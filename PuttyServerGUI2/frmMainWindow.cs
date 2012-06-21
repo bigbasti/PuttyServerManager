@@ -22,8 +22,6 @@ namespace PuttyServerGUI2 {
 
             sessions = new twiSessions();
             sessions.Show(ContentPanel, DockState.DockRight);
-
-            
         }
 
 

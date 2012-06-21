@@ -31,7 +31,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "twiPutty";
-            this.Text = "twiPutty";
+            this.Text = "Putty";
             this.Load += new System.EventHandler(this.twiPutty_Load);
             this.ResumeLayout(false);
 
