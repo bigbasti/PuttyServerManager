@@ -28,5 +28,12 @@ namespace PuttyServerGUI2 {
         private void frmMainWindow_Load(object sender, EventArgs e) {
 
         }
+
+        private void showQuickConnectionBarToolStripMenuItem_Click(object sender, EventArgs e) {
+            toolQuickConnect.Visible = !showQuickConnectionBarToolStripMenuItem.Checked;
+            showQuickConnectionBarToolStripMenuItem.Checked = !showQuickConnectionBarToolStripMenuItem.Checked;
+        }
+
+
     }
 }
