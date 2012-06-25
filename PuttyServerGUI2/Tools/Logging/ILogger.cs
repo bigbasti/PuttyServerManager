@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PuttyServerGUI2.Tools {
+namespace PuttyServerGUI2.Tools.Logging {
     public interface ILogger {
 
         /// <summary>

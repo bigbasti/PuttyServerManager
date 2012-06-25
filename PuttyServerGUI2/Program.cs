@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
-using PuttyServerGUI2.Tools;
+
+using PuttyServerGUI2.Tools.Logging;
 
 namespace PuttyServerGUI2 {
     static class Program {
@@ -21,6 +22,8 @@ namespace PuttyServerGUI2 {
             if (Debugger.IsAttached) {
                 LogWriter = new DebugLogger();
                 LogWriter.Log("DebugLogger wurde aktiviert!");
+            } else {
+                LogWriter = new LoggerMock();
             }
 
             Application.Run(new frmMainWindow());

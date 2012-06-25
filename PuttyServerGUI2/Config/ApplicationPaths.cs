@@ -47,7 +47,25 @@ namespace PuttyServerGUI2.Config {
 
         public static string SessionTemplatePath {
             get {
-                return ApplicationPath + "\\sessiontemplate.pst";
+                return ApplicationPath + "\\sessiontemplate";
+            }
+        }
+
+        public static string RemoteSessionListPath {
+            get {
+                return "";
+            }
+        }
+
+        public static string LocalSessionListPath {
+            get {
+                return ApplicationPath + "\\sessionlist.xml";
+            }
+        }
+
+        public static string RecentSessionListPath {
+            get {
+                return ApplicationPath + "\\recentSessionlist.xml";
             }
         }
     }

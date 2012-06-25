@@ -5,6 +5,12 @@ using System.Text;
 
 namespace PuttyServerGUI2.Persistence.Repository {
     public interface ISessionRepository {
+
+        /// <summary>
+        /// Gibt an, ob es dem Benutzer erlaubt ist die Liste zu bearbeiten
+        /// </summary>
+        bool UserCanEditList();
+
         /// <summary>
         /// Fügt eine neue Session zu der Sessionsammlung hinzu
         /// </summary>
@@ -32,12 +38,12 @@ namespace PuttyServerGUI2.Persistence.Repository {
         /// </summary>
         /// <param name="sessionName">Session die umbenannt werden soll</param>
         /// <param name="newName">Der neue Name für die Session</param>
-        void RenameSession(string sessionName, string newName);
+        bool RenameSession(string sessionName, string newName);
 
         /// <summary>
         /// Löscht eine Session aus der Sammlung
         /// </summary>
         /// <param name="sessionName">Name der Session die gelöscht werden soll</param>
-        void DeleteSession(string sessionName);
+        bool DeleteSession(string sessionName);
     }
 }

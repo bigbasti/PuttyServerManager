@@ -47,8 +47,6 @@
             this.txtServerPort = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.cboServerProtocol = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.txtServerName = new System.Windows.Forms.ToolStripTextBox();
             this.btnStartQuickConnection = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.menuMain = new System.Windows.Forms.MenuStrip();
@@ -76,7 +74,7 @@
             this.ContentPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.ContentPanel.Location = new System.Drawing.Point(0, 25);
             this.ContentPanel.Name = "ContentPanel";
-            this.ContentPanel.Size = new System.Drawing.Size(668, 443);
+            this.ContentPanel.Size = new System.Drawing.Size(837, 443);
             dockPanelGradient1.EndColor = System.Drawing.Color.MidnightBlue;
             dockPanelGradient1.StartColor = System.Drawing.Color.Black;
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -135,12 +133,10 @@
             this.txtServerPort,
             this.toolStripLabel3,
             this.cboServerProtocol,
-            this.toolStripLabel4,
-            this.txtServerName,
             this.btnStartQuickConnection});
             this.toolQuickConnect.Location = new System.Drawing.Point(0, 0);
             this.toolQuickConnect.Name = "toolQuickConnect";
-            this.toolQuickConnect.Size = new System.Drawing.Size(668, 25);
+            this.toolQuickConnect.Size = new System.Drawing.Size(837, 25);
             this.toolQuickConnect.TabIndex = 6;
             this.toolQuickConnect.Text = "Quick connection bar";
             // 
@@ -155,6 +151,7 @@
             this.txtServerIP.Name = "txtServerIP";
             this.txtServerIP.Size = new System.Drawing.Size(100, 25);
             this.txtServerIP.ToolTipText = "IP Address or hostname of the server";
+            this.txtServerIP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtServerIP_KeyUp);
             // 
             // toolStripLabel2
             // 
@@ -166,6 +163,7 @@
             // 
             this.txtServerPort.Name = "txtServerPort";
             this.txtServerPort.Size = new System.Drawing.Size(100, 25);
+            this.txtServerPort.Text = "22";
             this.txtServerPort.ToolTipText = "Server port to connect to";
             // 
             // toolStripLabel3
@@ -186,19 +184,6 @@
             this.cboServerProtocol.Name = "cboServerProtocol";
             this.cboServerProtocol.Size = new System.Drawing.Size(75, 25);
             // 
-            // toolStripLabel4
-            // 
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(42, 22);
-            this.toolStripLabel4.Text = "Name:";
-            // 
-            // txtServerName
-            // 
-            this.txtServerName.Name = "txtServerName";
-            this.txtServerName.Size = new System.Drawing.Size(100, 25);
-            this.txtServerName.ToolTipText = "You can provide a name for this Connection so you can find it easily and reuse it" +
-    " later";
-            // 
             // btnStartQuickConnection
             // 
             this.btnStartQuickConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -208,6 +193,7 @@
             this.btnStartQuickConnection.Size = new System.Drawing.Size(23, 22);
             this.btnStartQuickConnection.Text = "Connect";
             this.btnStartQuickConnection.ToolTipText = "Open Connection to the Server";
+            this.btnStartQuickConnection.Click += new System.EventHandler(this.btnStartQuickConnection_Click);
             // 
             // toolStripContainer1
             // 
@@ -216,11 +202,11 @@
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.ContentPanel);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.toolQuickConnect);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(668, 468);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(837, 468);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(668, 492);
+            this.toolStripContainer1.Size = new System.Drawing.Size(837, 492);
             this.toolStripContainer1.TabIndex = 7;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -236,7 +222,7 @@
             this.optionsToolStripMenuItem});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(668, 24);
+            this.menuMain.Size = new System.Drawing.Size(837, 24);
             this.menuMain.TabIndex = 7;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -282,13 +268,14 @@
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Text = "Putty Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // frmMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 492);
+            this.ClientSize = new System.Drawing.Size(837, 492);
             this.Controls.Add(this.toolStripContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuMain;
@@ -320,8 +307,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripComboBox cboServerProtocol;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-        private System.Windows.Forms.ToolStripTextBox txtServerName;
         private System.Windows.Forms.ToolStripButton btnStartQuickConnection;
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem fIleToolStripMenuItem;

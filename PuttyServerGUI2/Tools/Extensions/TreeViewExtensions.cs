@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using PuttyServerGUI2.Persistence;
+using System.IO;
 
-namespace PuttyServerGUI2.Tools {
+namespace PuttyServerGUI2.Tools.Extensions {
     /// <summary>
     /// Erweiterungen für die TreeView
     /// </summary>
@@ -28,7 +29,30 @@ namespace PuttyServerGUI2.Tools {
         /// <param name="filename">Datei aus der gelesen werden soll</param>
         /// <returns>Ausgelesene TreeNode oder null</returns>
         public static TreeNode DeserializeNode(this TreeView trv, string filename) {
-            return (TreeNode)SessionSerializer.DeserializeNode(filename);
+            return SessionSerializer.DeserializeNode(filename);
+        }
+
+        /// <summary>
+        /// Durchsucht rekursiv die gesamte Struktir nach einem Knoten
+        /// </summary>
+        /// <param name="trv">Automatischer Parameter (Gerade aktive TreeView)</param>
+        /// <param name="nodeName">Name nach dem gesucht werden soll</param>
+        /// <returns>True wenn der Name gefunden wurde</returns>
+        public static bool DoesNodeExist(this TreeView trv, string nodeName) {
+            bool found = false;
+            foreach (TreeNode n in trv.Nodes) {
+                found = SearchNextNode(n, nodeName);
+            }
+            return found;
+        }
+
+        private static bool SearchNextNode(TreeNode nextNode, string nodeName) {
+            bool found = false;
+            foreach (TreeNode n in nextNode.Nodes) {
+                if (n.Text.Equals(nodeName)) { return true; }
+                found = SearchNextNode(n, nodeName);
+            }
+            return found;
         }
     }
 }

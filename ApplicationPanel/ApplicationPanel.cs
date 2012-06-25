@@ -44,7 +44,7 @@ namespace WindowTool {
         private string m_ApplicationName = "";
         private string m_ApplicationParameters = "";
 
-        internal PuttyClosedCallback m_CloseCallback;
+        public PuttyClosedCallback m_CloseCallback;
 
         /// <summary>Set the name of the application executable to launch</summary>
         [Category("Data"), Description("The path/file to launch"), DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]

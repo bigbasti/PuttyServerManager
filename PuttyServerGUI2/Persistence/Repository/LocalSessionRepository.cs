@@ -2,12 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using PuttyServerGUI2.Config;
 
 namespace PuttyServerGUI2.Persistence.Repository {
     class LocalSessionRepository : ISessionRepository {
 
+        public bool UserCanEditList() {
+            return true;
+        }
+
         public void AddSession(string filename) {
-            throw new NotImplementedException();
+            try {
+                Program.LogWriter.Log("Copying new Session to Repository: {0}", filename);
+
+                File.Copy(filename, Path.Combine(ApplicationPaths.LocalRepositoryPath, Path.GetFileName(filename)), true);
+
+            } catch (Exception ex) {
+                Program.LogWriter.Log("# Cound not Copy the Sessionfile to Repostitory because {0}", ex.Message);
+            }
         }
 
         public void AddSession(string server, string protocol, int port, string name = "") {
@@ -15,16 +28,32 @@ namespace PuttyServerGUI2.Persistence.Repository {
         }
 
         public bool CheckSessionExists(string sessionName) {
-            throw new NotImplementedException();
+            return File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
         }
 
-        public void RenameSession(string sessionName, string newName) {
-            throw new NotImplementedException();
+        public bool RenameSession(string sessionName, string newName) {
+            try {
+                string oldFileName = Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName);
+                string newFileName = Path.Combine(ApplicationPaths.LocalRepositoryPath, newName);
+                File.Move(oldFileName, newFileName);
+            } catch (Exception ex) {
+                Program.LogWriter.Log("# Cound not Rename the Sessionfile in Repostitory because {0}", ex.Message);
+                return false;
+            }
+            return true;
         }
 
-        public void DeleteSession(string sessionName) {
-            throw new NotImplementedException();
+        public bool DeleteSession(string sessionName) {
+            try {
+                File.Delete(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+            } catch (Exception ex) {
+                Program.LogWriter.Log("# Cound not delete the Sessionfile from Repostitory because {0}", ex.Message);
+                return false;
+            }
+            return true;
         }
+
+
 
 
     }

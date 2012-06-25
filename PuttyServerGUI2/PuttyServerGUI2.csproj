@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ApplicationPaths.cs" />
+    <Compile Include="Config\FolderSetup.cs" />
     <Compile Include="Config\RepositoryType.cs" />
     <Compile Include="Config\SessionData.cs" />
     <Compile Include="frmMainWindow.cs">
@@ -66,12 +67,14 @@
     </Compile>
     <Compile Include="Persistence\Repository\ISessionRepository.cs" />
     <Compile Include="Persistence\Repository\LocalSessionRepository.cs" />
+    <Compile Include="Persistence\Repository\RecentSessionRepository.cs" />
     <Compile Include="Persistence\SessionSerializer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\DebugLogger.cs" />
-    <Compile Include="Tools\ILogger.cs" />
-    <Compile Include="Tools\TreeViewExtensions.cs" />
+    <Compile Include="Tools\Logging\DebuggerMock.cs" />
+    <Compile Include="Tools\Logging\LoggerMock.cs" />
+    <Compile Include="Tools\Logging\ILogger.cs" />
+    <Compile Include="Tools\Extensions\TreeViewExtensions.cs" />
     <Compile Include="ToolWindows\twiPutty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +128,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\computer_edit.png" />
+    <None Include="Resources\magifier_zoom_out.png" />
+    <None Include="Resources\magnifier_zoom_in.png" />
+    <None Include="Resources\text_list_numbers.png" />
+    <None Include="Resources\folder_delete.png" />
+    <None Include="Resources\folder_edit.png" />
+    <None Include="Resources\folder_add.png" />
+    <None Include="Resources\server_add.png" />
     <None Include="Resources\arrow_refresh.png" />
     <None Include="Resources\delete.png" />
     <None Include="Resources\server_edit1.png" />

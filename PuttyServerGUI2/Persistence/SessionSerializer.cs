@@ -69,11 +69,15 @@ namespace PuttyServerGUI2.Persistence {
         /// <returns>Deserialisierte TreeNode oder null im Fehlerfall</returns>
         public static TreeNode DeserializeNode(string filename) {
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(File.ReadAllText(filename));
+            TreeNode sessions = null;
+            try {
+                doc.LoadXml(File.ReadAllText(filename));
 
-            //Es wird nur ein Node gesichert und wiederhergestellt!
-            TreeNode sessions = CreateTreeNodeFromXmlNode(doc.ChildNodes[1]);  //Mhh... müsste man mal schönder machen
-
+                //Es wird nur ein Node gesichert und wiederhergestellt!
+                sessions = CreateTreeNodeFromXmlNode(doc.ChildNodes[1]);  //Mhh... müsste man mal schönder machen
+            } catch (Exception ex) {
+                Program.LogWriter.Log("# Could not load Sessionlist ({0}) - Just create some Folders and the List will be recreated!", ex.Message);
+            }
             return sessions;
         }
 
