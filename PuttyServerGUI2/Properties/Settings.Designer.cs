@@ -38,12 +38,24 @@ namespace PuttyServerGUI2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string RemoteRepositoryPath {
+        public string TeamRepositoryPath {
             get {
-                return ((string)(this["RemoteRepositoryPath"]));
+                return ((string)(this["TeamRepositoryPath"]));
             }
             set {
-                this["RemoteRepositoryPath"] = value;
+                this["TeamRepositoryPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TeamSessionListPath {
+            get {
+                return ((string)(this["TeamSessionListPath"]));
+            }
+            set {
+                this["TeamSessionListPath"] = value;
             }
         }
     }

@@ -47,7 +47,6 @@
             this.txtServerPort = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.cboServerProtocol = new System.Windows.Forms.ToolStripComboBox();
-            this.btnStartQuickConnection = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +54,8 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showQuickConnectionBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnStartQuickConnection = new System.Windows.Forms.ToolStripButton();
+            this.pSGSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolQuickConnect.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -184,17 +185,6 @@
             this.cboServerProtocol.Name = "cboServerProtocol";
             this.cboServerProtocol.Size = new System.Drawing.Size(75, 25);
             // 
-            // btnStartQuickConnection
-            // 
-            this.btnStartQuickConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartQuickConnection.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
-            this.btnStartQuickConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartQuickConnection.Name = "btnStartQuickConnection";
-            this.btnStartQuickConnection.Size = new System.Drawing.Size(23, 22);
-            this.btnStartQuickConnection.Text = "Connect";
-            this.btnStartQuickConnection.ToolTipText = "Open Connection to the Server";
-            this.btnStartQuickConnection.Click += new System.EventHandler(this.btnStartQuickConnection_Click);
-            // 
             // toolStripContainer1
             // 
             // 
@@ -237,7 +227,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // optionsToolStripMenuItem
@@ -245,6 +235,7 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showQuickConnectionBarToolStripMenuItem,
             this.toolStripMenuItem1,
+            this.pSGSettingsToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -264,8 +255,28 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(217, 6);
             // 
+            // btnStartQuickConnection
+            // 
+            this.btnStartQuickConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartQuickConnection.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
+            this.btnStartQuickConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartQuickConnection.Name = "btnStartQuickConnection";
+            this.btnStartQuickConnection.Size = new System.Drawing.Size(23, 22);
+            this.btnStartQuickConnection.Text = "Connect";
+            this.btnStartQuickConnection.ToolTipText = "Open Connection to the Server";
+            this.btnStartQuickConnection.Click += new System.EventHandler(this.btnStartQuickConnection_Click);
+            // 
+            // pSGSettingsToolStripMenuItem
+            // 
+            this.pSGSettingsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.cog;
+            this.pSGSettingsToolStripMenuItem.Name = "pSGSettingsToolStripMenuItem";
+            this.pSGSettingsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.pSGSettingsToolStripMenuItem.Text = "PSG Settings";
+            this.pSGSettingsToolStripMenuItem.Click += new System.EventHandler(this.pSGSettingsToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.settingsToolStripMenuItem.Text = "Putty Settings";
@@ -315,6 +326,7 @@
         private System.Windows.Forms.ToolStripMenuItem showQuickConnectionBarToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pSGSettingsToolStripMenuItem;
 
     }
 }

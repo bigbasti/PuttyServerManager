@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using System.Xml;
 
 using PuttyServerGUI2;
+using PuttyServerGUI2.Config;
 
 namespace PuttyServerGUI2.Persistence {
     /// <summary>
@@ -89,8 +90,13 @@ namespace PuttyServerGUI2.Persistence {
         private static TreeNode CreateTreeNodeFromXmlNode(XmlNode node) {
             TreeNode retVal = new TreeNode(XmlConvert.DecodeName(node.Name));
 
-            retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
-            retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+            if (File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, node.Name)) || node.HasChildNodes) {
+                retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+                retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+            } else {
+                retVal.ImageIndex = 9;
+                retVal.SelectedImageIndex = 9;
+            }
             if (Convert.ToBoolean(node.Attributes["Expanded"].Value)) { retVal.Expand(); }
 
             foreach (XmlNode n in node.ChildNodes) {

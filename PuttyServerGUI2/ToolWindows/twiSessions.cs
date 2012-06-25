@@ -44,24 +44,31 @@ namespace PuttyServerGUI2.ToolWindows {
         /// Lädt alle nötigen Einstellungen
         /// </summary>
         private void LoadConfiguration() {
-            try {
-                TreeNode node = trvSessions.DeserializeNode(ApplicationPaths.LocalSessionListPath);
-                trvSessions.Nodes.Add(node);
-            } catch (Exception ex) { 
-                trvSessions.Nodes.Add("Saved Sessions"); 
-            }
-
-            try {
-                TreeNode node = trvRecentSessions.DeserializeNode(ApplicationPaths.RecentSessionListPath);
-                trvRecentSessions.Nodes.Add(node);
-            } catch (Exception ex) {
-                trvRecentSessions.Nodes.Add("Recent Sessions"); 
-            }
+            LoadLocalSessionsList();
+            LoadRecentSessionsList();
 
             trvSessions.LabelEdit = localRepository.UserCanEditList();
             trvRecentSessions.LabelEdit = recentRepository.UserCanEditList();
 
             //TODO: Ort der Sessions aus dem repository beziehen?
+        }
+
+        private void LoadRecentSessionsList() {
+            try {
+                TreeNode node = trvRecentSessions.DeserializeNode(ApplicationPaths.RecentSessionListPath);
+                trvRecentSessions.Nodes.Add(node);
+            } catch (Exception ex) {
+                trvRecentSessions.Nodes.Add("Recent Sessions");
+            }
+        }
+
+        private void LoadLocalSessionsList() {
+            try {
+                TreeNode node = trvSessions.DeserializeNode(ApplicationPaths.LocalSessionListPath);
+                trvSessions.Nodes.Add(node);
+            } catch (Exception ex) {
+                trvSessions.Nodes.Add("Saved Sessions");
+            }
         }
 
         /// <summary>
@@ -88,6 +95,11 @@ namespace PuttyServerGUI2.ToolWindows {
                 //Auch bei einem Rechtsklick das gewählte Element markieren
                 TreeNode clickedNode = trvSessions.GetNodeAt(e.Location);
                 trvSessions.SelectedNode = clickedNode;
+
+                if (clickedNode.SelectedImageIndex == 9) {
+                    conMenuSessionMissing.Show(MousePosition);
+                    return;
+                }
 
                 if (clickedNode.SelectedImageIndex == 6) {
                     conMenuSession.Show(MousePosition);
@@ -179,6 +191,10 @@ namespace PuttyServerGUI2.ToolWindows {
         }
 
         private void trvSessions_AfterLabelEdit(object sender, NodeLabelEditEventArgs e) {
+            if (e.Label == null || e.Label == "") {
+                e.CancelEdit = true;
+                return;
+            }
             if (e.Node.ImageIndex == 6 && e.Label != null) {
                 if (!localRepository.RenameSession(e.Node.Text, e.Label)) {
                     MessageBox.Show("Could not Rename the Session. Look into Logfile for further Details!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -247,26 +263,136 @@ namespace PuttyServerGUI2.ToolWindows {
         }
 
         private void trvSessions_DoubleClick(object sender, EventArgs e) {
-            if (trvSessions.SelectedNode.ImageIndex == 6) {
-
-                twiPutty puttyWindow = null;
-
-                PuttyClosedCallback callback = delegate(bool closed) {
-                    if (puttyWindow != null) {
-
-                        if (puttyWindow.InvokeRequired) {
-                            this.BeginInvoke((MethodInvoker)delegate() {
-                                puttyWindow.Close();
-                            });
-                        } else {
-                            puttyWindow.Close();
-                        }
-                    }
-                };
-
-                puttyWindow = new twiPutty(trvSessions.SelectedNode.Text, callback);
-                puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+            if (trvSessions.SelectedNode.ImageIndex == 6) {         //Normale Session
+                StartPuttySession(trvSessions.SelectedNode.Text);
             }
+            if (trvSessions.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+                RemoveMissingNode(trvSessions.SelectedNode);
+            }
+        }
+
+        private void trvRecentSessions_DoubleClick(object sender, EventArgs e) {
+            if (trvRecentSessions.SelectedNode.ImageIndex == 6) {   //Normale Session
+                StartPuttySession(trvRecentSessions.SelectedNode.Text);
+            }
+            if (trvRecentSessions.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+                RemoveMissingNode(trvRecentSessions.SelectedNode);
+            }
+        }
+
+        private void StartPuttySession(string sessionName) {
+
+            twiPutty puttyWindow = null;
+
+            PuttyClosedCallback callback = delegate(bool closed) {
+                if (puttyWindow != null) {
+
+                    if (puttyWindow.InvokeRequired) {
+                        this.BeginInvoke((MethodInvoker)delegate() {
+                            puttyWindow.Close();
+                        });
+                    } else {
+                        puttyWindow.Close();
+                    }
+                }
+            };
+
+            puttyWindow = new twiPutty(sessionName, callback);
+            puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+        }
+
+        private void RemoveMissingNode(TreeNode node) {
+            DialogResult res = MessageBox.Show("This session seems to be missing in your session folder. Do you want to remove this session from the list?", "Remove missing session?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (res == System.Windows.Forms.DialogResult.Yes) {
+                node.Remove();
+                SaveChanges();
+            }
+        }
+
+        private void reloadOverviewToolStripMenuItem_Click(object sender, EventArgs e) {
+            trvSessions.Nodes.Remove(trvSessions.Nodes[0]);
+            LoadLocalSessionsList();
+
+        }
+
+        private void removeMissingSessionToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void removeMissingSessionFromListToolStripMenuItem_Click(object sender, EventArgs e) {
+            trvSessions.SelectedNode.Remove();
+            SaveChanges();
+        }
+
+        private void trvRecentSessions_MouseClick(object sender, MouseEventArgs e) {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right) {
+                //Auch bei einem Rechtsklick das gewählte Element markieren
+                TreeNode clickedNode = trvRecentSessions.GetNodeAt(e.Location);
+                trvRecentSessions.SelectedNode = clickedNode;
+
+                if (clickedNode.SelectedImageIndex == 9) {
+                    conMenuRemoveMissingRecent.Show(MousePosition);
+                    return;
+                }
+
+                if (clickedNode.SelectedImageIndex == 6) {
+                    conMenuRecent.Show(MousePosition);
+                    return;
+                }
+            }
+        }
+
+        private void transferSessionToPersonalSessionsToolStripMenuItem_Click(object sender, EventArgs e) {
+            TreeNode node = new TreeNode(trvRecentSessions.SelectedNode.Text);
+            node.ImageIndex = 6;
+            node.SelectedImageIndex = 6;
+
+            trvSessions.Nodes[0].Nodes.Add(node);
+            trvRecentSessions.SelectedNode.Remove();
+
+            SaveChanges();
+        }
+
+        private void removeSessionFromListToolStripMenuItem_Click(object sender, EventArgs e) {
+            recentRepository.DeleteSession(trvRecentSessions.SelectedNode.Text);
+            trvRecentSessions.SelectedNode.Remove();
+            SaveChanges();
+        }
+
+        private void reloadSessionLisToolStripMenuItem_Click(object sender, EventArgs e) {
+            trvRecentSessions.Nodes.Remove(trvRecentSessions.Nodes[0]);
+            LoadRecentSessionsList();
+        }
+
+        private void reloadSessionListToolStripMenuItem_Click(object sender, EventArgs e) {
+            reloadSessionLisToolStripMenuItem_Click(sender, e);
+        }
+
+        private void removeMissingSessionToolStripMenuItem1_Click(object sender, EventArgs e) {
+            trvRecentSessions.SelectedNode.Remove();
+            SaveChanges();
+        }
+
+        private void startSessionToolStripMenuItem1_Click(object sender, EventArgs e) {
+            StartPuttySession(trvRecentSessions.SelectedNode.Text);
+        }
+
+        private void removeAllMissingSessionsToolStripMenuItem_Click(object sender, EventArgs e) {
+            foreach (TreeNode n in trvRecentSessions.Nodes[0].Nodes) {
+                if (n.SelectedImageIndex == 9) {
+                    n.Remove();
+                }
+            }
+            SaveChanges();
+        }
+
+        private void startSessionToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartPuttySession(trvSessions.SelectedNode.Text);
+        }
+
+        private void twiSessions_FormClosing(object sender, FormClosingEventArgs e) {
+            e.Cancel = true;
         }
 
     }

@@ -97,6 +97,10 @@ namespace PuttyServerGUI2 {
             }
         }
 
+        private void pSGSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
+            new frmSettings().ShowDialog();
+        }
+
 
 
     }

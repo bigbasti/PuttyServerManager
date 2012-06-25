@@ -22,10 +22,10 @@ namespace PuttyServerGUI2.Config {
 
         public static string RemoteRepositoryPath {
             get {
-                return Settings.Default.RemoteRepositoryPath;
+                return Settings.Default.TeamRepositoryPath;
             }
             set {
-                Settings.Default.RemoteRepositoryPath = value;
+                Settings.Default.TeamRepositoryPath = value;
                 Settings.Default.Save();
             }
         }
@@ -51,9 +51,12 @@ namespace PuttyServerGUI2.Config {
             }
         }
 
-        public static string RemoteSessionListPath {
+        public static string TeamSessionListPath {
             get {
-                return "";
+                return Settings.Default.TeamSessionListPath;
+            }
+            set {
+                Settings.Default.TeamSessionListPath = value;
             }
         }
 

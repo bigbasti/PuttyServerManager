@@ -32,6 +32,7 @@
             this.tabTeam = new System.Windows.Forms.TabPage();
             this.tabPuttySessions = new System.Windows.Forms.TabPage();
             this.tabRecentSessions = new System.Windows.Forms.TabPage();
+            this.trvRecentSessions = new System.Windows.Forms.TreeView();
             this.conMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,8 +40,6 @@
             this.editSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.refreshSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conMenuFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
@@ -58,13 +57,32 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.expandAllFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trvRecentSessions = new System.Windows.Forms.TreeView();
+            this.conMenuSessionMissing = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeMissingSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeMissingSessionFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conMenuRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.startSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.startColoredSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.transferSessionToPersonalSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadSessionLisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.removeSessionFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conMenuRemoveMissingRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeMissingSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
+            this.removeAllMissingSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.reloadSessionListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSessionAreas.SuspendLayout();
             this.tabPersonal.SuspendLayout();
             this.tabRecentSessions.SuspendLayout();
             this.conMenuSession.SuspendLayout();
             this.conMenuFolder.SuspendLayout();
             this.conMenuTreeView.SuspendLayout();
+            this.conMenuSessionMissing.SuspendLayout();
+            this.conMenuRecent.SuspendLayout();
+            this.conMenuRemoveMissingRecent.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabSessionAreas
@@ -154,6 +172,20 @@
             this.tabRecentSessions.Text = "Recent";
             this.tabRecentSessions.UseVisualStyleBackColor = true;
             // 
+            // trvRecentSessions
+            // 
+            this.trvRecentSessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.trvRecentSessions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvRecentSessions.ImageIndex = 0;
+            this.trvRecentSessions.ImageList = this.imgSessionImages;
+            this.trvRecentSessions.Location = new System.Drawing.Point(0, 0);
+            this.trvRecentSessions.Name = "trvRecentSessions";
+            this.trvRecentSessions.SelectedImageIndex = 0;
+            this.trvRecentSessions.Size = new System.Drawing.Size(623, 448);
+            this.trvRecentSessions.TabIndex = 0;
+            this.trvRecentSessions.DoubleClick += new System.EventHandler(this.trvRecentSessions_DoubleClick);
+            this.trvRecentSessions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trvRecentSessions_MouseClick);
+            // 
             // conMenuSession
             // 
             this.conMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -162,36 +194,35 @@
             this.toolStripMenuItem1,
             this.editSessionToolStripMenuItem,
             this.renameToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.refreshSessionToolStripMenuItem});
+            this.deleteToolStripMenuItem});
             this.conMenuSession.Name = "conMenuSession";
-            this.conMenuSession.Size = new System.Drawing.Size(156, 148);
+            this.conMenuSession.Size = new System.Drawing.Size(144, 120);
             // 
             // startSessionToolStripMenuItem
             // 
             this.startSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
             this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
-            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.startSessionToolStripMenuItem.Text = "Start Session";
+            this.startSessionToolStripMenuItem.Click += new System.EventHandler(this.startSessionToolStripMenuItem_Click);
             // 
             // startColoredToolStripMenuItem
             // 
             this.startColoredToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.color_wheel;
             this.startColoredToolStripMenuItem.Name = "startColoredToolStripMenuItem";
-            this.startColoredToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.startColoredToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.startColoredToolStripMenuItem.Text = "Start Colored";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(140, 6);
             // 
             // editSessionToolStripMenuItem
             // 
             this.editSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_edit;
             this.editSessionToolStripMenuItem.Name = "editSessionToolStripMenuItem";
-            this.editSessionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.editSessionToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.editSessionToolStripMenuItem.Text = "Edit";
             this.editSessionToolStripMenuItem.Click += new System.EventHandler(this.editSessionToolStripMenuItem_Click);
             // 
@@ -199,7 +230,7 @@
             // 
             this.renameToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_edit1;
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.renameToolStripMenuItem.Text = "Rename";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
@@ -207,21 +238,9 @@
             // 
             this.deleteToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.delete;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 6);
-            // 
-            // refreshSessionToolStripMenuItem
-            // 
-            this.refreshSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_refresh;
-            this.refreshSessionToolStripMenuItem.Name = "refreshSessionToolStripMenuItem";
-            this.refreshSessionToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.refreshSessionToolStripMenuItem.Text = "Refresh Session";
             // 
             // conMenuFolder
             // 
@@ -327,6 +346,7 @@
             this.reloadOverviewToolStripMenuItem.Name = "reloadOverviewToolStripMenuItem";
             this.reloadOverviewToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.reloadOverviewToolStripMenuItem.Text = "Reload Overview";
+            this.reloadOverviewToolStripMenuItem.Click += new System.EventHandler(this.reloadOverviewToolStripMenuItem_Click);
             // 
             // sortOverviewToolStripMenuItem
             // 
@@ -357,17 +377,139 @@
             this.collapseAllFoldersToolStripMenuItem.Text = "Collapse all Folders";
             this.collapseAllFoldersToolStripMenuItem.Click += new System.EventHandler(this.collapseAllFoldersToolStripMenuItem_Click);
             // 
-            // trvRecentSessions
+            // conMenuSessionMissing
             // 
-            this.trvRecentSessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.trvRecentSessions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trvRecentSessions.ImageIndex = 0;
-            this.trvRecentSessions.ImageList = this.imgSessionImages;
-            this.trvRecentSessions.Location = new System.Drawing.Point(0, 0);
-            this.trvRecentSessions.Name = "trvRecentSessions";
-            this.trvRecentSessions.SelectedImageIndex = 0;
-            this.trvRecentSessions.Size = new System.Drawing.Size(623, 448);
-            this.trvRecentSessions.TabIndex = 0;
+            this.conMenuSessionMissing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeMissingSessionToolStripMenuItem});
+            this.conMenuSessionMissing.Name = "conMenuSessionMissing";
+            this.conMenuSessionMissing.Size = new System.Drawing.Size(191, 26);
+            // 
+            // removeMissingSessionToolStripMenuItem
+            // 
+            this.removeMissingSessionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeMissingSessionFromListToolStripMenuItem});
+            this.removeMissingSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.removeMissingSessionToolStripMenuItem.Name = "removeMissingSessionToolStripMenuItem";
+            this.removeMissingSessionToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.removeMissingSessionToolStripMenuItem.Text = "Session file is missing!";
+            this.removeMissingSessionToolStripMenuItem.Click += new System.EventHandler(this.removeMissingSessionToolStripMenuItem_Click);
+            // 
+            // removeMissingSessionFromListToolStripMenuItem
+            // 
+            this.removeMissingSessionFromListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.delete;
+            this.removeMissingSessionFromListToolStripMenuItem.Name = "removeMissingSessionFromListToolStripMenuItem";
+            this.removeMissingSessionFromListToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.removeMissingSessionFromListToolStripMenuItem.Text = "Remove missing session from list";
+            this.removeMissingSessionFromListToolStripMenuItem.Click += new System.EventHandler(this.removeMissingSessionFromListToolStripMenuItem_Click);
+            // 
+            // conMenuRecent
+            // 
+            this.conMenuRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem1,
+            this.startColoredSessionToolStripMenuItem,
+            this.toolStripMenuItem7,
+            this.transferSessionToPersonalSessionsToolStripMenuItem,
+            this.reloadSessionLisToolStripMenuItem,
+            this.toolStripMenuItem8,
+            this.removeSessionFromListToolStripMenuItem});
+            this.conMenuRecent.Name = "conMenuRecent";
+            this.conMenuRecent.Size = new System.Drawing.Size(267, 126);
+            // 
+            // startSessionToolStripMenuItem1
+            // 
+            this.startSessionToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.startSessionToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
+            this.startSessionToolStripMenuItem1.Name = "startSessionToolStripMenuItem1";
+            this.startSessionToolStripMenuItem1.Size = new System.Drawing.Size(266, 22);
+            this.startSessionToolStripMenuItem1.Text = "Start session";
+            this.startSessionToolStripMenuItem1.Click += new System.EventHandler(this.startSessionToolStripMenuItem1_Click);
+            // 
+            // startColoredSessionToolStripMenuItem
+            // 
+            this.startColoredSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.color_wheel;
+            this.startColoredSessionToolStripMenuItem.Name = "startColoredSessionToolStripMenuItem";
+            this.startColoredSessionToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.startColoredSessionToolStripMenuItem.Text = "Start colored session";
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(263, 6);
+            // 
+            // transferSessionToPersonalSessionsToolStripMenuItem
+            // 
+            this.transferSessionToPersonalSessionsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
+            this.transferSessionToPersonalSessionsToolStripMenuItem.Name = "transferSessionToPersonalSessionsToolStripMenuItem";
+            this.transferSessionToPersonalSessionsToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.transferSessionToPersonalSessionsToolStripMenuItem.Text = "Transfer session to personal sessions";
+            this.transferSessionToPersonalSessionsToolStripMenuItem.Click += new System.EventHandler(this.transferSessionToPersonalSessionsToolStripMenuItem_Click);
+            // 
+            // reloadSessionLisToolStripMenuItem
+            // 
+            this.reloadSessionLisToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_refresh;
+            this.reloadSessionLisToolStripMenuItem.Name = "reloadSessionLisToolStripMenuItem";
+            this.reloadSessionLisToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.reloadSessionLisToolStripMenuItem.Text = "Reload session list";
+            this.reloadSessionLisToolStripMenuItem.Click += new System.EventHandler(this.reloadSessionLisToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(263, 6);
+            // 
+            // removeSessionFromListToolStripMenuItem
+            // 
+            this.removeSessionFromListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.delete;
+            this.removeSessionFromListToolStripMenuItem.Name = "removeSessionFromListToolStripMenuItem";
+            this.removeSessionFromListToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.removeSessionFromListToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.removeSessionFromListToolStripMenuItem.Text = "Remove session from list";
+            this.removeSessionFromListToolStripMenuItem.Click += new System.EventHandler(this.removeSessionFromListToolStripMenuItem_Click);
+            // 
+            // conMenuRemoveMissingRecent
+            // 
+            this.conMenuRemoveMissingRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeMissingSessionToolStripMenuItem1,
+            this.toolStripMenuItem9,
+            this.removeAllMissingSessionsToolStripMenuItem,
+            this.toolStripMenuItem10,
+            this.reloadSessionListToolStripMenuItem});
+            this.conMenuRemoveMissingRecent.Name = "conMenuRemoveMissingRecent";
+            this.conMenuRemoveMissingRecent.Size = new System.Drawing.Size(223, 82);
+            // 
+            // removeMissingSessionToolStripMenuItem1
+            // 
+            this.removeMissingSessionToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.removeMissingSessionToolStripMenuItem1.Name = "removeMissingSessionToolStripMenuItem1";
+            this.removeMissingSessionToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
+            this.removeMissingSessionToolStripMenuItem1.Text = "Remove missing session";
+            this.removeMissingSessionToolStripMenuItem1.Click += new System.EventHandler(this.removeMissingSessionToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(219, 6);
+            // 
+            // removeAllMissingSessionsToolStripMenuItem
+            // 
+            this.removeAllMissingSessionsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.delete;
+            this.removeAllMissingSessionsToolStripMenuItem.Name = "removeAllMissingSessionsToolStripMenuItem";
+            this.removeAllMissingSessionsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.removeAllMissingSessionsToolStripMenuItem.Text = "Remove all missing sessions";
+            this.removeAllMissingSessionsToolStripMenuItem.Click += new System.EventHandler(this.removeAllMissingSessionsToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(219, 6);
+            // 
+            // reloadSessionListToolStripMenuItem
+            // 
+            this.reloadSessionListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_refresh;
+            this.reloadSessionListToolStripMenuItem.Name = "reloadSessionListToolStripMenuItem";
+            this.reloadSessionListToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.reloadSessionListToolStripMenuItem.Text = "Reload session list";
+            this.reloadSessionListToolStripMenuItem.Click += new System.EventHandler(this.reloadSessionListToolStripMenuItem_Click);
             // 
             // twiSessions
             // 
@@ -377,6 +519,7 @@
             this.Controls.Add(this.tabSessionAreas);
             this.Name = "twiSessions";
             this.Text = "Sessions";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.twiSessions_FormClosing);
             this.Load += new System.EventHandler(this.twiSessions_Load);
             this.tabSessionAreas.ResumeLayout(false);
             this.tabPersonal.ResumeLayout(false);
@@ -384,6 +527,9 @@
             this.conMenuSession.ResumeLayout(false);
             this.conMenuFolder.ResumeLayout(false);
             this.conMenuTreeView.ResumeLayout(false);
+            this.conMenuSessionMissing.ResumeLayout(false);
+            this.conMenuRecent.ResumeLayout(false);
+            this.conMenuRemoveMissingRecent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -403,8 +549,6 @@
         private System.Windows.Forms.ToolStripMenuItem editSessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem refreshSessionToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip conMenuFolder;
         private System.Windows.Forms.ToolStripMenuItem addSessionToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
@@ -424,6 +568,23 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
         private System.Windows.Forms.TabPage tabTeam;
         private System.Windows.Forms.TreeView trvRecentSessions;
+        private System.Windows.Forms.ContextMenuStrip conMenuSessionMissing;
+        private System.Windows.Forms.ToolStripMenuItem removeMissingSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeMissingSessionFromListToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip conMenuRecent;
+        private System.Windows.Forms.ToolStripMenuItem startSessionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem startColoredSessionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem transferSessionToPersonalSessionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem removeSessionFromListToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip conMenuRemoveMissingRecent;
+        private System.Windows.Forms.ToolStripMenuItem removeMissingSessionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem removeAllMissingSessionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadSessionLisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
+        private System.Windows.Forms.ToolStripMenuItem reloadSessionListToolStripMenuItem;
 
     }
 }
