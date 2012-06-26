@@ -31,6 +31,7 @@ namespace PuttyServerGUI2 {
 
         private void frmMainWindow_Load(object sender, EventArgs e) {
             cboServerProtocol.SelectedIndex = 0;
+            
         }
 
         private void showQuickConnectionBarToolStripMenuItem_Click(object sender, EventArgs e) {

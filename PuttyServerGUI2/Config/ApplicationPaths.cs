@@ -20,6 +20,12 @@ namespace PuttyServerGUI2.Config {
             }
         }
 
+        public static string LocalSessionListPath {
+            get {
+                return ApplicationPath + "\\sessionlist.xml";
+            }
+        }
+
         public static string RemoteRepositoryPath {
             get {
                 return Settings.Default.TeamRepositoryPath;
@@ -30,18 +36,40 @@ namespace PuttyServerGUI2.Config {
             }
         }
 
+        public static string RemoteSessionListPath {
+            get {
+                return Settings.Default.TeamSessionListPath;
+            }
+            set {
+                Settings.Default.TeamSessionListPath = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static bool RemoteSessionIsConfigured {
+            get {
+                return !string.IsNullOrEmpty(RemoteRepositoryPath);
+            }
+        }
+
         public static string PuttyLocation {
             get {
                 return ApplicationPath + "\\putty.exe";
             }
         }
 
-        public static RepositoryType RepositoryType {
+        public static string PuttyAgentLocation {
             get {
-                return Settings.Default.LocalRepository == true ? RepositoryType.Local : RepositoryType.Remote;
+                return ApplicationPath + "\\pagent.exe";
+            }
+        }
+
+        public static bool FirstStart {
+            get {
+                return Settings.Default.FirstStart;
             }
             set {
-                Settings.Default.LocalRepository = value == RepositoryType.Local ? true : false;
+                Settings.Default.FirstStart = value;
             }
         }
 
@@ -51,25 +79,51 @@ namespace PuttyServerGUI2.Config {
             }
         }
 
-        public static string TeamSessionListPath {
-            get {
-                return Settings.Default.TeamSessionListPath;
-            }
-            set {
-                Settings.Default.TeamSessionListPath = value;
-            }
-        }
-
-        public static string LocalSessionListPath {
-            get {
-                return ApplicationPath + "\\sessionlist.xml";
-            }
-        }
-
         public static string RecentSessionListPath {
             get {
                 return ApplicationPath + "\\recentSessionlist.xml";
             }
         }
+
+        public static bool UsePuttyAgent {
+            get {
+                return Settings.Default.UsePuttyAgent;
+            }
+            set {
+                Settings.Default.UsePuttyAgent = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static string PuttyAgentParameters {
+            get {
+                return Settings.Default.PuttyAgentParameters;
+            }
+            set {
+                Settings.Default.PuttyAgentParameters = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static string TeamUsername {
+            get {
+                return Settings.Default.TeamUsername;
+            }
+            set {
+                Settings.Default.TeamUsername = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static bool StartWithWindows {
+            get {
+                return Settings.Default.StartAppWithWindows;
+            }
+            set {
+                Settings.Default.StartAppWithWindows = value;
+                Settings.Default.Save();
+            }
+        }
+
     }
 }

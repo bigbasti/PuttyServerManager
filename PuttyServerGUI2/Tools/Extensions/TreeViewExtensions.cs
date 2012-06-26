@@ -33,6 +33,16 @@ namespace PuttyServerGUI2.Tools.Extensions {
         }
 
         /// <summary>
+        /// Deserialiert ein TreeNode aus einer Datei
+        /// </summary>
+        /// <param name="trv">Automatischer Parameter (Gerade aktive TreeView)</param>
+        /// <param name="filename">Datei aus der gelesen werden soll</param>
+        /// <returns>Ausgelesene TreeNode oder null</returns>
+        public static TreeNode DeserializeTeamNode(this TreeView trv, string filename) {
+            return SessionSerializer.DeserializeTeamNode(filename);
+        }
+
+        /// <summary>
         /// Durchsucht rekursiv die gesamte Struktir nach einem Knoten
         /// </summary>
         /// <param name="trv">Automatischer Parameter (Gerade aktive TreeView)</param>

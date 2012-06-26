@@ -26,12 +26,12 @@ namespace PuttyServerGUI2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool LocalRepository {
+        public bool FirstStart {
             get {
-                return ((bool)(this["LocalRepository"]));
+                return ((bool)(this["FirstStart"]));
             }
             set {
-                this["LocalRepository"] = value;
+                this["FirstStart"] = value;
             }
         }
         
@@ -56,6 +56,54 @@ namespace PuttyServerGUI2.Properties {
             }
             set {
                 this["TeamSessionListPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StartAppWithWindows {
+            get {
+                return ((bool)(this["StartAppWithWindows"]));
+            }
+            set {
+                this["StartAppWithWindows"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TeamUsername {
+            get {
+                return ((string)(this["TeamUsername"]));
+            }
+            set {
+                this["TeamUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UsePuttyAgent {
+            get {
+                return ((bool)(this["UsePuttyAgent"]));
+            }
+            set {
+                this["UsePuttyAgent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PuttyAgentParameters {
+            get {
+                return ((string)(this["PuttyAgentParameters"]));
+            }
+            set {
+                this["PuttyAgentParameters"] = value;
             }
         }
     }

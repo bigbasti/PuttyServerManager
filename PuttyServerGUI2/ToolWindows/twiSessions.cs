@@ -47,10 +47,13 @@ namespace PuttyServerGUI2.ToolWindows {
             LoadLocalSessionsList();
             LoadRecentSessionsList();
 
+            if (ApplicationPaths.RemoteSessionIsConfigured) {
+                LoadTeamSessionsList();
+            }
+
             trvSessions.LabelEdit = localRepository.UserCanEditList();
             trvRecentSessions.LabelEdit = recentRepository.UserCanEditList();
 
-            //TODO: Ort der Sessions aus dem repository beziehen?
         }
 
         private void LoadRecentSessionsList() {
@@ -68,6 +71,15 @@ namespace PuttyServerGUI2.ToolWindows {
                 trvSessions.Nodes.Add(node);
             } catch (Exception ex) {
                 trvSessions.Nodes.Add("Saved Sessions");
+            }
+        }
+
+        private void LoadTeamSessionsList() {
+            try {
+                TreeNode node = trvTeam.DeserializeTeamNode(ApplicationPaths.RemoteSessionListPath);
+                trvTeam.Nodes.Add(node);
+            } catch (Exception ex) {
+                Program.LogWriter.Log("Could not load Team Sessions - {0}", ex.Message);
             }
         }
 
@@ -282,6 +294,16 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private void StartPuttySession(string sessionName) {
 
+            //On demand: start putty agent
+            if (ApplicationPaths.UsePuttyAgent) {
+                if (Process.GetProcessesByName("pagent").Length < 1) {
+                    if (File.Exists(ApplicationPaths.PuttyAgentLocation)) {
+                        ProcessStartInfo info = new ProcessStartInfo(ApplicationPaths.PuttyAgentLocation, ApplicationPaths.PuttyAgentParameters);
+                        Process.Start(info);
+                    }
+                }
+            }
+            
             twiPutty puttyWindow = null;
 
             PuttyClosedCallback callback = delegate(bool closed) {
@@ -393,6 +415,81 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private void twiSessions_FormClosing(object sender, FormClosingEventArgs e) {
             e.Cancel = true;
+        }
+
+        private void startSessionToolStripMenuItem2_Click(object sender, EventArgs e) {
+            StartTeamSession(trvTeam.SelectedNode.Text);
+        }
+
+        private void StartTeamSession(string sessionName) {
+            string from = Path.Combine(ApplicationPaths.RemoteRepositoryPath, sessionName);
+
+            if (!localRepository.CheckSessionExists(sessionName)) {
+                localRepository.AddSession(from);
+            }
+
+            //TODO: Needs refactory
+            if (!string.IsNullOrEmpty(ApplicationPaths.TeamUsername)) {
+                string newSession = File.ReadAllText(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+
+                newSession = newSession.Replace("UserName=", "UserName=" + ApplicationPaths.TeamUsername);
+                if (newSession.Contains("=ssh  @")) {
+                    newSession = newSession.Replace("=ssh  @", "=ssh " + ApplicationPaths.TeamUsername + "@");
+                }
+                File.WriteAllText(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName), newSession);
+            }
+
+            StartPuttySession(sessionName);
+        }
+
+        private void transferSessionToPersonalListToolStripMenuItem_Click(object sender, EventArgs e) {
+            string from = Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text);
+
+            if (trvSessions.DoesNodeExist(Path.GetFileName(from))) {
+                MessageBox.Show(string.Format("The Session {0} is already in your Session list and won't be added again!", Path.GetFileName(from)), "Session already in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            } else {
+                localRepository.AddSession(from);
+
+                TreeNode newNode = new TreeNode(Path.GetFileName(from));
+                newNode.ImageIndex = 6;
+                newNode.SelectedImageIndex = 6;
+
+                trvSessions.Nodes[0].Nodes.Add(newNode);
+            }
+            SaveChanges();
+        }
+
+        private void trvTeam_MouseClick(object sender, MouseEventArgs e) {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right) {
+                //Auch bei einem Rechtsklick das gewählte Element markieren
+                TreeNode clickedNode = trvTeam.GetNodeAt(e.Location);
+                trvTeam.SelectedNode = clickedNode;
+
+                if (clickedNode.SelectedImageIndex == 9) {
+                    conMenuSessionMissing.Show(MousePosition);
+                    return;
+                }
+
+                if (clickedNode.SelectedImageIndex == 6) {
+                    conMenuTeamSession.Show(MousePosition);
+                    return;
+                }
+
+                if (clickedNode.SelectedImageIndex == 1) {
+                    //conMenuFolder.Show(MousePosition);
+                    return;
+                }
+
+            }
+        }
+
+        private void trvTeam_DoubleClick(object sender, EventArgs e) {
+            if (trvTeam.SelectedNode.ImageIndex == 6) {         //Normale Session
+                StartTeamSession(trvTeam.SelectedNode.Text);
+            }
+            if (trvSessions.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+                MessageBox.Show("This session seems to be missing in the Team folder. Please contact your Session Folder administrator!", "Missing session!", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            }
         }
 
     }

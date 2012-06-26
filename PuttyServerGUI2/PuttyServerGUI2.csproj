@@ -57,7 +57,6 @@
   <ItemGroup>
     <Compile Include="Config\ApplicationPaths.cs" />
     <Compile Include="Config\FolderSetup.cs" />
-    <Compile Include="Config\RepositoryType.cs" />
     <Compile Include="Config\SessionData.cs" />
     <Compile Include="frmMainWindow.cs">
       <SubType>Form</SubType>
@@ -138,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\server.png" />
     <None Include="Resources\wand.png" />
     <None Include="Resources\folder_explore.png" />
     <None Include="Resources\information.png" />

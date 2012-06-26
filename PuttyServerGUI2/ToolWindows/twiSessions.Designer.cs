@@ -74,8 +74,15 @@
             this.removeAllMissingSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
             this.reloadSessionListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trvTeam = new System.Windows.Forms.TreeView();
+            this.conMenuTeamSession = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.startSessionToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.startSessionColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.transferSessionToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSessionAreas.SuspendLayout();
             this.tabPersonal.SuspendLayout();
+            this.tabTeam.SuspendLayout();
             this.tabRecentSessions.SuspendLayout();
             this.conMenuSession.SuspendLayout();
             this.conMenuFolder.SuspendLayout();
@@ -83,6 +90,7 @@
             this.conMenuSessionMissing.SuspendLayout();
             this.conMenuRecent.SuspendLayout();
             this.conMenuRemoveMissingRecent.SuspendLayout();
+            this.conMenuTeamSession.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabSessionAreas
@@ -145,6 +153,7 @@
             // 
             // tabTeam
             // 
+            this.tabTeam.Controls.Add(this.trvTeam);
             this.tabTeam.Location = new System.Drawing.Point(4, 4);
             this.tabTeam.Name = "tabTeam";
             this.tabTeam.Size = new System.Drawing.Size(623, 448);
@@ -511,6 +520,59 @@
             this.reloadSessionListToolStripMenuItem.Text = "Reload session list";
             this.reloadSessionListToolStripMenuItem.Click += new System.EventHandler(this.reloadSessionListToolStripMenuItem_Click);
             // 
+            // trvTeam
+            // 
+            this.trvTeam.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.trvTeam.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvTeam.ImageIndex = 0;
+            this.trvTeam.ImageList = this.imgSessionImages;
+            this.trvTeam.Location = new System.Drawing.Point(0, 0);
+            this.trvTeam.Name = "trvTeam";
+            this.trvTeam.SelectedImageIndex = 0;
+            this.trvTeam.Size = new System.Drawing.Size(623, 448);
+            this.trvTeam.TabIndex = 0;
+            this.trvTeam.DoubleClick += new System.EventHandler(this.trvTeam_DoubleClick);
+            this.trvTeam.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trvTeam_MouseClick);
+            // 
+            // conMenuTeamSession
+            // 
+            this.conMenuTeamSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem2,
+            this.startSessionColoredToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.transferSessionToPersonalListToolStripMenuItem});
+            this.conMenuTeamSession.Name = "conMenuTeamSession";
+            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 76);
+            // 
+            // startSessionToolStripMenuItem2
+            // 
+            this.startSessionToolStripMenuItem2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.startSessionToolStripMenuItem2.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
+            this.startSessionToolStripMenuItem2.Name = "startSessionToolStripMenuItem2";
+            this.startSessionToolStripMenuItem2.Size = new System.Drawing.Size(242, 22);
+            this.startSessionToolStripMenuItem2.Text = "Start Session";
+            this.startSessionToolStripMenuItem2.Click += new System.EventHandler(this.startSessionToolStripMenuItem2_Click);
+            // 
+            // startSessionColoredToolStripMenuItem
+            // 
+            this.startSessionColoredToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.color_wheel;
+            this.startSessionColoredToolStripMenuItem.Name = "startSessionColoredToolStripMenuItem";
+            this.startSessionColoredToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.startSessionColoredToolStripMenuItem.Text = "Start Session Colored";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(239, 6);
+            // 
+            // transferSessionToPersonalListToolStripMenuItem
+            // 
+            this.transferSessionToPersonalListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
+            this.transferSessionToPersonalListToolStripMenuItem.Name = "transferSessionToPersonalListToolStripMenuItem";
+            this.transferSessionToPersonalListToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.transferSessionToPersonalListToolStripMenuItem.Text = "Transfer Session to Personal List";
+            this.transferSessionToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferSessionToPersonalListToolStripMenuItem_Click);
+            // 
             // twiSessions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -523,6 +585,7 @@
             this.Load += new System.EventHandler(this.twiSessions_Load);
             this.tabSessionAreas.ResumeLayout(false);
             this.tabPersonal.ResumeLayout(false);
+            this.tabTeam.ResumeLayout(false);
             this.tabRecentSessions.ResumeLayout(false);
             this.conMenuSession.ResumeLayout(false);
             this.conMenuFolder.ResumeLayout(false);
@@ -530,6 +593,7 @@
             this.conMenuSessionMissing.ResumeLayout(false);
             this.conMenuRecent.ResumeLayout(false);
             this.conMenuRemoveMissingRecent.ResumeLayout(false);
+            this.conMenuTeamSession.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -585,6 +649,12 @@
         private System.Windows.Forms.ToolStripMenuItem reloadSessionLisToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem10;
         private System.Windows.Forms.ToolStripMenuItem reloadSessionListToolStripMenuItem;
+        private System.Windows.Forms.TreeView trvTeam;
+        private System.Windows.Forms.ContextMenuStrip conMenuTeamSession;
+        private System.Windows.Forms.ToolStripMenuItem startSessionToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem startSessionColoredToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem transferSessionToPersonalListToolStripMenuItem;
 
     }
 }

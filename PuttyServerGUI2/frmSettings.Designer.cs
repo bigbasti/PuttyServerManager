@@ -26,23 +26,47 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtPuttyAgentParameters = new System.Windows.Forms.TextBox();
+            this.chkUsePuttyAgent = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnOpenStoredSessionsFolder = new System.Windows.Forms.Button();
+            this.txtStoredSessionsPath = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.lblStoredSessions = new System.Windows.Forms.Label();
+            this.btnRunConfigurationWizard = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkStartWithWindows = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnOpenTeamSessionFolder = new System.Windows.Forms.Button();
+            this.btnOpenTeamSessionList = new System.Windows.Forms.Button();
+            this.txtTeamSessionFolder = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.txtTeamSessionList = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSaveClose = new System.Windows.Forms.Button();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -59,8 +83,9 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button4);
-            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Controls.Add(this.groupBox5);
+            this.tabPage1.Controls.Add(this.groupBox4);
+            this.tabPage1.Controls.Add(this.btnRunConfigurationWizard);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -70,93 +95,250 @@
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.pictureBox4);
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.txtPuttyAgentParameters);
+            this.groupBox5.Controls.Add(this.chkUsePuttyAgent);
+            this.groupBox5.Location = new System.Drawing.Point(6, 143);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(330, 89);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Putty agent";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox4.Location = new System.Drawing.Point(6, 65);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox4.TabIndex = 6;
+            this.pictureBox4.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 65);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(246, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "This setting is optional if you don\'t use Putty Agent.";
+            // 
+            // txtPuttyAgentParameters
+            // 
+            this.txtPuttyAgentParameters.Location = new System.Drawing.Point(9, 42);
+            this.txtPuttyAgentParameters.Name = "txtPuttyAgentParameters";
+            this.txtPuttyAgentParameters.Size = new System.Drawing.Size(292, 20);
+            this.txtPuttyAgentParameters.TabIndex = 4;
+            // 
+            // chkUsePuttyAgent
+            // 
+            this.chkUsePuttyAgent.AutoSize = true;
+            this.chkUsePuttyAgent.Location = new System.Drawing.Point(9, 19);
+            this.chkUsePuttyAgent.Name = "chkUsePuttyAgent";
+            this.chkUsePuttyAgent.Size = new System.Drawing.Size(228, 17);
+            this.chkUsePuttyAgent.TabIndex = 0;
+            this.chkUsePuttyAgent.Text = "Start pagent.exe with following parameters:";
+            this.chkUsePuttyAgent.UseVisualStyleBackColor = true;
+            this.chkUsePuttyAgent.CheckedChanged += new System.EventHandler(this.chkUsePuttyAgent_CheckedChanged);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnOpenStoredSessionsFolder);
+            this.groupBox4.Controls.Add(this.txtStoredSessionsPath);
+            this.groupBox4.Controls.Add(this.label7);
+            this.groupBox4.Controls.Add(this.pictureBox3);
+            this.groupBox4.Controls.Add(this.lblStoredSessions);
+            this.groupBox4.Location = new System.Drawing.Point(6, 59);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(330, 78);
+            this.groupBox4.TabIndex = 4;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Stored Sessions";
+            // 
+            // btnOpenStoredSessionsFolder
+            // 
+            this.btnOpenStoredSessionsFolder.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnOpenStoredSessionsFolder.Location = new System.Drawing.Point(303, 48);
+            this.btnOpenStoredSessionsFolder.Name = "btnOpenStoredSessionsFolder";
+            this.btnOpenStoredSessionsFolder.Size = new System.Drawing.Size(24, 23);
+            this.btnOpenStoredSessionsFolder.TabIndex = 9;
+            this.btnOpenStoredSessionsFolder.UseVisualStyleBackColor = true;
+            this.btnOpenStoredSessionsFolder.Click += new System.EventHandler(this.btnOpenStoredSessionsFolder_Click);
+            // 
+            // txtStoredSessionsPath
+            // 
+            this.txtStoredSessionsPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.txtStoredSessionsPath.Location = new System.Drawing.Point(9, 51);
+            this.txtStoredSessionsPath.Name = "txtStoredSessionsPath";
+            this.txtStoredSessionsPath.ReadOnly = true;
+            this.txtStoredSessionsPath.Size = new System.Drawing.Size(292, 20);
+            this.txtStoredSessionsPath.TabIndex = 8;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 35);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(126, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Sessions are stored here:";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::PuttyServerGUI2.Properties.Resources.server;
+            this.pictureBox3.Location = new System.Drawing.Point(6, 16);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox3.TabIndex = 3;
+            this.pictureBox3.TabStop = false;
+            // 
+            // lblStoredSessions
+            // 
+            this.lblStoredSessions.AutoSize = true;
+            this.lblStoredSessions.Location = new System.Drawing.Point(26, 16);
+            this.lblStoredSessions.Name = "lblStoredSessions";
+            this.lblStoredSessions.Size = new System.Drawing.Size(301, 13);
+            this.lblStoredSessions.TabIndex = 2;
+            this.lblStoredSessions.Text = "You currently have {0} Sessions stored in your Sessions folder.";
+            // 
+            // btnRunConfigurationWizard
+            // 
+            this.btnRunConfigurationWizard.Image = global::PuttyServerGUI2.Properties.Resources.wand;
+            this.btnRunConfigurationWizard.Location = new System.Drawing.Point(12, 260);
+            this.btnRunConfigurationWizard.Name = "btnRunConfigurationWizard";
+            this.btnRunConfigurationWizard.Size = new System.Drawing.Size(194, 40);
+            this.btnRunConfigurationWizard.TabIndex = 3;
+            this.btnRunConfigurationWizard.Text = "Run the Configuration Wizard";
+            this.btnRunConfigurationWizard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRunConfigurationWizard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRunConfigurationWizard.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.chkStartWithWindows);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(330, 47);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "General Settings";
+            // 
+            // chkStartWithWindows
+            // 
+            this.chkStartWithWindows.AutoSize = true;
+            this.chkStartWithWindows.Location = new System.Drawing.Point(6, 19);
+            this.chkStartWithWindows.Name = "chkStartWithWindows";
+            this.chkStartWithWindows.Size = new System.Drawing.Size(206, 17);
+            this.chkStartWithWindows.TabIndex = 0;
+            this.chkStartWithWindows.Text = "Start PSG with Windows automatically";
+            this.chkStartWithWindows.UseVisualStyleBackColor = true;
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(342, 315);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Personal";
+            this.tabPage2.Text = "Team";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // groupBox3
             // 
-            this.button1.Location = new System.Drawing.Point(242, 359);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Save && Close";
-            this.button1.UseVisualStyleBackColor = true;
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.txtUsername);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.pictureBox2);
+            this.groupBox3.Location = new System.Drawing.Point(3, 129);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(327, 106);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "User Settings";
             // 
-            // checkBox1
+            // label6
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(206, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Start PSG with Windows automatically";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(28, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(272, 39);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "You can leave this setting blank if your team doesn\'t use\r\nplaceholders in the se" +
+    "ssion files. You will need to enter\r\nyour username manually then.";
             // 
-            // groupBox1
+            // txtUsername
             // 
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(330, 68);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "General settings";
+            this.txtUsername.Location = new System.Drawing.Point(6, 78);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(315, 20);
+            this.txtUsername.TabIndex = 11;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "My team username";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox2.Location = new System.Drawing.Point(6, 19);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.btnOpenTeamSessionFolder);
+            this.groupBox2.Controls.Add(this.btnOpenTeamSessionList);
+            this.groupBox2.Controls.Add(this.txtTeamSessionFolder);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtTeamSessionList);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(6, 80);
+            this.groupBox2.Location = new System.Drawing.Point(3, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(330, 118);
-            this.groupBox2.TabIndex = 2;
+            this.groupBox2.Size = new System.Drawing.Size(330, 117);
+            this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Paths - Team settings";
+            this.groupBox2.Text = "Paths - Team Settings";
             // 
-            // label1
+            // btnOpenTeamSessionFolder
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(298, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "This configuration is only needed when you use a team setup!";
+            this.btnOpenTeamSessionFolder.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnOpenTeamSessionFolder.Location = new System.Drawing.Point(300, 88);
+            this.btnOpenTeamSessionFolder.Name = "btnOpenTeamSessionFolder";
+            this.btnOpenTeamSessionFolder.Size = new System.Drawing.Size(24, 23);
+            this.btnOpenTeamSessionFolder.TabIndex = 7;
+            this.btnOpenTeamSessionFolder.UseVisualStyleBackColor = true;
+            this.btnOpenTeamSessionFolder.Click += new System.EventHandler(this.btnOpenTeamSessionFolder_Click);
             // 
-            // label2
+            // btnOpenTeamSessionList
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Path to Team Session list";
+            this.btnOpenTeamSessionList.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnOpenTeamSessionList.Location = new System.Drawing.Point(300, 48);
+            this.btnOpenTeamSessionList.Name = "btnOpenTeamSessionList";
+            this.btnOpenTeamSessionList.Size = new System.Drawing.Size(24, 23);
+            this.btnOpenTeamSessionList.TabIndex = 6;
+            this.btnOpenTeamSessionList.UseVisualStyleBackColor = true;
+            this.btnOpenTeamSessionList.Click += new System.EventHandler(this.btnOpenTeamSessionList_Click);
             // 
-            // textBox1
+            // txtTeamSessionFolder
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(292, 20);
-            this.textBox1.TabIndex = 3;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(6, 90);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(292, 20);
-            this.textBox2.TabIndex = 5;
+            this.txtTeamSessionFolder.Location = new System.Drawing.Point(6, 90);
+            this.txtTeamSessionFolder.Name = "txtTeamSessionFolder";
+            this.txtTeamSessionFolder.Size = new System.Drawing.Size(292, 20);
+            this.txtTeamSessionFolder.TabIndex = 5;
             // 
             // label3
             // 
@@ -167,35 +349,21 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Path to Team Session folder";
             // 
-            // button4
+            // txtTeamSessionList
             // 
-            this.button4.Image = global::PuttyServerGUI2.Properties.Resources.wand;
-            this.button4.Location = new System.Drawing.Point(12, 260);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(194, 40);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Run the Configuration Wizard";
-            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button4.UseVisualStyleBackColor = true;
+            this.txtTeamSessionList.Location = new System.Drawing.Point(6, 51);
+            this.txtTeamSessionList.Name = "txtTeamSessionList";
+            this.txtTeamSessionList.Size = new System.Drawing.Size(292, 20);
+            this.txtTeamSessionList.TabIndex = 3;
             // 
-            // button3
+            // label2
             // 
-            this.button3.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
-            this.button3.Location = new System.Drawing.Point(300, 88);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(24, 23);
-            this.button3.TabIndex = 7;
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
-            this.button2.Location = new System.Drawing.Point(300, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(24, 23);
-            this.button2.TabIndex = 6;
-            this.button2.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Path to Team Session list";
             // 
             // pictureBox1
             // 
@@ -206,12 +374,41 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(26, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(298, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "This configuration is only needed when you use a team setup!";
+            // 
+            // btnSaveClose
+            // 
+            this.btnSaveClose.Location = new System.Drawing.Point(242, 359);
+            this.btnSaveClose.Name = "btnSaveClose";
+            this.btnSaveClose.Size = new System.Drawing.Size(116, 23);
+            this.btnSaveClose.TabIndex = 1;
+            this.btnSaveClose.Text = "Save && Close";
+            this.btnSaveClose.UseVisualStyleBackColor = true;
+            this.btnSaveClose.Click += new System.EventHandler(this.btnSaveClose_Click);
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(13, 364);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(104, 13);
+            this.lblVersion.TabIndex = 6;
+            this.lblVersion.Text = "Software Version {0}";
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 389);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lblVersion);
+            this.Controls.Add(this.btnSaveClose);
             this.Controls.Add(this.tabGeneral);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -219,14 +416,26 @@
             this.MinimizeBox = false;
             this.Name = "frmSettings";
             this.Text = "Settings";
+            this.Load += new System.EventHandler(this.frmSettings_Load);
             this.tabGeneral.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -235,18 +444,35 @@
         private System.Windows.Forms.TabControl tabGeneral;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button btnSaveClose;
+        private System.Windows.Forms.CheckBox chkStartWithWindows;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnRunConfigurationWizard;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtUsername;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnOpenTeamSessionFolder;
+        private System.Windows.Forms.Button btnOpenTeamSessionList;
+        private System.Windows.Forms.TextBox txtTeamSessionFolder;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtTeamSessionList;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label lblStoredSessions;
+        private System.Windows.Forms.Button btnOpenStoredSessionsFolder;
+        private System.Windows.Forms.TextBox txtStoredSessionsPath;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox txtPuttyAgentParameters;
+        private System.Windows.Forms.CheckBox chkUsePuttyAgent;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblVersion;
     }
 }

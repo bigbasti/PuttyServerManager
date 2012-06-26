@@ -90,7 +90,7 @@ namespace PuttyServerGUI2.Persistence {
         private static TreeNode CreateTreeNodeFromXmlNode(XmlNode node) {
             TreeNode retVal = new TreeNode(XmlConvert.DecodeName(node.Name));
 
-            if (File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, node.Name)) || node.HasChildNodes) {
+            if (File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, XmlConvert.DecodeName(node.Name))) || node.HasChildNodes) {
                 retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
                 retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
             } else {
@@ -101,6 +101,64 @@ namespace PuttyServerGUI2.Persistence {
 
             foreach (XmlNode n in node.ChildNodes) {
                 retVal.Nodes.Add(CreateTreeNodeFromXmlNode(n));
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Deserialisiert eine TreeNode aus einer Datei
+        /// </summary>
+        /// <param name="filename">Pfad zu der Datei die deaserialisiert werden soll</param>
+        /// <returns>Deserialisierte TreeNode oder null im Fehlerfall</returns>
+        public static TreeNode DeserializeTeamNode(string filename) {
+            XmlDocument doc = new XmlDocument();
+            TreeNode sessions = null;
+            try {
+                doc.LoadXml(File.ReadAllText(filename));
+
+                //Es wird nur ein Node gesichert und wiederhergestellt!
+                sessions = CreateTreeNodeFromTeamXmlNode(doc.ChildNodes[1]);  //Mhh... müsste man mal schönder machen
+            } catch (Exception ex) {
+                Program.LogWriter.Log("# Could not load Sessionlist ({0}) - Just create some Folders and the List will be recreated!", ex.Message);
+            }
+            return sessions;
+        }
+
+        /// <summary>
+        /// Durchläuft rekursiv den angegebenen Knoten und speichert die Einträge in einem TreeNode
+        /// </summary>
+        /// <param name="node">Der zu parsende XML-Knoten</param>
+        /// <returns>TreeNode</returns>
+        private static TreeNode CreateTreeNodeFromTeamXmlNode(XmlNode node) {
+            TreeNode retVal = new TreeNode(XmlConvert.DecodeName(node.Name));
+
+            if (File.Exists(Path.Combine(ApplicationPaths.RemoteRepositoryPath, node.Name)) || node.HasChildNodes) {
+                //Abwärtskompatibilität gewährleisten
+                try {
+                    retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+                    retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+                } catch (Exception ex) {
+                    //Das alte Format kennt diese Attribute nicht
+                    if (node.HasChildNodes) {
+                        retVal.ImageIndex = 1;
+                        retVal.SelectedImageIndex = 1;
+                    } else {
+                        retVal.ImageIndex = 6;
+                        retVal.SelectedImageIndex = 6;
+                    }
+                }
+            } else {
+                retVal.ImageIndex = 9;
+                retVal.SelectedImageIndex = 9;
+            }
+
+            try {
+                if (Convert.ToBoolean(node.Attributes["Expanded"].Value)) { retVal.Expand(); }
+            } catch (Exception ex) { }
+
+            foreach (XmlNode n in node.ChildNodes) {
+                retVal.Nodes.Add(CreateTreeNodeFromTeamXmlNode(n));
             }
 
             return retVal;
