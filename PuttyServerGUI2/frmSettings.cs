@@ -17,6 +17,9 @@ namespace PuttyServerGUI2 {
         }
 
         private void frmSettings_Load(object sender, EventArgs e) {
+
+            FolderSetup.SetupDirectory();
+
             lblStoredSessions.Text = string.Format(lblStoredSessions.Text, Directory.GetFiles(ApplicationPaths.LocalRepositoryPath).Length);
             txtStoredSessionsPath.Text = ApplicationPaths.LocalRepositoryPath;
 

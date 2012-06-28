@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WindowTools;
 using WindowTool;
 using PuttyServerGUI2.Config;
+using System.Runtime.InteropServices;
 
 namespace PuttyServerGUI2.ToolWindows {
     public partial class twiPutty : ToolWindow {
@@ -16,10 +17,13 @@ namespace PuttyServerGUI2.ToolWindows {
         private ApplicationPanel applicationwrapper;
         private PuttyClosedCallback m_ApplicationExit;
 
-        public twiPutty(string session, PuttyClosedCallback callback) {
+        private Form containerForm;
+
+        public twiPutty(string session, PuttyClosedCallback callback, Form container) {
             InitializeComponent();
 
             m_ApplicationExit = callback;
+            containerForm = container;
 
             if (session == "") {
                 this.Text = ApplicationPaths.PuttyLocation;
@@ -42,8 +46,29 @@ namespace PuttyServerGUI2.ToolWindows {
 
         }
 
-        private void twiPutty_Load(object sender, EventArgs e) {
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        public void FocusParentWindow() {
+            SetForegroundWindow(this.Handle);
+        }
+
+        private void twiPutty_Load(object sender, EventArgs e) {
+            //this.GotFocus += ((object s, EventArgs ev) => {
+            //    //this.applicationwrapper.Focus();
+                
+            //    applicationwrapper.ReFocusPuTTY();
+            //});
+
+            //this.LostFocus += ((object s, EventArgs ev) => {
+
+            //});
+
+            //this.applicationwrapper.GotFocus += ((object s, EventArgs ev) => {
+            //    //FocusParentWindow();
+
+            //    applicationwrapper.ReFocusPuTTY();
+            //});
         }
     }
 }

@@ -30,6 +30,7 @@
             this.trvSessions = new System.Windows.Forms.TreeView();
             this.imgSessionImages = new System.Windows.Forms.ImageList(this.components);
             this.tabTeam = new System.Windows.Forms.TabPage();
+            this.trvTeam = new System.Windows.Forms.TreeView();
             this.tabPuttySessions = new System.Windows.Forms.TabPage();
             this.tabRecentSessions = new System.Windows.Forms.TabPage();
             this.trvRecentSessions = new System.Windows.Forms.TreeView();
@@ -74,7 +75,6 @@
             this.removeAllMissingSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
             this.reloadSessionListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trvTeam = new System.Windows.Forms.TreeView();
             this.conMenuTeamSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.startSessionColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,6 +120,7 @@
             // 
             // trvSessions
             // 
+            this.trvSessions.AllowDrop = true;
             this.trvSessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.trvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvSessions.ImageIndex = 0;
@@ -132,6 +133,9 @@
             this.trvSessions.TabIndex = 0;
             this.trvSessions.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.trvSessions_AfterLabelEdit);
             this.trvSessions.BeforeCheck += new System.Windows.Forms.TreeViewCancelEventHandler(this.trvSessions_BeforeCheck);
+            this.trvSessions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.trvSessions_ItemDrag);
+            this.trvSessions.DragDrop += new System.Windows.Forms.DragEventHandler(this.trvSessions_DragDrop);
+            this.trvSessions.DragEnter += new System.Windows.Forms.DragEventHandler(this.trvSessions_DragEnter);
             this.trvSessions.DoubleClick += new System.EventHandler(this.trvSessions_DoubleClick);
             this.trvSessions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trvSessions_MouseClick);
             // 
@@ -160,6 +164,21 @@
             this.tabTeam.TabIndex = 3;
             this.tabTeam.Text = "Team";
             this.tabTeam.UseVisualStyleBackColor = true;
+            // 
+            // trvTeam
+            // 
+            this.trvTeam.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.trvTeam.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvTeam.ImageIndex = 0;
+            this.trvTeam.ImageList = this.imgSessionImages;
+            this.trvTeam.Location = new System.Drawing.Point(0, 0);
+            this.trvTeam.Name = "trvTeam";
+            this.trvTeam.SelectedImageIndex = 0;
+            this.trvTeam.Size = new System.Drawing.Size(623, 448);
+            this.trvTeam.TabIndex = 0;
+            this.trvTeam.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.trvTeam_AfterSelect);
+            this.trvTeam.DoubleClick += new System.EventHandler(this.trvTeam_DoubleClick);
+            this.trvTeam.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trvTeam_MouseClick);
             // 
             // tabPuttySessions
             // 
@@ -519,20 +538,6 @@
             this.reloadSessionListToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.reloadSessionListToolStripMenuItem.Text = "Reload session list";
             this.reloadSessionListToolStripMenuItem.Click += new System.EventHandler(this.reloadSessionListToolStripMenuItem_Click);
-            // 
-            // trvTeam
-            // 
-            this.trvTeam.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.trvTeam.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trvTeam.ImageIndex = 0;
-            this.trvTeam.ImageList = this.imgSessionImages;
-            this.trvTeam.Location = new System.Drawing.Point(0, 0);
-            this.trvTeam.Name = "trvTeam";
-            this.trvTeam.SelectedImageIndex = 0;
-            this.trvTeam.Size = new System.Drawing.Size(623, 448);
-            this.trvTeam.TabIndex = 0;
-            this.trvTeam.DoubleClick += new System.EventHandler(this.trvTeam_DoubleClick);
-            this.trvTeam.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trvTeam_MouseClick);
             // 
             // conMenuTeamSession
             // 

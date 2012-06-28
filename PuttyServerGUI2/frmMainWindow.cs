@@ -10,6 +10,7 @@ using PuttyServerGUI2.ToolWindows;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
 using PuttyServerGUI2.Persistence.Repository;
+using WindowTools;
 
 namespace PuttyServerGUI2 {
     public partial class frmMainWindow : Form {
@@ -24,15 +25,24 @@ namespace PuttyServerGUI2 {
         public frmMainWindow() {
             InitializeComponent();
 
-            frmSessions = new twiSessions(ContentPanel);
+            frmSessions = new twiSessions(ContentPanel, this);
             frmSessions.Show(ContentPanel, DockState.DockRight);
         }
 
 
         private void frmMainWindow_Load(object sender, EventArgs e) {
             cboServerProtocol.SelectedIndex = 0;
-            
+
+
+            this.GotFocus += ((object o, EventArgs ev) => {
+                ContentPanel.ActivePane.Focus();
+            });
+
         }
+
+
+
+
 
         private void showQuickConnectionBarToolStripMenuItem_Click(object sender, EventArgs e) {
             toolQuickConnect.Visible = !showQuickConnectionBarToolStripMenuItem.Checked;
@@ -62,7 +72,7 @@ namespace PuttyServerGUI2 {
                         }
                     };
 
-                    puttyWindow = new twiPutty(name, callback);
+                    puttyWindow = new twiPutty(name, callback, this);
                     puttyWindow.Show(ContentPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
 
                 } catch (Exception ex) {
@@ -88,7 +98,7 @@ namespace PuttyServerGUI2 {
                 }
             };
 
-            puttyWindow = new twiPutty("", callback);
+            puttyWindow = new twiPutty("", callback, this);
             puttyWindow.Show(ContentPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
         }
 

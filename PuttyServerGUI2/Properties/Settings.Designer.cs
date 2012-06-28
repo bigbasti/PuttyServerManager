@@ -106,5 +106,53 @@ namespace PuttyServerGUI2.Properties {
                 this["PuttyAgentParameters"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point LastWindowPosition {
+            get {
+                return ((global::System.Drawing.Point)(this["LastWindowPosition"]));
+            }
+            set {
+                this["LastWindowPosition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowQuickCompose {
+            get {
+                return ((bool)(this["ShowQuickCompose"]));
+            }
+            set {
+                this["ShowQuickCompose"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DockRight")]
+        public global::WeifenLuo.WinFormsUI.Docking.DockState SessionOverviewDockState {
+            get {
+                return ((global::WeifenLuo.WinFormsUI.Docking.DockState)(this["SessionOverviewDockState"]));
+            }
+            set {
+                this["SessionOverviewDockState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size LastWindowSize {
+            get {
+                return ((global::System.Drawing.Size)(this["LastWindowSize"]));
+            }
+            set {
+                this["LastWindowSize"] = value;
+            }
+        }
     }
 }

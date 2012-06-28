@@ -60,7 +60,7 @@ namespace PuttyServerGUI2.Config {
 
         public static string PuttyAgentLocation {
             get {
-                return ApplicationPath + "\\pagent.exe";
+                return ApplicationPath + "\\pageant.exe";
             }
         }
 

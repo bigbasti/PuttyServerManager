@@ -33,6 +33,8 @@ namespace WindowTool {
 
     public class ApplicationPanel : System.Windows.Forms.Panel {
 
+
+
         // Win32 Exceptions which might occur trying to start the process
         const int ERROR_FILE_NOT_FOUND = 2;
         const int ERROR_ACCESS_DENIED = 5;

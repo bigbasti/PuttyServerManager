@@ -28,18 +28,6 @@
             <setting name="PuttyAgentParameters" serializeAs="String">
                 <value />
             </setting>
-            <setting name="LastWindowPosition" serializeAs="String">
-                <value>0, 0</value>
-            </setting>
-            <setting name="ShowQuickCompose" serializeAs="String">
-                <value>True</value>
-            </setting>
-            <setting name="SessionOverviewDockState" serializeAs="String">
-                <value>DockRight</value>
-            </setting>
-            <setting name="LastWindowSize" serializeAs="String">
-                <value>0, 0</value>
-            </setting>
         </PuttyServerGUI2.Properties.Settings>
     </userSettings>
 </configuration>

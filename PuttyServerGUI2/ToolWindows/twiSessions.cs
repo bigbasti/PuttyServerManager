@@ -23,9 +23,12 @@ namespace PuttyServerGUI2.ToolWindows {
         private ISessionRepository recentRepository;
 
         private DockPanel dockPanel;
+        private Form containerForm;
 
-        public twiSessions(DockPanel dockPanel) {
+        public twiSessions(DockPanel dockPanel, Form container) {
             InitializeComponent();
+
+            containerForm = container;
 
             this.dockPanel = dockPanel;
             localRepository = new LocalSessionRepository();
@@ -49,7 +52,12 @@ namespace PuttyServerGUI2.ToolWindows {
 
             if (ApplicationPaths.RemoteSessionIsConfigured) {
                 LoadTeamSessionsList();
+                trvTeam.Sort();
+                trvTeam.Nodes[0].Expand();
             }
+
+            trvSessions.Sort();
+            trvRecentSessions.Sort();
 
             trvSessions.LabelEdit = localRepository.UserCanEditList();
             trvRecentSessions.LabelEdit = recentRepository.UserCanEditList();
@@ -244,7 +252,8 @@ namespace PuttyServerGUI2.ToolWindows {
         private void editSessionToolStripMenuItem_Click(object sender, EventArgs e) {
             if (localRepository.CheckSessionExists(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvSessions.SelectedNode.Text))) {
                 try {
-                    Process.Start(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvSessions.SelectedNode.Text));
+                    ProcessStartInfo info = new ProcessStartInfo("C:\\Windows\\System32\\notepad.exe", Path.Combine(ApplicationPaths.LocalRepositoryPath, trvSessions.SelectedNode.Text));
+                    Process.Start(info);
                 } catch (Exception ex) {
                     Program.LogWriter.Log("Could not start default editor, make sure there is an default editor for this type of file! - {0}", ex.Message);
                     MessageBox.Show("Could not start default editor, make sure there is an default editor for this type of file!");
@@ -296,7 +305,7 @@ namespace PuttyServerGUI2.ToolWindows {
 
             //On demand: start putty agent
             if (ApplicationPaths.UsePuttyAgent) {
-                if (Process.GetProcessesByName("pagent").Length < 1) {
+                if (Process.GetProcessesByName("pageant").Length < 1) {
                     if (File.Exists(ApplicationPaths.PuttyAgentLocation)) {
                         ProcessStartInfo info = new ProcessStartInfo(ApplicationPaths.PuttyAgentLocation, ApplicationPaths.PuttyAgentParameters);
                         Process.Start(info);
@@ -319,7 +328,7 @@ namespace PuttyServerGUI2.ToolWindows {
                 }
             };
 
-            puttyWindow = new twiPutty(sessionName, callback);
+            puttyWindow = new twiPutty(sessionName, callback, containerForm);
             puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
         }
 
@@ -424,22 +433,31 @@ namespace PuttyServerGUI2.ToolWindows {
         private void StartTeamSession(string sessionName) {
             string from = Path.Combine(ApplicationPaths.RemoteRepositoryPath, sessionName);
 
+            TransferSessionFromTeamFolder(sessionName, from);
+
+            StartPuttySession(sessionName);
+        }
+
+        private void TransferSessionFromTeamFolder(string sessionName, string from) {
             if (!localRepository.CheckSessionExists(sessionName)) {
                 localRepository.AddSession(from);
             }
 
             //TODO: Needs refactory
             if (!string.IsNullOrEmpty(ApplicationPaths.TeamUsername)) {
-                string newSession = File.ReadAllText(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+                string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
 
-                newSession = newSession.Replace("UserName=", "UserName=" + ApplicationPaths.TeamUsername);
-                if (newSession.Contains("=ssh  @")) {
-                    newSession = newSession.Replace("=ssh  @", "=ssh " + ApplicationPaths.TeamUsername + "@");
+                for (int i = 0; i < newSession.Length; i++) {
+                    if (newSession[i].Equals("UserName=")) {
+                        newSession[i] = "UserName=" + ApplicationPaths.TeamUsername;
+                    }
+                    if (newSession[i].Contains("ssh  @")) {
+                        newSession[i] = newSession[i].Replace("=ssh  @", "=ssh " + ApplicationPaths.TeamUsername + "@");
+                    }
                 }
-                File.WriteAllText(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName), newSession);
-            }
 
-            StartPuttySession(sessionName);
+                File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName), newSession);
+            }
         }
 
         private void transferSessionToPersonalListToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -448,7 +466,8 @@ namespace PuttyServerGUI2.ToolWindows {
             if (trvSessions.DoesNodeExist(Path.GetFileName(from))) {
                 MessageBox.Show(string.Format("The Session {0} is already in your Session list and won't be added again!", Path.GetFileName(from)), "Session already in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             } else {
-                localRepository.AddSession(from);
+
+                TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, from);
 
                 TreeNode newNode = new TreeNode(Path.GetFileName(from));
                 newNode.ImageIndex = 6;
@@ -487,9 +506,46 @@ namespace PuttyServerGUI2.ToolWindows {
             if (trvTeam.SelectedNode.ImageIndex == 6) {         //Normale Session
                 StartTeamSession(trvTeam.SelectedNode.Text);
             }
-            if (trvSessions.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+            if (trvTeam.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
                 MessageBox.Show("This session seems to be missing in the Team folder. Please contact your Session Folder administrator!", "Missing session!", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
+        }
+
+        private void trvTeam_AfterSelect(object sender, TreeViewEventArgs e) {
+
+        }
+
+        private void trvSessions_DragDrop(object sender, DragEventArgs e) {
+            TreeNode draggedNode;
+            TreeNode destenationNode;
+
+            if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false)) {
+                Point destenationPoint = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+
+                destenationNode = ((TreeView)sender).GetNodeAt(destenationPoint);
+                draggedNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+
+                if (!destenationNode.FullPath.Contains(draggedNode.Text)) {
+                    if (destenationNode.ImageIndex > 1) {
+                        destenationNode = destenationNode.Parent;
+                    }
+
+                    destenationNode.Nodes.Add(((TreeNode)draggedNode.Clone()));
+                    destenationNode.Expand();
+
+                    draggedNode.Remove();
+
+                    SaveChanges();
+                }
+            }
+        }
+
+        private void trvSessions_DragEnter(object sender, DragEventArgs e) {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void trvSessions_ItemDrag(object sender, ItemDragEventArgs e) {
+            DoDragDrop(e.Item, DragDropEffects.Move);
         }
 
     }
