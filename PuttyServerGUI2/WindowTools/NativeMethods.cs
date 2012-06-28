@@ -1,221 +1,39 @@
-﻿/*
- * Copyright (c) 2009 Jim Radford http://www.jimradford.com
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions: 
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using PuttyServerGUI2.ToolWindows;
 
 namespace PuttyServerGUI2.WindowTools {
-    public delegate void PuttyClosedCallback(bool error);
-
-    public class ApplicationPanel : System.Windows.Forms.Panel {
-
-
-
-        // Win32 Exceptions which might occur trying to start the process
-        const int ERROR_FILE_NOT_FOUND = 2;
-        const int ERROR_ACCESS_DENIED = 5;
-
-        #region Private Member Variables
-
-        private Process m_Process;
-        private bool m_Created = false;
-        private IntPtr m_AppWin;
-        private string m_ApplicationName = "";
-        private string m_ApplicationParameters = "";
-
-        private string m_ApplicationWorkingDirectory = "";  //
-        private WindowActivator m_windowActivator = null;   //
-
-        public PuttyClosedCallback m_CloseCallback;
-
-        public IntPtr AppWindowHandle { get { return this.m_AppWin; } }
-
-        /// <summary>Set the name of the application executable to launch</summary>
-        [Category("Data"), Description("The path/file to launch"), DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public string ApplicationName {
-            get { return m_ApplicationName; }
-            set { m_ApplicationName = value; }
-        }
-
-        [Category("Data"), Description("The parameters to pass to the application being launched"),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public string ApplicationParameters {
-            get { return m_ApplicationParameters; }
-            set { m_ApplicationParameters = value; }
-        }
-        #endregion
-
-        #region Pinvoke/Win32 Methods
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
-        private static extern long GetWindowLong(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongA", SetLastError = true)]
-        private static extern long SetWindowLong(IntPtr hWnd, int nIndex, long dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool repaint);
-
-        [DllImport("user32.dll", EntryPoint = "PostMessageA", SetLastError = true)]
-        private static extern bool PostMessage(IntPtr hWnd, uint Msg, long wParam, long lParam);
-
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
-
-        [DllImport("user32")]
-        static extern bool AnimateWindow(IntPtr hwnd, int time, AnimateWindowFlags flags);
-        #endregion
+    public class NativeMethods {
 
         #region Win32 Constants/Enums
-        private const int GWL_STYLE = (-16);
 
-        private const int WM_CLOSE = 0x10;
-        public const uint WS_CAPTION = 0x00C00000;
-        public const uint WS_BORDER = 0x00800000;
-        public const uint WS_VSCROLL = 0x00200000;
-        public const uint WS_THICKFRAME = 0x00040000;
+        public const int WM_CLOSE = 0x10;
+        public const int WM_DESTROY = 0x02;
+        public const short WM_COPYDATA = 74;
 
-        #region newStuff
+        public const int WM_KEYDOWN = 0x100;
+        public const int WM_KEYUP = 0x101;
+        public const int WM_CHAR = 0x102;
+        public const int WM_SYSKEYDOWN = 0x104;
+        public const int WM_SYSKEYUP = 0x105;
 
-        private static string ActivatorTypeName = typeof(KeyEventWindowActivator).FullName;
-        private Form mainForm;
+        public const int
+            SC_MAXIMIZE = 0xF030,
+            SC_RESTORE = 0xF120;
 
-        public ApplicationPanel(Form main) {
-            mainForm = main;
-
-            this.Disposed += new EventHandler(ApplicationPanel_Disposed);
-            //main.LayoutChanged += new EventHandler<Data.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
-
-            // setup up the hook to watch for all EVENT_SYSTEM_FOREGROUND events system wide
-
-            this.m_windowActivator = (WindowActivator)Activator.CreateInstance(Type.GetType(ActivatorTypeName));
-            //this.m_windowActivator = new SetFGCombinedWindowActivator();
-            this.m_winEventDelegate = new NativeMethods.WinEventDelegate(WinEventProc);
-            this.m_hWinEventHook = NativeMethods.SetWinEventHook(
-                NativeMethods.EVENT_SYSTEM_FOREGROUND,
-                NativeMethods.EVENT_SYSTEM_FOREGROUND,
-                IntPtr.Zero,
-                this.m_winEventDelegate, 0, 0,
-                NativeMethods.WINEVENT_OUTOFCONTEXT);
-        }
-
-        
-
-        void ApplicationPanel_Disposed(object sender, EventArgs e) {
-            this.Disposed -= new EventHandler(ApplicationPanel_Disposed);
-            //main.LayoutChanged -= new EventHandler<Data.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
-            NativeMethods.UnhookWinEvent(m_hWinEventHook);
-        }
-
-        //void SuperPuTTY_LayoutChanged(object sender, Data.LayoutChangedEventArgs e) {
-        //    // move 1x after we're done loading
-        //    this.MoveWindow("LayoutChanged");
-        //}
-
-        //void SuperPuTTY_LayoutChanged(object sender, LayoutData Data.LayoutChangedEventArgs e) {
-        //    // move 1x after we're done loading
-        //    this.MoveWindow("LayoutChanged");
-        //}
-
-        public void RefreshAppWindow() {
-            this.MoveWindow("RefreshWindow");
-        }
-
-        private void MoveWindow(string src) {
-
-            //if (!true/*SuperPuTTY.IsLayoutChanging*/) {
-                //if (Log.IsDebugEnabled) {
-                //    Log.DebugFormat("MoveWindow [{3,-15}{4,20}] w={0,4}, h={1,4}, visible={2}", this.Width, this.Height, this.Visible, src, this.Name);
-                //}
-
-                NativeMethods.MoveWindow(m_AppWin, 0, 0, this.Width, this.Height, this.Visible);
-            //}
-        }
-
-        public bool ReFocusPuTTY(string caller) {
-            bool result = false;
-            if (this.m_AppWin != null && NativeMethods.GetForegroundWindow() != this.m_AppWin) {
-                //Log.InfoFormat("[{0}] ReFocusPuTTY - puttyTab={1}, caller={2}", this.m_AppWin, this.Parent.Text, caller);
-                settingForeground = true;
-                result = !NativeMethods.SetForegroundWindow(this.m_AppWin);
-            }
-            //return (this.m_AppWin != null
-            //    && NativeMethods.GetForegroundWindow() != this.m_AppWin
-            //    && !NativeMethods.SetForegroundWindow(this.m_AppWin));
-
-            return result;
-        }
-
-        NativeMethods.WinEventDelegate m_winEventDelegate;
-        IntPtr m_hWinEventHook;
-        bool settingForeground = false;
-
-        void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) {
-            // if we got the EVENT_SYSTEM_FOREGROUND, and the hwnd is the putty terminal hwnd (m_AppWin)
-            // then bring the supperputty window to the foreground
-
-            if (eventType == NativeMethods.EVENT_SYSTEM_FOREGROUND && hwnd == m_AppWin) {
-                //Log.DebugFormat("[{0}] HandlingForegroundEvent: settingFG={1}", hwnd, settingForeground);
-                if (settingForeground) {
-                    settingForeground = false;
-                    return;
-                }
-
-                // This is the easiest way I found to get the superputty window to be brought to the top
-                // if you leave TopMost = true; then the window will always be on top.
-                if (this.TopLevelControl != null) {
-                    Form form = mainForm;
-                    if (form.WindowState == FormWindowState.Minimized) {
-                        return;
-                    }
-
-                    DesktopWindow window = DesktopWindow.GetFirstDesktopWindow();
-                    this.m_windowActivator.ActivateForm(form, window, hwnd);
-
-                    // focus back to putty via setting active dock panel
-                    twiPutty parent = (twiPutty)this.Parent;
-                    if (parent.DockPanel.ActiveDocument != parent && !parent.IsFloat) {
-                        string activeDoc = parent.DockPanel.ActiveDocument != null
-                            ? ((ToolWindow)parent.DockPanel.ActiveDocument).Text : "?";
-                        //Log.InfoFormat("[{0}] Setting Active Document: {1} -> {2}", hwnd, activeDoc, parent.Text);
-                        parent.Show();
-                    } else {
-                        // give focus back
-                        this.ReFocusPuTTY("WinEventProc-FG");
-                    }
-                }
-            }
-        }
-
-        #endregion
+        public const int
+            ERROR_FILE_NOT_FOUND = 2,
+            ERROR_ACCESS_DENIED = 5,
+            GWL_STYLE = (-16);
+        public const uint
+            WH_KEYBOARD_LL = 0x000d,
+            WH_MOUSE_LL = 0x000e,
+            WS_CAPTION = 0x00C00000,
+            WS_BORDER = 0x00800000,
+            WS_VSCROLL = 0x00200000,
+            WS_THICKFRAME = 0x00040000;
 
         [Flags]
         public enum AnimateWindowFlags {
@@ -230,9 +48,15 @@ namespace PuttyServerGUI2.WindowTools {
             AW_BLEND = 0x00080000
         }
 
+        public struct COPYDATA {
+            public int dwData;
+            public uint cbData;
+            public IntPtr lpData;
+        }
+
         /// <summary>Enumeration of the different ways of showing a window using
         /// ShowWindow</summary>
-        private enum WindowShowStyle : uint {
+        public enum WindowShowStyle : uint {
             /// <summary>Hides the window and activates another window.</summary>
             /// <remarks>See SW_HIDE</remarks>
             Hide = 0,
@@ -1212,136 +1036,228 @@ namespace PuttyServerGUI2.WindowTools {
 
         #endregion
 
-        #region Base Overrides
+        #region Pinvoke/Win32 Methods
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
+        public static extern long GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongA", SetLastError = true)]
+        public static extern long SetWindowLong(IntPtr hWnd, int nIndex, long dwNewLong);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool repaint);
+
+        [DllImport("user32.dll", EntryPoint = "PostMessageA", SetLastError = true)]
+        public static extern bool PostMessage(IntPtr hWnd, uint Msg, long wParam, long lParam);
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, uint Msg, long wParam, long lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
+
+        [DllImport("user32")]
+        public static extern bool AnimateWindow(IntPtr hwnd, int time, AnimateWindowFlags flags);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, int wParam, IntPtr lParam);
+
+        [DllImport("USER32.DLL", EntryPoint = "PostMessageW", SetLastError = true,
+             CharSet = CharSet.Unicode, ExactSpelling = true,
+             CallingConvention = CallingConvention.StdCall)]
+        public static extern bool PostMessage(int hwnd, int Msg, int wParam, int lParam);
+
+        [DllImport("USER32.DLL", EntryPoint = "SendMessageW", SetLastError = true,
+             CharSet = CharSet.Unicode, ExactSpelling = true,
+             CallingConvention = CallingConvention.StdCall)]
+        public static extern bool SendMessage(int hwnd, int Msg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern short VkKeyScan(char ch);
+
+        public delegate bool CallBackPtr(int hwnd, int lParam);
+        public delegate IntPtr LowLevelKMProc(int nCode, IntPtr wParam, IntPtr lParam);
+        public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr i);
+
+        [DllImport("user32.dll")]
+        public static extern int EnumWindows(CallBackPtr callPtr, int lPar);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetActiveWindow();
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int GetWindowTextLength(IntPtr hWnd);
+
+        //[DllImport("user32.dll")]
+        //public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(uint idHook, LowLevelKMProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetActiveWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
+
+        public const uint EVENT_SYSTEM_FOREGROUND = 3;
+        public const uint WINEVENT_OUTOFCONTEXT = 0;
+
+        public delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+
+        [DllImport("user32.dll")]
+        public static extern bool UnhookWinEvent(IntPtr hWinEventHook);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetTopWindow(IntPtr hWnd);
 
         /// <summary>
-        /// Force redraw of control when size changes
+        /// check if windows visible
         /// </summary>
-        /// <param name="e">Not used</param>
-        protected override void OnSizeChanged(EventArgs e) {
-            this.Invalidate();
-            base.OnSizeChanged(e);
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+
+        public class GetWindowCmd {
+            public const uint
+                GW_HWNDFIRST = 0,
+                GW_HWNDLAST = 1,
+                GW_HWNDNEXT = 2,
+                GW_HWNDPREV = 3,
+                GW_OWNER = 4,
+                GW_CHILD = 5,
+                GW_ENABLEDPOPUP = 6;
         }
 
-        //public bool ReFocusPuTTY() {
-        //    return (this.m_AppWin != null
-        //        && GetForegroundWindow() != this.m_AppWin
-        //        && !SetForegroundWindow(this.m_AppWin));
-        //}
+        [DllImport("user32.dll", SetLastError = false)]
+        public static extern IntPtr GetDesktopWindow();
 
         /// <summary>
-        /// Create (start) the hosted application when the parent becomes visible
+        /// filter function
         /// </summary>
-        /// <param name="e">Not used</param>
-        protected override void OnVisibleChanged(EventArgs e) {
-            if (!m_Created && !String.IsNullOrEmpty(ApplicationName)) // only allow one instance of the child
-            {
-                m_Created = true;
-                m_AppWin = IntPtr.Zero;
-
-                try {
-                    m_Process = new Process();
-                    m_Process.EnableRaisingEvents = true;
-                    //m_Process.Exited += new EventHandler(p_Exited);
-                    m_Process.StartInfo.FileName = ApplicationName;
-                    m_Process.StartInfo.Arguments = ApplicationParameters;
-
-                    m_Process.Exited += delegate(object sender, EventArgs ev) {
-                        m_CloseCallback(true);
-                    };
-
-                    m_Process.Start();
-
-                    // Wait for application to start and become idle
-                    m_Process.WaitForInputIdle();
-                    m_AppWin = m_Process.MainWindowHandle;
-
-                    
-                } catch (InvalidOperationException ex) {
-                    /* Possible Causes:
-                     * No file name was specified in the Process component's StartInfo.
-                     * -or-
-                     * The ProcessStartInfo.UseShellExecute member of the StartInfo property is true while ProcessStartInfo.RedirectStandardInput, 
-                     * ProcessStartInfo.RedirectStandardOutput, or ProcessStartInfo.RedirectStandardError is true. 
-                     */
-                    MessageBox.Show(this, ex.Message, "Invalid Operation Error");
-                    throw;
-                } catch (Win32Exception ex) {
-                    /*
-                     * Checks are elsewhere to ensure these don't occur, but incase they do we're gonna bail with a nasty exception
-                     * which will hopefully send users kicking and screaming at me to fix this (And hopefully they will include a 
-                     * stacktrace!)
-                     */
-                    if (ex.NativeErrorCode == ERROR_ACCESS_DENIED) {
-                        throw;
-                    } else if (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND) {
-                        throw;
-                    }
-                }
-
-                //Logger.Log("ApplicationPanel Handle: {0}", this.Handle.ToString("X"));              
-                //Logger.Log("Process Handle: {0}", m_AppWin.ToString("X"));
-                // Set the application as a child of the parent form
-                SetParent(m_AppWin, this.Handle);
-
-                // Show it! (must be done before we set the windows visibility parameters below                
-                ShowWindow(m_AppWin, WindowShowStyle.Maximize);
-
-                // set window parameters (how it's displayed)
-                long lStyle = GetWindowLong(m_AppWin, GWL_STYLE);
-                lStyle &= ~(WS_BORDER | WS_THICKFRAME);
-                SetWindowLong(m_AppWin, GWL_STYLE, lStyle);
-
-                // Move the child so it's located over the parent
-                //MoveWindow(m_AppWin, 0, 0, this.Width, this.Height, true);
-
-            }
-            if (this.Visible && this.m_Created) {
-                // Move the child so it's located over the parent
-                this.MoveWindow("OnVisChanged");
-                //MoveWindow(m_AppWin, 0, 0, this.Width, this.Height, true);
-                if (NativeMethods.GetForegroundWindow() != this.m_AppWin) {
-                    this.BeginInvoke(new MethodInvoker(delegate { this.ReFocusPuTTY("OnVisChanged"); }));
-                }
-            }
-
-            base.OnVisibleChanged(e);
-        }
+        /// <param name="hWnd"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
         /// <summary>
-        /// Send a close message to the hosted application window when the parent is destroyed
+        /// enumarator on all desktop windows
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnHandleDestroyed(EventArgs e) {
-            if (m_AppWin != IntPtr.Zero) {
-                // Send WM_DESTROY instead of WM_CLOSE, so that the Client doesn't
-                // ask in the Background whether the session shall be closed.
-                // Otherwise an annoying beep is generated everytime a terminal session is closed.
-                NativeMethods.PostMessage(m_AppWin, NativeMethods.WM_DESTROY, 0, 0);
+        /// <param name="hDesktop"></param>
+        /// <param name="lpEnumCallbackFunction"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows",
+        ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
 
-                System.Threading.Thread.Sleep(100);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
-                m_AppWin = IntPtr.Zero;
-            }
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool BringWindowToTop(IntPtr hWnd);
 
-            base.OnHandleDestroyed(e);
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetFocus(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+        [DllImport("user32.dll")]
+        public static extern bool IsIconic(IntPtr hWnd);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr DefWindowProc(IntPtr hWnd, int uMsg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+        #endregion
+
+
+        #region Flashing windows
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct FLASHWINFO {
+            public UInt32 cbSize;
+            public IntPtr hwnd;
+            public UInt32 dwFlags;
+            public UInt32 uCount;
+            public UInt32 dwTimeout;
         }
 
-        /// <summary>
-        /// Refresh the hosted applications window when the parent changes size
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnResize(EventArgs e) {
-            // if valid
-            if (this.m_AppWin != IntPtr.Zero) {
-                // if not minimizing && visible
-                if (this.Height > 0 && this.Width > 0 && this.Visible) {
-                    MoveWindow("OnResize");
-                }
-            }
-            base.OnResize(e);
-        }
+        //Stop flashing. The system restores the window to its original state. 
+        public const UInt32 FLASHW_STOP = 0;
+        //Flash the window caption. 
+        public const UInt32 FLASHW_CAPTION = 1;
+        //Flash the taskbar button. 
+        public const UInt32 FLASHW_TRAY = 2;
+        //Flash both the window caption and taskbar button.
+        //This is equivalent to setting the FLASHW_CAPTION | FLASHW_TRAY flags. 
+        public const UInt32 FLASHW_ALL = 3;
+        //Flash continuously, until the FLASHW_STOP flag is set. 
+        public const UInt32 FLASHW_TIMER = 4;
+        //Flash continuously until the window comes to the foreground. 
+        public const UInt32 FLASHW_TIMERNOFG = 12;
 
+        public static bool FlashWindow(IntPtr hWnd, uint mode) {
+            NativeMethods.FLASHWINFO fInfo = new NativeMethods.FLASHWINFO();
+
+            fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
+            fInfo.hwnd = hWnd;
+            fInfo.dwFlags = (UInt32)mode;
+            fInfo.uCount = UInt32.MaxValue;
+            fInfo.dwTimeout = 0;
+
+            return NativeMethods.FlashWindowEx(ref fInfo);
+        }
         #endregion
     }
+
 }

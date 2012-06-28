@@ -31,7 +31,7 @@ namespace PuttyServerGUI2.ToolWindows {
                 this.Text = session;
             }
 
-            this.applicationwrapper = new ApplicationPanel();
+            this.applicationwrapper = new ApplicationPanel(container);
             this.applicationwrapper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.applicationwrapper.ApplicationName = ApplicationPaths.PuttyLocation;
             if (session != "") {

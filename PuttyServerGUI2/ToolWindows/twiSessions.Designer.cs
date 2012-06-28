@@ -64,6 +64,7 @@
             this.conMenuRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.startColoredSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.transferSessionToPersonalSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadSessionLisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,6 +81,8 @@
             this.startSessionColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.transferSessionToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startSessionInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startInNativePuTTYWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSessionAreas.SuspendLayout();
             this.tabPersonal.SuspendLayout();
             this.tabTeam.SuspendLayout();
@@ -219,18 +222,19 @@
             this.conMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startSessionToolStripMenuItem,
             this.startColoredToolStripMenuItem,
+            this.startSessionInNativePuTTYWindowToolStripMenuItem,
             this.toolStripMenuItem1,
             this.editSessionToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.conMenuSession.Name = "conMenuSession";
-            this.conMenuSession.Size = new System.Drawing.Size(144, 120);
+            this.conMenuSession.Size = new System.Drawing.Size(234, 142);
             // 
             // startSessionToolStripMenuItem
             // 
             this.startSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
             this.startSessionToolStripMenuItem.Name = "startSessionToolStripMenuItem";
-            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.startSessionToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.startSessionToolStripMenuItem.Text = "Start Session";
             this.startSessionToolStripMenuItem.Click += new System.EventHandler(this.startSessionToolStripMenuItem_Click);
             // 
@@ -238,19 +242,19 @@
             // 
             this.startColoredToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.color_wheel;
             this.startColoredToolStripMenuItem.Name = "startColoredToolStripMenuItem";
-            this.startColoredToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.startColoredToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.startColoredToolStripMenuItem.Text = "Start Colored";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(140, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(230, 6);
             // 
             // editSessionToolStripMenuItem
             // 
             this.editSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_edit;
             this.editSessionToolStripMenuItem.Name = "editSessionToolStripMenuItem";
-            this.editSessionToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.editSessionToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.editSessionToolStripMenuItem.Text = "Edit";
             this.editSessionToolStripMenuItem.Click += new System.EventHandler(this.editSessionToolStripMenuItem_Click);
             // 
@@ -258,7 +262,7 @@
             // 
             this.renameToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_edit1;
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.renameToolStripMenuItem.Text = "Rename";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
@@ -266,7 +270,7 @@
             // 
             this.deleteToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.delete;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -435,13 +439,14 @@
             this.conMenuRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startSessionToolStripMenuItem1,
             this.startColoredSessionToolStripMenuItem,
+            this.startInNativePuTTYWindowToolStripMenuItem,
             this.toolStripMenuItem7,
             this.transferSessionToPersonalSessionsToolStripMenuItem,
             this.reloadSessionLisToolStripMenuItem,
             this.toolStripMenuItem8,
             this.removeSessionFromListToolStripMenuItem});
             this.conMenuRecent.Name = "conMenuRecent";
-            this.conMenuRecent.Size = new System.Drawing.Size(267, 126);
+            this.conMenuRecent.Size = new System.Drawing.Size(267, 148);
             // 
             // startSessionToolStripMenuItem1
             // 
@@ -458,6 +463,14 @@
             this.startColoredSessionToolStripMenuItem.Name = "startColoredSessionToolStripMenuItem";
             this.startColoredSessionToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.startColoredSessionToolStripMenuItem.Text = "Start colored session";
+            // 
+            // startInNativePuTTYWindowToolStripMenuItem
+            // 
+            this.startInNativePuTTYWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startInNativePuTTYWindowToolStripMenuItem.Name = "startInNativePuTTYWindowToolStripMenuItem";
+            this.startInNativePuTTYWindowToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.startInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
+            this.startInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startInNativePuTTYWindowToolStripMenuItem_Click);
             // 
             // toolStripMenuItem7
             // 
@@ -544,10 +557,11 @@
             this.conMenuTeamSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startSessionToolStripMenuItem2,
             this.startSessionColoredToolStripMenuItem,
+            this.startInNativePuTTYWindowToolStripMenuItem1,
             this.toolStripMenuItem2,
             this.transferSessionToPersonalListToolStripMenuItem});
             this.conMenuTeamSession.Name = "conMenuTeamSession";
-            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 76);
+            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 120);
             // 
             // startSessionToolStripMenuItem2
             // 
@@ -577,6 +591,22 @@
             this.transferSessionToPersonalListToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.transferSessionToPersonalListToolStripMenuItem.Text = "Transfer Session to Personal List";
             this.transferSessionToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferSessionToPersonalListToolStripMenuItem_Click);
+            // 
+            // startSessionInNativePuTTYWindowToolStripMenuItem
+            // 
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Name = "startSessionInNativePuTTYWindowToolStripMenuItem";
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startSessionInNativePuTTYWindowToolStripMenuItem_Click);
+            // 
+            // startInNativePuTTYWindowToolStripMenuItem1
+            // 
+            this.startInNativePuTTYWindowToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startInNativePuTTYWindowToolStripMenuItem1.Name = "startInNativePuTTYWindowToolStripMenuItem1";
+            this.startInNativePuTTYWindowToolStripMenuItem1.Size = new System.Drawing.Size(242, 22);
+            this.startInNativePuTTYWindowToolStripMenuItem1.Text = "Start in Native PuTTY Window";
+            this.startInNativePuTTYWindowToolStripMenuItem1.Click += new System.EventHandler(this.startInNativePuTTYWindowToolStripMenuItem1_Click);
             // 
             // twiSessions
             // 
@@ -660,6 +690,9 @@
         private System.Windows.Forms.ToolStripMenuItem startSessionColoredToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem transferSessionToPersonalListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startInNativePuTTYWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startSessionInNativePuTTYWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startInNativePuTTYWindowToolStripMenuItem1;
 
     }
 }

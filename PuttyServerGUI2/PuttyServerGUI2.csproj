@@ -133,12 +133,15 @@
     <Compile Include="WindowTools\ApplicationPanel.Designer.cs">
       <DependentUpon>ApplicationPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowTools\DesktopWindow.cs" />
+    <Compile Include="WindowTools\NativeMethods.cs" />
     <Compile Include="WindowTools\ToolWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WindowTools\ToolWindow.designer.cs">
       <DependentUpon>ToolWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowTools\WindowActivator.cs" />
     <EmbeddedResource Include="frmMainWindow.resx">
       <DependentUpon>frmMainWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -332,6 +332,22 @@ namespace PuttyServerGUI2.ToolWindows {
             puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
         }
 
+        private void StartNativePuttySession(string sessionName) {
+
+            //On demand: start putty agent
+            if (ApplicationPaths.UsePuttyAgent) {
+                if (Process.GetProcessesByName("pageant").Length < 1) {
+                    if (File.Exists(ApplicationPaths.PuttyAgentLocation)) {
+                        ProcessStartInfo info = new ProcessStartInfo(ApplicationPaths.PuttyAgentLocation, ApplicationPaths.PuttyAgentParameters);
+                        Process.Start(info);
+                    }
+                }
+            }
+
+            ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PuttyLocation, "-load " + sessionName);
+            Process.Start(pi);
+        }
+
         private void RemoveMissingNode(TreeNode node) {
             DialogResult res = MessageBox.Show("This session seems to be missing in your session folder. Do you want to remove this session from the list?", "Remove missing session?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -546,6 +562,18 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private void trvSessions_ItemDrag(object sender, ItemDragEventArgs e) {
             DoDragDrop(e.Item, DragDropEffects.Move);
+        }
+
+        private void startInNativePuTTYWindowToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartNativePuttySession(trvRecentSessions.SelectedNode.Text);
+        }
+
+        private void startSessionInNativePuTTYWindowToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartNativePuttySession(trvSessions.SelectedNode.Text);
+        }
+
+        private void startInNativePuTTYWindowToolStripMenuItem1_Click(object sender, EventArgs e) {
+            StartNativePuttySession(trvTeam.SelectedNode.Text);
         }
 
     }
