@@ -10,7 +10,8 @@ using PuttyServerGUI2.ToolWindows;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
 using PuttyServerGUI2.Persistence.Repository;
-using WindowTools;
+using PuttyServerGUI2.WindowTools;
+
 
 namespace PuttyServerGUI2 {
     public partial class frmMainWindow : Form {

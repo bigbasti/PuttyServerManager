@@ -6,10 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WindowTools;
 using WindowTool;
 using PuttyServerGUI2.Config;
 using System.Runtime.InteropServices;
+using PuttyServerGUI2.WindowTools;
 
 namespace PuttyServerGUI2.ToolWindows {
     public partial class twiPutty : ToolWindow {

@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WindowTools;
 
 using PuttyServerGUI2.Tools.Extensions;
 using PuttyServerGUI2.Persistence.Repository;
@@ -15,6 +14,7 @@ using System.IO;
 using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
+using PuttyServerGUI2.WindowTools;
 
 namespace PuttyServerGUI2.ToolWindows {
     public partial class twiSessions : ToolWindow {
