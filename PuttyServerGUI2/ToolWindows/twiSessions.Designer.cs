@@ -32,11 +32,13 @@
             this.tabTeam = new System.Windows.Forms.TabPage();
             this.trvTeam = new System.Windows.Forms.TreeView();
             this.tabPuttySessions = new System.Windows.Forms.TabPage();
+            this.trvRegistrySessions = new System.Windows.Forms.TreeView();
             this.tabRecentSessions = new System.Windows.Forms.TabPage();
             this.trvRecentSessions = new System.Windows.Forms.TreeView();
             this.conMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startSessionInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.editSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,13 +81,19 @@
             this.conMenuTeamSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.startSessionColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startInNativePuTTYWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.transferSessionToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startSessionInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startInNativePuTTYWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.conMenuRegistrySession = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.startSessionToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.startSessionColoredToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.startInNativeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
+            this.transferToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSessionAreas.SuspendLayout();
             this.tabPersonal.SuspendLayout();
             this.tabTeam.SuspendLayout();
+            this.tabPuttySessions.SuspendLayout();
             this.tabRecentSessions.SuspendLayout();
             this.conMenuSession.SuspendLayout();
             this.conMenuFolder.SuspendLayout();
@@ -94,6 +102,7 @@
             this.conMenuRecent.SuspendLayout();
             this.conMenuRemoveMissingRecent.SuspendLayout();
             this.conMenuTeamSession.SuspendLayout();
+            this.conMenuRegistrySession.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabSessionAreas
@@ -185,6 +194,7 @@
             // 
             // tabPuttySessions
             // 
+            this.tabPuttySessions.Controls.Add(this.trvRegistrySessions);
             this.tabPuttySessions.Location = new System.Drawing.Point(4, 4);
             this.tabPuttySessions.Name = "tabPuttySessions";
             this.tabPuttySessions.Padding = new System.Windows.Forms.Padding(3);
@@ -192,6 +202,21 @@
             this.tabPuttySessions.TabIndex = 1;
             this.tabPuttySessions.Text = "Putty";
             this.tabPuttySessions.UseVisualStyleBackColor = true;
+            // 
+            // trvRegistrySessions
+            // 
+            this.trvRegistrySessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.trvRegistrySessions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvRegistrySessions.ImageIndex = 0;
+            this.trvRegistrySessions.ImageList = this.imgSessionImages;
+            this.trvRegistrySessions.Location = new System.Drawing.Point(3, 3);
+            this.trvRegistrySessions.Name = "trvRegistrySessions";
+            this.trvRegistrySessions.SelectedImageIndex = 0;
+            this.trvRegistrySessions.Size = new System.Drawing.Size(617, 442);
+            this.trvRegistrySessions.TabIndex = 0;
+            this.trvRegistrySessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.trvRegistrySessions_AfterSelect);
+            this.trvRegistrySessions.DoubleClick += new System.EventHandler(this.trvRegistrySessions_DoubleClick);
+            this.trvRegistrySessions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trvRegistrySessions_MouseClick);
             // 
             // tabRecentSessions
             // 
@@ -244,6 +269,14 @@
             this.startColoredToolStripMenuItem.Name = "startColoredToolStripMenuItem";
             this.startColoredToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.startColoredToolStripMenuItem.Text = "Start Colored";
+            // 
+            // startSessionInNativePuTTYWindowToolStripMenuItem
+            // 
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Name = "startSessionInNativePuTTYWindowToolStripMenuItem";
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
+            this.startSessionInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startSessionInNativePuTTYWindowToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -561,7 +594,7 @@
             this.toolStripMenuItem2,
             this.transferSessionToPersonalListToolStripMenuItem});
             this.conMenuTeamSession.Name = "conMenuTeamSession";
-            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 120);
+            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 98);
             // 
             // startSessionToolStripMenuItem2
             // 
@@ -579,6 +612,14 @@
             this.startSessionColoredToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.startSessionColoredToolStripMenuItem.Text = "Start Session Colored";
             // 
+            // startInNativePuTTYWindowToolStripMenuItem1
+            // 
+            this.startInNativePuTTYWindowToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startInNativePuTTYWindowToolStripMenuItem1.Name = "startInNativePuTTYWindowToolStripMenuItem1";
+            this.startInNativePuTTYWindowToolStripMenuItem1.Size = new System.Drawing.Size(242, 22);
+            this.startInNativePuTTYWindowToolStripMenuItem1.Text = "Start in Native PuTTY Window";
+            this.startInNativePuTTYWindowToolStripMenuItem1.Click += new System.EventHandler(this.startInNativePuTTYWindowToolStripMenuItem1_Click);
+            // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
@@ -592,21 +633,53 @@
             this.transferSessionToPersonalListToolStripMenuItem.Text = "Transfer Session to Personal List";
             this.transferSessionToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferSessionToPersonalListToolStripMenuItem_Click);
             // 
-            // startSessionInNativePuTTYWindowToolStripMenuItem
+            // conMenuRegistrySession
             // 
-            this.startSessionInNativePuTTYWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
-            this.startSessionInNativePuTTYWindowToolStripMenuItem.Name = "startSessionInNativePuTTYWindowToolStripMenuItem";
-            this.startSessionInNativePuTTYWindowToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
-            this.startSessionInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
-            this.startSessionInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startSessionInNativePuTTYWindowToolStripMenuItem_Click);
+            this.conMenuRegistrySession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem3,
+            this.startSessionColoredToolStripMenuItem1,
+            this.startInNativeWindowToolStripMenuItem,
+            this.toolStripMenuItem11,
+            this.transferToPersonalListToolStripMenuItem});
+            this.conMenuRegistrySession.Name = "contextMenuStrip1";
+            this.conMenuRegistrySession.Size = new System.Drawing.Size(201, 120);
             // 
-            // startInNativePuTTYWindowToolStripMenuItem1
+            // startSessionToolStripMenuItem3
             // 
-            this.startInNativePuTTYWindowToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
-            this.startInNativePuTTYWindowToolStripMenuItem1.Name = "startInNativePuTTYWindowToolStripMenuItem1";
-            this.startInNativePuTTYWindowToolStripMenuItem1.Size = new System.Drawing.Size(242, 22);
-            this.startInNativePuTTYWindowToolStripMenuItem1.Text = "Start in Native PuTTY Window";
-            this.startInNativePuTTYWindowToolStripMenuItem1.Click += new System.EventHandler(this.startInNativePuTTYWindowToolStripMenuItem1_Click);
+            this.startSessionToolStripMenuItem3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.startSessionToolStripMenuItem3.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
+            this.startSessionToolStripMenuItem3.Name = "startSessionToolStripMenuItem3";
+            this.startSessionToolStripMenuItem3.Size = new System.Drawing.Size(200, 22);
+            this.startSessionToolStripMenuItem3.Text = "Start Session";
+            this.startSessionToolStripMenuItem3.Click += new System.EventHandler(this.startSessionToolStripMenuItem3_Click);
+            // 
+            // startSessionColoredToolStripMenuItem1
+            // 
+            this.startSessionColoredToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.color_wheel;
+            this.startSessionColoredToolStripMenuItem1.Name = "startSessionColoredToolStripMenuItem1";
+            this.startSessionColoredToolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.startSessionColoredToolStripMenuItem1.Text = "Start Session Colored";
+            // 
+            // startInNativeWindowToolStripMenuItem
+            // 
+            this.startInNativeWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startInNativeWindowToolStripMenuItem.Name = "startInNativeWindowToolStripMenuItem";
+            this.startInNativeWindowToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.startInNativeWindowToolStripMenuItem.Text = "Start in Native Window";
+            this.startInNativeWindowToolStripMenuItem.Click += new System.EventHandler(this.startInNativeWindowToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(197, 6);
+            // 
+            // transferToPersonalListToolStripMenuItem
+            // 
+            this.transferToPersonalListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
+            this.transferToPersonalListToolStripMenuItem.Name = "transferToPersonalListToolStripMenuItem";
+            this.transferToPersonalListToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.transferToPersonalListToolStripMenuItem.Text = "Transfer to Personal List";
+            this.transferToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferToPersonalListToolStripMenuItem_Click);
             // 
             // twiSessions
             // 
@@ -621,6 +694,7 @@
             this.tabSessionAreas.ResumeLayout(false);
             this.tabPersonal.ResumeLayout(false);
             this.tabTeam.ResumeLayout(false);
+            this.tabPuttySessions.ResumeLayout(false);
             this.tabRecentSessions.ResumeLayout(false);
             this.conMenuSession.ResumeLayout(false);
             this.conMenuFolder.ResumeLayout(false);
@@ -629,6 +703,7 @@
             this.conMenuRecent.ResumeLayout(false);
             this.conMenuRemoveMissingRecent.ResumeLayout(false);
             this.conMenuTeamSession.ResumeLayout(false);
+            this.conMenuRegistrySession.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -693,6 +768,13 @@
         private System.Windows.Forms.ToolStripMenuItem startInNativePuTTYWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startSessionInNativePuTTYWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startInNativePuTTYWindowToolStripMenuItem1;
+        private System.Windows.Forms.TreeView trvRegistrySessions;
+        private System.Windows.Forms.ContextMenuStrip conMenuRegistrySession;
+        private System.Windows.Forms.ToolStripMenuItem startSessionToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem startSessionColoredToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem startInNativeWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
+        private System.Windows.Forms.ToolStripMenuItem transferToPersonalListToolStripMenuItem;
 
     }
 }

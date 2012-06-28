@@ -115,6 +115,7 @@
     <Compile Include="Tools\Logging\DebugLogger.cs" />
     <Compile Include="Tools\Logging\ILogger.cs" />
     <Compile Include="Tools\Extensions\TreeViewExtensions.cs" />
+    <Compile Include="Tools\RegistryExporter.cs" />
     <Compile Include="ToolWindows\twiPutty.cs">
       <SubType>Form</SubType>
     </Compile>

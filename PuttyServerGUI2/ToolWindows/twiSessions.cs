@@ -15,6 +15,7 @@ using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
 using PuttyServerGUI2.WindowTools;
+using PuttyServerGUI2.Tools;
 
 namespace PuttyServerGUI2.ToolWindows {
     public partial class twiSessions : ToolWindow {
@@ -56,6 +57,8 @@ namespace PuttyServerGUI2.ToolWindows {
                 trvTeam.Nodes[0].Expand();
             }
 
+            LoarRegestrySessionsList();
+
             trvSessions.Sort();
             trvRecentSessions.Sort();
 
@@ -86,6 +89,16 @@ namespace PuttyServerGUI2.ToolWindows {
             try {
                 TreeNode node = trvTeam.DeserializeTeamNode(ApplicationPaths.RemoteSessionListPath);
                 trvTeam.Nodes.Add(node);
+            } catch (Exception ex) {
+                Program.LogWriter.Log("Could not load Team Sessions - {0}", ex.Message);
+            }
+        }
+
+        private void LoarRegestrySessionsList() {
+            try {
+                TreeNode node = RegistryExporter.ImportSessionsFromRegistry();
+                trvRegistrySessions.Nodes.Add(node);
+                node.Expand();
             } catch (Exception ex) {
                 Program.LogWriter.Log("Could not load Team Sessions - {0}", ex.Message);
             }
@@ -455,6 +468,8 @@ namespace PuttyServerGUI2.ToolWindows {
         }
 
         private void TransferSessionFromTeamFolder(string sessionName, string from) {
+            FolderSetup.SetupDirectory();
+
             if (!localRepository.CheckSessionExists(sessionName)) {
                 localRepository.AddSession(from);
             }
@@ -574,6 +589,52 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private void startInNativePuTTYWindowToolStripMenuItem1_Click(object sender, EventArgs e) {
             StartNativePuttySession(trvTeam.SelectedNode.Text);
+        }
+
+        private void trvRegistrySessions_AfterSelect(object sender, TreeViewEventArgs e) {
+            
+        }
+
+        private void trvRegistrySessions_DoubleClick(object sender, EventArgs e) {
+            StartPuttySession(trvRegistrySessions.SelectedNode.Text);
+        }
+
+        private void startSessionToolStripMenuItem3_Click(object sender, EventArgs e) {
+            trvRegistrySessions_DoubleClick(sender, e);
+        }
+
+        private void startInNativeWindowToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartNativePuttySession(trvRegistrySessions.SelectedNode.Text);
+        }
+
+        private void transferToPersonalListToolStripMenuItem_Click(object sender, EventArgs e) {
+            try {
+                FolderSetup.SetupDirectory();
+
+                string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text));
+
+                File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text), newSession);
+
+                TreeNode node = new TreeNode(trvRegistrySessions.SelectedNode.Text);
+                node.SelectedImageIndex = 6;
+                node.ImageIndex = 6;
+                trvSessions.Nodes[0].Nodes.Add(node);
+
+                SaveChanges();
+            } catch (Exception ex) { }
+        }
+
+        private void trvRegistrySessions_MouseClick(object sender, MouseEventArgs e) {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right) {
+                //Auch bei einem Rechtsklick das gewählte Element markieren
+                TreeNode clickedNode = trvRegistrySessions.GetNodeAt(e.Location);
+                trvRegistrySessions.SelectedNode = clickedNode;
+
+                if (clickedNode.SelectedImageIndex == 6) {
+                    conMenuRegistrySession.Show(MousePosition);
+                    return;
+                }
+            }
         }
 
     }
