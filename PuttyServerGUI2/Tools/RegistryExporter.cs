@@ -33,7 +33,7 @@ namespace PuttyServerGUI2.Tools {
                             string session = "";
                             Microsoft.Win32.RegistryKey nf = default(Microsoft.Win32.RegistryKey);
                             nf = Registry.CurrentUser.OpenSubKey("Software\\SimonTatham\\PuTTY\\Sessions\\" + s);
-                            lst_n.Add(s.Replace("%20", " "));
+                            lst_n.Add(s.Replace("%20", " ").Replace("%2F", "/"));
                             foreach (string a in nf.GetValueNames()) {
                                 string o = Registry.GetValue("HKEY_CURRENT_USER\\Software\\SimonTatham\\PuTTY\\Sessions\\" + s, a, null).ToString();
                                 session = (a + "=" + o) + Environment.NewLine + session;
@@ -52,6 +52,13 @@ namespace PuttyServerGUI2.Tools {
 
 
                 for (int i = 0; i <= lst_n.Count - 1; i++) {
+
+                    if (lst_n[i].IndexOfAny(Path.GetInvalidFileNameChars()) != -1 || lst_n[i].Contains(" ")) {
+                        foreach (char c in Path.GetInvalidFileNameChars()) {
+                            lst_n[i] = lst_n[i].Replace(c.ToString(), "_");
+                        }
+                        lst_n[i] = lst_n[i].Replace(" ", "_");
+                    }
 
                     string filepath = Path.Combine(ApplicationPaths.LocalRepositoryPath, lst_n[i].ToString());
                     if(File.Exists(filepath)){

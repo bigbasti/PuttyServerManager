@@ -145,13 +145,25 @@ namespace PuttyServerGUI2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("800, 600")]
         public global::System.Drawing.Size LastWindowSize {
             get {
                 return ((global::System.Drawing.Size)(this["LastWindowSize"]));
             }
             set {
                 this["LastWindowSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800, 200")]
+        public global::System.Drawing.Size SessionIverviewWindowSize {
+            get {
+                return ((global::System.Drawing.Size)(this["SessionIverviewWindowSize"]));
+            }
+            set {
+                this["SessionIverviewWindowSize"] = value;
             }
         }
     }

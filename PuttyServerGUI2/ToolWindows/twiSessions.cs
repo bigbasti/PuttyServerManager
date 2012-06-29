@@ -39,7 +39,7 @@ namespace PuttyServerGUI2.ToolWindows {
         /// <summary>
         /// Speichert alle Änderungen an der Session TreeView
         /// </summary>
-        private void SaveChanges() {
+        public void SaveChanges() {
             trvSessions.SerializeNode(trvSessions.Nodes[0], ApplicationPaths.LocalSessionListPath);
             trvRecentSessions.SerializeNode(trvRecentSessions.Nodes[0], ApplicationPaths.RecentSessionListPath);
         }
@@ -49,6 +49,9 @@ namespace PuttyServerGUI2.ToolWindows {
         /// </summary>
         private void LoadConfiguration() {
             LoadLocalSessionsList();
+            trvSessions.Nodes[0].ImageIndex = 0;
+            trvSessions.Nodes[0].SelectedImageIndex = 0;
+
             LoadRecentSessionsList();
 
             if (ApplicationPaths.RemoteSessionIsConfigured) {
@@ -198,15 +201,24 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private void GetSelectedSessionsFromFolder(OpenFileDialog open, DialogResult result) {
             if (result != DialogResult.Cancel && result != DialogResult.Abort) {
+
+                bool forbiddenNameFound = false;
                 foreach (string session in open.FileNames) {
 
-                    if (trvSessions.DoesNodeExist(Path.GetFileName(session))) {
-                        MessageBox.Show(string.Format("The Session {0} is already in your Session list and won't be added again!", Path.GetFileName(session)), "Session already in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    if (session.Contains(" ")) {
+                        forbiddenNameFound = true;
                     } else {
-                        localRepository.AddSession(session);
+                        if (trvSessions.DoesNodeExist(Path.GetFileName(session))) {
+                            MessageBox.Show(string.Format("The Session {0} is already in your Session list and won't be added again!", Path.GetFileName(session)), "Session already in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        } else {
+                            localRepository.AddSession(session);
 
-                        AddSessionAsTreeNode(session);
+                            AddSessionAsTreeNode(session);
+                        }
                     }
+                }
+                if(forbiddenNameFound){
+                    MessageBox.Show("One or more Sessions could not be added because they have forbidden characters in their name. Note: Whitespace is a forbidden character too!", "Can't add session", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -228,6 +240,13 @@ namespace PuttyServerGUI2.ToolWindows {
                 e.CancelEdit = true;
                 return;
             }
+
+            if (e.Label.IndexOfAny(Path.GetInvalidFileNameChars()) != -1 || e.Label.Contains(" ")) {
+                MessageBox.Show("Your Filename contains forbidden characters!", "Forbidden Characters", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.CancelEdit = true;
+                return;
+            }
+
             if (e.Node.ImageIndex == 6 && e.Label != null) {
                 if (!localRepository.RenameSession(e.Node.Text, e.Label)) {
                     MessageBox.Show("Could not Rename the Session. Look into Logfile for further Details!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -637,5 +656,122 @@ namespace PuttyServerGUI2.ToolWindows {
             }
         }
 
+
+
+        /// <summary>
+        /// Startet eine Session mit modifizierten Fore- & Backgroundfarben
+        /// </summary>
+        /// <param name="sessionName">Session die gestartetw erden soll</param>
+        /// <param name="bgColor">Gewünschte Hintergrundfarbe</param>
+        /// <param name="foreColor">Gewünschte Textfarbe</param>
+        /// <param name="isRemote">Gibt an, ob eine Teamsession gestartet werden soll</param>
+        private void StartSessionInColor(string sessionName, string bgColor, string foreColor, bool isRemote=false) {
+            string sessionFile = Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName);
+
+            try {
+                if (File.Exists(sessionFile)) {
+                    string[] source = File.ReadAllLines(sessionFile);
+                    string [] backup = File.ReadAllLines(sessionFile);
+
+                    for (int i = 0; i < source.Length; i++) {
+                        if(source[i].StartsWith("Colour2=")){
+                            source[i] = bgColor;
+                        }
+                        if(source[i].StartsWith("Colour0=")){
+                            source[i] = foreColor;
+                        }
+                    }
+
+                    File.WriteAllLines(sessionFile, source);
+
+                    StartPuttySession(sessionName);
+
+                    System.Threading.Thread.Sleep(500);
+
+                    File.WriteAllLines(sessionFile, backup);
+                }
+            }catch(Exception ex){
+                Program.LogWriter.Log("Could not start Colored Session: {0}", ex.Message);
+            }
+        }
+        #region ColoredSessionEventHandlers
+
+        //MySessions ---
+
+        private void blackWhiteToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
+        }
+
+        private void blackGreenToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
+        }
+
+        private void blackGreenToolStripMenuItem1_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
+        }
+
+        private void yellowBlackToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
+        }
+
+        private void blueBlackToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
+        }
+
+        private void greenBlackToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
+        }
+
+        private void redBlackToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
+        }
+
+        private void greyBlackToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
+        }
+
+        //--- RecentSessions
+
+        private void toolStripMenuItem13_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
+        }
+
+        private void toolStripMenuItem14_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem15_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
+        }
+
+        private void toolStripMenuItem16_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem17_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem18_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem19_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem20_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
+            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
+        }
+
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
 using PuttyServerGUI2.Persistence.Repository;
 using PuttyServerGUI2.WindowTools;
+using PuttyServerGUI2.Config;
 
 
 namespace PuttyServerGUI2 {
@@ -28,12 +29,21 @@ namespace PuttyServerGUI2 {
 
             frmSessions = new twiSessions(ContentPanel, this);
             frmSessions.Show(ContentPanel, DockState.DockRight);
+
+            
         }
 
 
         private void frmMainWindow_Load(object sender, EventArgs e) {
             cboServerProtocol.SelectedIndex = 0;
 
+            this.Size = ApplicationPaths.LastWindowSize;
+            this.Location = ApplicationPaths.LastWindowPosition;
+            frmSessions.Size = ApplicationPaths.LastOverviewWindowSize;
+            frmSessions.DockState = ApplicationPaths.SessionOverviewDockState;
+
+            toolQuickConnect.Visible = ApplicationPaths.ShowQuickConnectionBar;
+            showQuickConnectionBarToolStripMenuItem.Checked = ApplicationPaths.ShowQuickConnectionBar;
 
             this.GotFocus += ((object o, EventArgs ev) => {
                 ContentPanel.ActivePane.Focus();
@@ -48,6 +58,8 @@ namespace PuttyServerGUI2 {
         private void showQuickConnectionBarToolStripMenuItem_Click(object sender, EventArgs e) {
             toolQuickConnect.Visible = !showQuickConnectionBarToolStripMenuItem.Checked;
             showQuickConnectionBarToolStripMenuItem.Checked = !showQuickConnectionBarToolStripMenuItem.Checked;
+
+            ApplicationPaths.ShowQuickConnectionBar = !showQuickConnectionBarToolStripMenuItem.Checked;
         }
 
         private void btnStartQuickConnection_Click(object sender, EventArgs e) {
@@ -111,6 +123,18 @@ namespace PuttyServerGUI2 {
 
         private void pSGSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
             new frmSettings().ShowDialog();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
+            frmSessions.SaveChanges();
+            Environment.Exit(0);
+        }
+
+        private void frmMainWindow_FormClosing(object sender, FormClosingEventArgs e) {
+            ApplicationPaths.LastWindowPosition = this.Location;
+            ApplicationPaths.LastWindowSize = this.Size;
+            ApplicationPaths.SessionOverviewDockState = frmSessions.DockState;
+            ApplicationPaths.LastOverviewWindowSize = frmSessions.Size;
         }
 
 

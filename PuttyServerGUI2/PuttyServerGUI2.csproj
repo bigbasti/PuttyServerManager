@@ -185,6 +185,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\control_play_blue.png" />
+    <None Include="Resources\door_open.png" />
     <None Include="PuttyServerGUI2_TemporaryKey.pfx" />
     <None Include="Resources\server.png" />
     <None Include="Resources\wand.png" />

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using PuttyServerGUI2.Properties;
+using System.Drawing;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace PuttyServerGUI2.Config {
     public static class ApplicationPaths {
@@ -121,6 +123,56 @@ namespace PuttyServerGUI2.Config {
             }
             set {
                 Settings.Default.StartAppWithWindows = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static Point LastWindowPosition {
+            get {
+                return Settings.Default.LastWindowPosition;
+            }
+            set {
+                Settings.Default.LastWindowPosition = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static Size LastWindowSize {
+            get {
+                return Settings.Default.LastWindowSize;
+            }
+            set {
+                Settings.Default.LastWindowSize = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static DockState SessionOverviewDockState {
+            get {
+                return Settings.Default.SessionOverviewDockState;
+            }
+            set {
+                Settings.Default.SessionOverviewDockState = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static bool ShowQuickConnectionBar {
+            get {
+                return Settings.Default.ShowQuickCompose;
+            }
+            set {
+                Settings.Default.ShowQuickCompose = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static Size LastOverviewWindowSize {
+            get {
+                return Settings.Default.SessionIverviewWindowSize;
+            }
+            set {
+                Settings.Default.SessionIverviewWindowSize = value;
                 Settings.Default.Save();
             }
         }

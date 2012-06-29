@@ -33,7 +33,10 @@
       <Value Profile="(Default)">DockRight</Value>
     </Setting>
     <Setting Name="LastWindowSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
+      <Value Profile="(Default)">800, 600</Value>
+    </Setting>
+    <Setting Name="SessionIverviewWindowSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">800, 200</Value>
     </Setting>
   </Settings>
 </SettingsFile>

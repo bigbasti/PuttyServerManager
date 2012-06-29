@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -50,18 +51,21 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showQuickConnectionBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnStartQuickConnection = new System.Windows.Forms.ToolStripButton();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showQuickConnectionBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pSGSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conMenuTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolQuickConnect.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.menuMain.SuspendLayout();
+            this.conMenuTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // ContentPanel
@@ -224,12 +228,6 @@
             this.fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fIleToolStripMenuItem.Text = "File";
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -240,15 +238,6 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
-            // 
-            // showQuickConnectionBarToolStripMenuItem
-            // 
-            this.showQuickConnectionBarToolStripMenuItem.Checked = true;
-            this.showQuickConnectionBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showQuickConnectionBarToolStripMenuItem.Name = "showQuickConnectionBarToolStripMenuItem";
-            this.showQuickConnectionBarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.showQuickConnectionBarToolStripMenuItem.Text = "Show Quick connection bar";
-            this.showQuickConnectionBarToolStripMenuItem.Click += new System.EventHandler(this.showQuickConnectionBarToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -266,6 +255,24 @@
             this.btnStartQuickConnection.ToolTipText = "Open Connection to the Server";
             this.btnStartQuickConnection.Click += new System.EventHandler(this.btnStartQuickConnection_Click);
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.door_open;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // showQuickConnectionBarToolStripMenuItem
+            // 
+            this.showQuickConnectionBarToolStripMenuItem.Checked = true;
+            this.showQuickConnectionBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showQuickConnectionBarToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.control_play_blue;
+            this.showQuickConnectionBarToolStripMenuItem.Name = "showQuickConnectionBarToolStripMenuItem";
+            this.showQuickConnectionBarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.showQuickConnectionBarToolStripMenuItem.Text = "Show Quick connection bar";
+            this.showQuickConnectionBarToolStripMenuItem.Click += new System.EventHandler(this.showQuickConnectionBarToolStripMenuItem_Click);
+            // 
             // pSGSettingsToolStripMenuItem
             // 
             this.pSGSettingsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.cog;
@@ -282,6 +289,19 @@
             this.settingsToolStripMenuItem.Text = "Putty Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
+            // conMenuTab
+            // 
+            this.conMenuTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeToolStripMenuItem});
+            this.conMenuTab.Name = "conMenuTab";
+            this.conMenuTab.Size = new System.Drawing.Size(104, 26);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            // 
             // frmMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +312,7 @@
             this.MainMenuStrip = this.menuMain;
             this.Name = "frmMainWindow";
             this.Text = "Serveroverview 2.0a";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMainWindow_FormClosing);
             this.Load += new System.EventHandler(this.frmMainWindow_Load);
             this.toolQuickConnect.ResumeLayout(false);
             this.toolQuickConnect.PerformLayout();
@@ -303,6 +324,7 @@
             this.toolStripContainer1.PerformLayout();
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
+            this.conMenuTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -327,6 +349,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pSGSettingsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip conMenuTab;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
 
     }
 }

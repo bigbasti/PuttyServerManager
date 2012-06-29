@@ -102,9 +102,23 @@ namespace PuttyServerGUI2.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap control_play_blue {
+            get {
+                object obj = ResourceManager.GetObject("control_play_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap door_open {
+            get {
+                object obj = ResourceManager.GetObject("door_open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
