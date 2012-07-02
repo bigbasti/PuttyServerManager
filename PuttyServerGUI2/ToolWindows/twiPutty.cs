@@ -44,6 +44,15 @@ namespace PuttyServerGUI2.ToolWindows {
             this.applicationwrapper.m_CloseCallback = this.m_ApplicationExit;
             this.Controls.Add(this.applicationwrapper);
 
+            this.FormClosing += new FormClosingEventHandler(twiPutty_FormClosing);
+
+        }
+
+        void twiPutty_FormClosing(object sender, FormClosingEventArgs e) {
+            try {
+                var docs = ((frmMainWindow)containerForm).ContentPanel.Documents.ToArray();
+                docs[docs.Length - 2].DockHandler.Activate();
+            } catch (Exception ex) { /*ignore*/ }}
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]

@@ -331,7 +331,7 @@
 
         #endregion
 
-        private WeifenLuo.WinFormsUI.Docking.DockPanel ContentPanel;
+        public WeifenLuo.WinFormsUI.Docking.DockPanel ContentPanel;
         private System.Windows.Forms.ToolStrip toolQuickConnect;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox txtServerIP;

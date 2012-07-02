@@ -357,12 +357,17 @@ namespace PuttyServerGUI2.ToolWindows {
                     } else {
                         puttyWindow.Close();
                     }
+
+
                 }
             };
 
             puttyWindow = new twiPutty(sessionName, callback, containerForm);
+            puttyWindow.CloseButton = true;
+            puttyWindow.CloseButtonVisible = true;
             puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
         }
+
 
         private void StartNativePuttySession(string sessionName) {
 
@@ -667,7 +672,7 @@ namespace PuttyServerGUI2.ToolWindows {
         /// <param name="isRemote">Gibt an, ob eine Teamsession gestartet werden soll</param>
         private void StartSessionInColor(string sessionName, string bgColor, string foreColor, bool isRemote=false) {
             string sessionFile = Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName);
-
+            
             try {
                 if (File.Exists(sessionFile)) {
                     string[] source = File.ReadAllLines(sessionFile);
@@ -694,6 +699,7 @@ namespace PuttyServerGUI2.ToolWindows {
                 Program.LogWriter.Log("Could not start Colored Session: {0}", ex.Message);
             }
         }
+
         #region ColoredSessionEventHandlers
 
         //MySessions ---
@@ -733,45 +739,116 @@ namespace PuttyServerGUI2.ToolWindows {
         //--- RecentSessions
 
         private void toolStripMenuItem13_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
         }
 
         private void toolStripMenuItem14_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem15_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
         }
 
         private void toolStripMenuItem16_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem17_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem18_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem20_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvSessions.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvSessions.SelectedNode.Text));
-            StartSessionInColor(trvSessions.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
+            StartSessionInColor(trvRecentSessions.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
+        }
+
+        //Team Sessions ---
+
+        private void toolStripMenuItem22_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
+        }
+
+        private void toolStripMenuItem23_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem24_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
+        }
+
+        private void toolStripMenuItem25_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem26_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem27_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem28_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem29_Click(object sender, EventArgs e) {
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
+        }
+
+        //Registry sessions ---
+        private void toolStripMenuItem31_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
+        }
+
+        private void toolStripMenuItem32_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem33_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
+        }
+
+        private void toolStripMenuItem34_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem35_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem36_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem37_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
+        }
+
+        private void toolStripMenuItem38_Click(object sender, EventArgs e) {
+            StartSessionInColor(trvRegistrySessions.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
         }
 
         #endregion
+
+
+
+
     }
 }

@@ -19,10 +19,12 @@ namespace PuttyServerGUI2 {
 
         ISessionRepository recentRepository = new RecentSessionRepository();
 
+
+
         /// <summary>
         /// Fenster mit der Treeview, die alle Sessions beinhaltet
         /// </summary>
-        private twiSessions frmSessions;
+        public twiSessions frmSessions;
         
         public frmMainWindow() {
             InitializeComponent();
