@@ -11,6 +11,7 @@ using PuttyServerGUI2.Config;
 using System.Runtime.InteropServices;
 using PuttyServerGUI2.WindowTools;
 
+
 namespace PuttyServerGUI2.ToolWindows {
     public partial class twiPutty : ToolWindow {
 
@@ -19,11 +20,14 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private Form containerForm;
 
+        public string sessionName;
+
         public twiPutty(string session, PuttyClosedCallback callback, Form container) {
             InitializeComponent();
 
             m_ApplicationExit = callback;
             containerForm = container;
+            sessionName = session;
 
             if (session == "") {
                 this.Text = ApplicationPaths.PuttyLocation;
@@ -45,14 +49,14 @@ namespace PuttyServerGUI2.ToolWindows {
             this.Controls.Add(this.applicationwrapper);
 
             this.FormClosing += new FormClosingEventHandler(twiPutty_FormClosing);
-
+            this.TabPageContextMenuStrip = this.conMenuSessionTab;
         }
 
         void twiPutty_FormClosing(object sender, FormClosingEventArgs e) {
             try {
                 var docs = ((frmMainWindow)containerForm).ContentPanel.Documents.ToArray();
                 docs[docs.Length - 2].DockHandler.Activate();
-            } catch (Exception ex) { /*ignore*/ }}
+            } catch (Exception ex) { /*ignore*/ }
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -78,6 +82,21 @@ namespace PuttyServerGUI2.ToolWindows {
 
             //    applicationwrapper.ReFocusPuTTY();
             //});
+        }
+
+        private void closeSessionToolStripMenuItem_Click(object sender, EventArgs e) {
+            ((frmMainWindow)containerForm).ContentPanel.ActiveDocument.DockHandler.Close();
+        }
+
+        private void cloneSessionToolStripMenuItem_Click(object sender, EventArgs e) {
+            ((frmMainWindow)containerForm).frmSessions.StartPuttySession(sessionName);
+        }
+
+        private void renameTabToolStripMenuItem_Click(object sender, EventArgs e) {
+            string newName = Microsoft.VisualBasic.Interaction.InputBox("Please enter the new name", "enter new name", this.TabText);
+            if (!string.IsNullOrEmpty(newName)) {
+                this.TabText = newName;
+            }
         }
     }
 }

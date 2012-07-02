@@ -60,6 +60,13 @@ namespace PuttyServerGUI2.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_double {
+            get {
+                object obj = ResourceManager.GetObject("application_double", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_xp_terminal {
             get {
                 object obj = ResourceManager.GetObject("application_xp_terminal", resourceCulture);
@@ -210,6 +217,20 @@ namespace PuttyServerGUI2.Properties {
         internal static System.Drawing.Bitmap server_go {
             get {
                 object obj = ResourceManager.GetObject("server_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tab_delete {
+            get {
+                object obj = ResourceManager.GetObject("tab_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tab_edit {
+            get {
+                object obj = ResourceManager.GetObject("tab_edit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -43,6 +43,7 @@ namespace PuttyServerGUI2 {
             ApplicationPaths.RemoteSessionListPath = txtTeamSessionList.Text;
             ApplicationPaths.TeamUsername = txtUsername.Text;
             ApplicationPaths.UsePuttyAgent = chkUsePuttyAgent.Checked;
+            ApplicationPaths.RuninSingleInstanceMode = chkSingleWindow.Checked;
         }
 
         private void LoadSettings() {
@@ -53,6 +54,7 @@ namespace PuttyServerGUI2 {
             txtUsername.Text = ApplicationPaths.TeamUsername;
             chkUsePuttyAgent.Checked = ApplicationPaths.UsePuttyAgent;
             txtPuttyAgentParameters.Enabled = chkUsePuttyAgent.Checked;
+            chkSingleWindow.Checked = ApplicationPaths.RuninSingleInstanceMode;
         }
 
         private void btnSaveClose_Click(object sender, EventArgs e) {

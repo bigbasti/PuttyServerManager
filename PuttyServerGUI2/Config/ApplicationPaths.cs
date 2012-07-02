@@ -177,5 +177,20 @@ namespace PuttyServerGUI2.Config {
             }
         }
 
+        public static Form ApplicationMainForm {
+            get;
+            set;
+        }
+
+        public static bool RuninSingleInstanceMode {
+            get {
+                return Settings.Default.SingleInstance;
+            }
+            set {
+                Settings.Default.SingleInstance = value;
+                Settings.Default.Save();
+            }
+        }
+
     }
 }

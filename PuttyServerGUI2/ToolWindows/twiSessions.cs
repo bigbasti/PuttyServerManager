@@ -333,7 +333,7 @@ namespace PuttyServerGUI2.ToolWindows {
             }
         }
 
-        private void StartPuttySession(string sessionName) {
+        public void StartPuttySession(string sessionName) {
 
             //On demand: start putty agent
             if (ApplicationPaths.UsePuttyAgent) {
@@ -363,8 +363,6 @@ namespace PuttyServerGUI2.ToolWindows {
             };
 
             puttyWindow = new twiPutty(sessionName, callback, containerForm);
-            puttyWindow.CloseButton = true;
-            puttyWindow.CloseButtonVisible = true;
             puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
         }
 

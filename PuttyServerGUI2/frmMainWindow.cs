@@ -67,34 +67,38 @@ namespace PuttyServerGUI2 {
         private void btnStartQuickConnection_Click(object sender, EventArgs e) {
             if (!string.IsNullOrEmpty(txtServerIP.Text) && !string.IsNullOrEmpty(txtServerPort.Text)) {
                 try {
-                    string name = cboServerProtocol.Text + "-" + txtServerIP.Text + "-" + txtServerPort.Text;
-                    recentRepository.AddSession(txtServerIP.Text, cboServerProtocol.SelectedText, Convert.ToInt32(txtServerPort.Text), name);
-
-                    frmSessions.AddSessionToRecentSessionList(name);
-
-                    twiPutty puttyWindow = null;
-
-                    PuttyClosedCallback callback = delegate(bool closed) {
-                        if (puttyWindow != null) {
-
-                            if (puttyWindow.InvokeRequired) {
-                                this.BeginInvoke((MethodInvoker)delegate() {
-                                    puttyWindow.Close();
-                                });
-                            } else {
-                                puttyWindow.Close();
-                            }
-                        }
-                    };
-
-                    puttyWindow = new twiPutty(name, callback, this);
-                    puttyWindow.Show(ContentPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+                    StartQuickSession(cboServerProtocol.Text, txtServerIP.Text, txtServerPort.Text);
 
                 } catch (Exception ex) {
                     MessageBox.Show("Cold not create the Session with the Values you provided!", "Cann not create session", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Program.LogWriter.Log("# Cold not create the Session with the Values you provided! " + ex.Message);
                 }
             }
+        }
+
+        public void StartQuickSession(string protocol, string host, string port) {
+            string name = protocol + "-" + host + "-" + port;
+            recentRepository.AddSession(host, protocol, Convert.ToInt32(port), name);
+
+            frmSessions.AddSessionToRecentSessionList(name);
+
+            twiPutty puttyWindow = null;
+
+            PuttyClosedCallback callback = delegate(bool closed) {
+                if (puttyWindow != null) {
+
+                    if (puttyWindow.InvokeRequired) {
+                        this.BeginInvoke((MethodInvoker)delegate() {
+                            puttyWindow.Close();
+                        });
+                    } else {
+                        puttyWindow.Close();
+                    }
+                }
+            };
+
+            puttyWindow = new twiPutty(name, callback, this);
+            puttyWindow.Show(ContentPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e) {
