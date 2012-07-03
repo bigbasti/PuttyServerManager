@@ -380,7 +380,6 @@ namespace PuttyServerGUI2.ToolWindows {
         }
 
         private void StartSessionInFileZilla(string session, string userPass) {
-            string retVal = "";
 
             try {
                 string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
@@ -959,7 +958,86 @@ namespace PuttyServerGUI2.ToolWindows {
             
         }
 
+        private void connectWithWinSCPToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartSessionInWinSCP(trvSessions.SelectedNode.Text);
+        }
 
+        private void StartSessionInWinSCP(string session) {
 
+                try {
+                    string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
+
+                    string winSCPString = "";
+                    string puttyTunnel = "";
+
+                    string userNameLine = "";
+                    string ipLine = "";
+                    string remoteCommandLine = "";
+
+                    foreach (string line in sessionData) {
+                        if (line.StartsWith("UserName=")) { userNameLine = line; }
+                        if (line.StartsWith("HostName=")) { ipLine = line; }
+                        if (line.StartsWith("RemoteCommand=")) { remoteCommandLine = line; }
+                    }
+
+                    if (remoteCommandLine.Length > "RemoteCommand=".Length && remoteCommandLine.Contains("ssh")) {
+                        string userName = "";
+                        string serverName = "";
+                        string serverPort = "";
+
+                        //Es muss eine Getunnelte Verbindung aufgebaut werden
+                        userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
+                        serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                        serverPort = "22";
+
+                        string rndPort = new Random().Next(1025, 65000).ToString();
+
+                        puttyTunnel = string.Format("PortForwardings=L{0}={1}:{2},", rndPort, serverName, serverPort);
+
+                        for (int i = 0; i < sessionData.Length; i++) {
+                            if (sessionData[i].StartsWith("PortForwardings=")) { sessionData[i] = puttyTunnel; }
+                        }
+
+                        //save temp session
+                        if(File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"))){File.Delete(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"));}
+                        File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"), sessionData);
+
+                        //start putty session
+                        StartPuttySession(session + "_tunnel", WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
+
+                        winSCPString = string.Format("sftp://{0}@localhost:{1}", userName, rndPort);
+                        Program.LogWriter.Log("sftp://{0}@localhost:{1}", userName, rndPort);
+
+                        infWait waiter = new infWait(ApplicationPaths.PathToWinSCP, winSCPString);
+                        waiter.Show();
+
+                    } else {
+                        //kein tunnel nötig
+                        string userName = "";
+                        string serverName = "";
+                        string serverPort = "22";
+                        if (userNameLine.Length <= "UserName=".Length) {
+                            userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username");
+                            if (string.IsNullOrEmpty(userName)) {
+                                return;
+                            }
+
+                            userNameLine = "UserName=" + userName;
+                        }
+                        userName = userNameLine.Substring(userNameLine.IndexOf("=") + 1, userNameLine.Length - 1 - userNameLine.IndexOf("="));
+                        serverName = ipLine.Substring(ipLine.IndexOf("=") + 1, ipLine.Length - 1 - ipLine.IndexOf("="));
+
+                        winSCPString = string.Format("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
+
+                        Program.LogWriter.Log("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
+
+                        ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToWinSCP, winSCPString);
+                        pi.WorkingDirectory = ApplicationPaths.PathToWinSCP.Substring(0, ApplicationPaths.PathToWinSCP.LastIndexOf(Path.DirectorySeparatorChar));
+                        Process.Start(pi);
+                    }
+                } catch (Exception ex) {
+                    Program.LogWriter.Log("Could not start WinSCP: {0}", ex.Message);
+                }
+        }
     }
 }

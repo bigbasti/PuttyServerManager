@@ -449,6 +449,7 @@
             this.connectWithWinSCPToolStripMenuItem.Name = "connectWithWinSCPToolStripMenuItem";
             this.connectWithWinSCPToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.connectWithWinSCPToolStripMenuItem.Text = "Connect with WinSCP";
+            this.connectWithWinSCPToolStripMenuItem.Click += new System.EventHandler(this.connectWithWinSCPToolStripMenuItem_Click);
             // 
             // startSessionToolStripMenuItem
             // 
