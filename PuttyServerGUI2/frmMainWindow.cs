@@ -84,7 +84,7 @@ namespace PuttyServerGUI2 {
 
             twiPutty puttyWindow = null;
 
-            PuttyClosedCallback callback = delegate(bool closed) {
+            ApplicationClosedCallback callback = delegate(bool closed) {
                 if (puttyWindow != null) {
 
                     if (puttyWindow.InvokeRequired) {
@@ -104,7 +104,7 @@ namespace PuttyServerGUI2 {
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e) {
             twiPutty puttyWindow = null;
 
-            PuttyClosedCallback callback = delegate(bool closed) {
+            ApplicationClosedCallback callback = delegate(bool closed) {
                 if (puttyWindow != null) {
 
                     if (puttyWindow.InvokeRequired) {

@@ -39,6 +39,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.conMenuFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem39 = new System.Windows.Forms.ToolStripSeparator();
             this.conMenuTreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
@@ -54,7 +55,8 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.conMenuRegistrySession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem39 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem40 = new System.Windows.Forms.ToolStripSeparator();
+            this.connectWithWinSCPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blackGreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +68,7 @@
             this.redBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greyBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startSessionInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectWithFileZillaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -283,11 +286,14 @@
             this.startColoredToolStripMenuItem,
             this.startSessionInNativePuTTYWindowToolStripMenuItem,
             this.toolStripMenuItem1,
+            this.connectWithFileZillaToolStripMenuItem,
+            this.connectWithWinSCPToolStripMenuItem,
+            this.toolStripMenuItem40,
             this.editSessionToolStripMenuItem,
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.conMenuSession.Name = "conMenuSession";
-            this.conMenuSession.Size = new System.Drawing.Size(234, 142);
+            this.conMenuSession.Size = new System.Drawing.Size(234, 214);
             // 
             // toolStripMenuItem1
             // 
@@ -305,12 +311,17 @@
             this.renameToolStripMenuItem1,
             this.deleteToolStripMenuItem1});
             this.conMenuFolder.Name = "contextMenuFolder";
-            this.conMenuFolder.Size = new System.Drawing.Size(210, 148);
+            this.conMenuFolder.Size = new System.Drawing.Size(210, 126);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(206, 6);
+            // 
+            // toolStripMenuItem39
+            // 
+            this.toolStripMenuItem39.Name = "toolStripMenuItem39";
+            this.toolStripMenuItem39.Size = new System.Drawing.Size(206, 6);
             // 
             // conMenuTreeView
             // 
@@ -427,10 +438,17 @@
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
             this.toolStripMenuItem11.Size = new System.Drawing.Size(197, 6);
             // 
-            // toolStripMenuItem39
+            // toolStripMenuItem40
             // 
-            this.toolStripMenuItem39.Name = "toolStripMenuItem39";
-            this.toolStripMenuItem39.Size = new System.Drawing.Size(206, 6);
+            this.toolStripMenuItem40.Name = "toolStripMenuItem40";
+            this.toolStripMenuItem40.Size = new System.Drawing.Size(230, 6);
+            // 
+            // connectWithWinSCPToolStripMenuItem
+            // 
+            this.connectWithWinSCPToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.computer_go;
+            this.connectWithWinSCPToolStripMenuItem.Name = "connectWithWinSCPToolStripMenuItem";
+            this.connectWithWinSCPToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.connectWithWinSCPToolStripMenuItem.Text = "Connect with WinSCP";
             // 
             // startSessionToolStripMenuItem
             // 
@@ -528,6 +546,14 @@
             this.startSessionInNativePuTTYWindowToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.startSessionInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
             this.startSessionInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startSessionInNativePuTTYWindowToolStripMenuItem_Click);
+            // 
+            // connectWithFileZillaToolStripMenuItem
+            // 
+            this.connectWithFileZillaToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.computer_go;
+            this.connectWithFileZillaToolStripMenuItem.Name = "connectWithFileZillaToolStripMenuItem";
+            this.connectWithFileZillaToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.connectWithFileZillaToolStripMenuItem.Text = "Connect with FileZilla";
+            this.connectWithFileZillaToolStripMenuItem.Click += new System.EventHandler(this.connectWithFileZillaToolStripMenuItem_Click);
             // 
             // editSessionToolStripMenuItem
             // 
@@ -1154,6 +1180,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem38;
         private System.Windows.Forms.ToolStripMenuItem startAllSessionsInFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem39;
+        private System.Windows.Forms.ToolStripMenuItem connectWithFileZillaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem40;
+        private System.Windows.Forms.ToolStripMenuItem connectWithWinSCPToolStripMenuItem;
 
     }
 }

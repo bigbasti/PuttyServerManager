@@ -138,6 +138,14 @@ namespace PuttyServerGUI2.ToolWindows {
                 }
 
                 if (clickedNode.SelectedImageIndex == 6) {
+                    if (string.IsNullOrEmpty(ApplicationPaths.PathToFileZilla)) {
+                        connectWithFileZillaToolStripMenuItem.Enabled = false;
+                    } else { connectWithFileZillaToolStripMenuItem.Enabled = true; }
+
+                    if (string.IsNullOrEmpty(ApplicationPaths.PathToWinSCP)) {
+                        connectWithWinSCPToolStripMenuItem.Enabled = false;
+                    } else { connectWithWinSCPToolStripMenuItem.Enabled = true; }
+
                     conMenuSession.Show(MousePosition);
                     return;
                 }
@@ -338,7 +346,7 @@ namespace PuttyServerGUI2.ToolWindows {
             }
         }
 
-        public void StartPuttySession(string sessionName) {
+        public void StartPuttySession(string sessionName, DockState dockstate = WeifenLuo.WinFormsUI.Docking.DockState.Document) {
 
             //On demand: start putty agent
             if (ApplicationPaths.UsePuttyAgent) {
@@ -352,7 +360,7 @@ namespace PuttyServerGUI2.ToolWindows {
             
             twiPutty puttyWindow = null;
 
-            PuttyClosedCallback callback = delegate(bool closed) {
+            ApplicationClosedCallback callback = delegate(bool closed) {
                 if (puttyWindow != null) {
 
                     if (puttyWindow.InvokeRequired) {
@@ -368,7 +376,86 @@ namespace PuttyServerGUI2.ToolWindows {
             };
 
             puttyWindow = new twiPutty(sessionName, callback, containerForm);
-            puttyWindow.Show(dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
+            puttyWindow.Show(dockPanel, dockstate);
+        }
+
+        private void StartSessionInFileZilla(string session, string userPass) {
+            string retVal = "";
+
+            try {
+                string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
+
+                string filezillaString = "";
+                string puttyTunnel = "";
+
+                string userNameLine = "";
+                string ipLine = "";
+                string remoteCommandLine = "";
+
+                foreach (string line in sessionData) {
+                    if (line.StartsWith("UserName=")) { userNameLine = line; }
+                    if (line.StartsWith("HostName=")) { ipLine = line; }
+                    if (line.StartsWith("RemoteCommand=")) { remoteCommandLine = line; }
+                }
+
+                if (remoteCommandLine.Length > "RemoteCommand=".Length && remoteCommandLine.Contains("ssh")) {
+                    string userName = "";
+                    string serverName = "";
+                    string serverPort = "";
+
+                    //Es muss eine Getunnelte Verbindung aufgebaut werden
+                    userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
+                    serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                    serverPort = "22";
+
+                    string rndPort = new Random().Next(1025, 65000).ToString();
+
+                    puttyTunnel = string.Format("PortForwardings=L{0}={1}:{2},", rndPort, serverName, serverPort);
+
+                    for (int i = 0; i < sessionData.Length; i++) {
+                        if (sessionData[i].StartsWith("PortForwardings=")) { sessionData[i] = puttyTunnel; }
+                    }
+
+                    //save temp session
+                    File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"), sessionData);
+
+                    //start putty session
+                    StartPuttySession(session + "_tunnel", WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
+
+                    filezillaString = string.Format("sftp://{0}:{1}@localhost:{2}", userName, userPass, rndPort);
+                    Program.LogWriter.Log("sftp://{0}:{1}@localhost:{2}", userName, "******", rndPort);
+
+                    infWait waiter = new infWait(ApplicationPaths.PathToFileZilla, filezillaString);
+                    waiter.Show();
+
+                } else {
+                    //kein tunnel nötig
+                    string userName = "";
+                    string serverName = "";
+                    string serverPort = "22";
+                    if (userNameLine.Length <= "UserName=".Length) {
+                        userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username");
+                        if (string.IsNullOrEmpty(userName)) {
+                            return;
+                        }
+
+                        userNameLine = "UserName=" + userName;
+                    }
+                    userName = userNameLine.Substring(userNameLine.IndexOf("=") + 1, userNameLine.Length - 1 - userNameLine.IndexOf("="));
+                    serverName = ipLine.Substring(ipLine.IndexOf("=") + 1, ipLine.Length - 1 - ipLine.IndexOf("="));
+
+                    filezillaString = string.Format("sftp://{0}:{1}@{2}:{3}", userName, userPass, serverName, serverPort);
+
+                    Program.LogWriter.Log("sftp://{0}:{1}@{2}:{3}", userName, userPass, serverName, serverPort);
+
+                    ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToFileZilla, filezillaString);
+                    pi.WorkingDirectory = ApplicationPaths.PathToFileZilla.Substring(0, ApplicationPaths.PathToFileZilla.LastIndexOf(Path.DirectorySeparatorChar));
+                    Process.Start(pi);
+                }
+            } catch (Exception ex) {
+                Program.LogWriter.Log("Could not start FileZilla: {0}", ex.Message);
+            }
+
         }
 
 
@@ -860,6 +947,16 @@ namespace PuttyServerGUI2.ToolWindows {
                     StartPuttySession(session.Text);
                 }
             }
+        }
+
+        private void connectWithFileZillaToolStripMenuItem_Click(object sender, EventArgs e) {
+            dlgPassword passDlg = new dlgPassword();
+            DialogResult res = passDlg.ShowDialog();
+
+            if (!string.IsNullOrEmpty(passDlg.EnteredPassword)) {
+                StartSessionInFileZilla(trvSessions.SelectedNode.Text, passDlg.EnteredPassword);
+            }
+            
         }
 
 

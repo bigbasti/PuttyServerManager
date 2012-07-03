@@ -119,6 +119,18 @@
     <Compile Include="Tools\Extensions\TreeViewExtensions.cs" />
     <Compile Include="Tools\RegistryExporter.cs" />
     <Compile Include="Tools\SingleInstanceHelper.cs" />
+    <Compile Include="ToolWindows\dlgPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolWindows\dlgPassword.Designer.cs">
+      <DependentUpon>dlgPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolWindows\infWait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolWindows\infWait.Designer.cs">
+      <DependentUpon>infWait.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolWindows\twiPutty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +174,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ToolWindows\dlgPassword.resx">
+      <DependentUpon>dlgPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolWindows\infWait.resx">
+      <DependentUpon>infWait.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ToolWindows\twiPutty.resx">
       <DependentUpon>twiPutty.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +206,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\computer_go.png" />
+    <None Include="Resources\clock.png" />
+    <None Include="Resources\Key1.png" />
+    <None Include="Resources\Key.png" />
     <None Include="Resources\application_cascade.png" />
     <None Include="Resources\tab_delete.png" />
     <None Include="Resources\tab_edit.png" />

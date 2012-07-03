@@ -192,5 +192,25 @@ namespace PuttyServerGUI2.Config {
             }
         }
 
+        public static string PathToFileZilla {
+            get {
+                return Settings.Default.FileZillaPath;
+            }
+            set {
+                Settings.Default.FileZillaPath = value;
+                Settings.Default.Save();
+            }
+        }
+
+        public static string PathToWinSCP {
+            get {
+                return Settings.Default.WinSCPPath;
+            }
+            set {
+                Settings.Default.WinSCPPath = value;
+                Settings.Default.Save();
+            }
+        }
+
     }
 }

@@ -44,6 +44,8 @@ namespace PuttyServerGUI2 {
             ApplicationPaths.TeamUsername = txtUsername.Text;
             ApplicationPaths.UsePuttyAgent = chkUsePuttyAgent.Checked;
             ApplicationPaths.RuninSingleInstanceMode = chkSingleWindow.Checked;
+            ApplicationPaths.PathToFileZilla = txtFileZillaPath.Text;
+            ApplicationPaths.PathToWinSCP = txtWinSCPPath.Text;
         }
 
         private void LoadSettings() {
@@ -55,6 +57,8 @@ namespace PuttyServerGUI2 {
             chkUsePuttyAgent.Checked = ApplicationPaths.UsePuttyAgent;
             txtPuttyAgentParameters.Enabled = chkUsePuttyAgent.Checked;
             chkSingleWindow.Checked = ApplicationPaths.RuninSingleInstanceMode;
+            txtFileZillaPath.Text = ApplicationPaths.PathToFileZilla;
+            txtWinSCPPath.Text = ApplicationPaths.PathToWinSCP;
         }
 
         private void btnSaveClose_Click(object sender, EventArgs e) {
@@ -83,6 +87,26 @@ namespace PuttyServerGUI2 {
 
         private void chkUsePuttyAgent_CheckedChanged(object sender, EventArgs e) {
             txtPuttyAgentParameters.Enabled = chkUsePuttyAgent.Checked;
+        }
+
+        private void btnFileZillaPath_Click(object sender, EventArgs e) {
+            OpenFileDialog file = new OpenFileDialog();
+            file.Multiselect = false;
+            DialogResult res = file.ShowDialog();
+
+            if (res != System.Windows.Forms.DialogResult.Abort && res != System.Windows.Forms.DialogResult.Cancel) {
+                txtFileZillaPath.Text = file.FileName;
+            }
+        }
+
+        private void btnWinSCPPath_Click(object sender, EventArgs e) {
+            OpenFileDialog file = new OpenFileDialog();
+            file.Multiselect = false;
+            DialogResult res = file.ShowDialog();
+
+            if (res != System.Windows.Forms.DialogResult.Abort && res != System.Windows.Forms.DialogResult.Cancel) {
+                txtWinSCPPath.Text = file.FileName;
+            }
         }
     }
 }

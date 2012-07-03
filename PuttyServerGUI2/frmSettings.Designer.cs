@@ -63,6 +63,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnWinSCPPath = new System.Windows.Forms.Button();
+            this.btnFileZillaPath = new System.Windows.Forms.Button();
+            this.txtWinSCPPath = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtFileZillaPath = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.btnSaveClose = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
@@ -82,12 +92,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
             // 
             this.tabGeneral.Controls.Add(this.tabPage1);
             this.tabGeneral.Controls.Add(this.tabPage2);
+            this.tabGeneral.Controls.Add(this.tabPage3);
             this.tabGeneral.Location = new System.Drawing.Point(12, 12);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.SelectedIndex = 0;
@@ -477,6 +491,103 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "This configuration is only needed when you use a team setup!";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox6);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(342, 315);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Extensions";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnWinSCPPath);
+            this.groupBox6.Controls.Add(this.btnFileZillaPath);
+            this.groupBox6.Controls.Add(this.txtWinSCPPath);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Controls.Add(this.txtFileZillaPath);
+            this.groupBox6.Controls.Add(this.label12);
+            this.groupBox6.Controls.Add(this.pictureBox13);
+            this.groupBox6.Controls.Add(this.label13);
+            this.groupBox6.Location = new System.Drawing.Point(3, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(330, 117);
+            this.groupBox6.TabIndex = 15;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "File Managers";
+            // 
+            // btnWinSCPPath
+            // 
+            this.btnWinSCPPath.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnWinSCPPath.Location = new System.Drawing.Point(300, 88);
+            this.btnWinSCPPath.Name = "btnWinSCPPath";
+            this.btnWinSCPPath.Size = new System.Drawing.Size(24, 23);
+            this.btnWinSCPPath.TabIndex = 7;
+            this.btnWinSCPPath.UseVisualStyleBackColor = true;
+            this.btnWinSCPPath.Click += new System.EventHandler(this.btnWinSCPPath_Click);
+            // 
+            // btnFileZillaPath
+            // 
+            this.btnFileZillaPath.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnFileZillaPath.Location = new System.Drawing.Point(300, 48);
+            this.btnFileZillaPath.Name = "btnFileZillaPath";
+            this.btnFileZillaPath.Size = new System.Drawing.Size(24, 23);
+            this.btnFileZillaPath.TabIndex = 6;
+            this.btnFileZillaPath.UseVisualStyleBackColor = true;
+            this.btnFileZillaPath.Click += new System.EventHandler(this.btnFileZillaPath_Click);
+            // 
+            // txtWinSCPPath
+            // 
+            this.txtWinSCPPath.Location = new System.Drawing.Point(6, 90);
+            this.txtWinSCPPath.Name = "txtWinSCPPath";
+            this.txtWinSCPPath.Size = new System.Drawing.Size(292, 20);
+            this.txtWinSCPPath.TabIndex = 5;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 74);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(84, 13);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Path to WinSCP";
+            // 
+            // txtFileZillaPath
+            // 
+            this.txtFileZillaPath.Location = new System.Drawing.Point(6, 51);
+            this.txtFileZillaPath.Name = "txtFileZillaPath";
+            this.txtFileZillaPath.Size = new System.Drawing.Size(292, 20);
+            this.txtFileZillaPath.TabIndex = 3;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 35);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(79, 13);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Path to FileZilla";
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox13.Location = new System.Drawing.Point(6, 16);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox13.TabIndex = 1;
+            this.pictureBox13.TabStop = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(26, 16);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(283, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Leave the Configuration blank to deactivete the extension.";
+            // 
             // btnSaveClose
             // 
             this.btnSaveClose.Location = new System.Drawing.Point(242, 359);
@@ -535,6 +646,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -583,5 +698,15 @@
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox9;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnWinSCPPath;
+        private System.Windows.Forms.Button btnFileZillaPath;
+        private System.Windows.Forms.TextBox txtWinSCPPath;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtFileZillaPath;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.Label label13;
     }
 }

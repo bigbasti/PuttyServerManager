@@ -30,7 +30,7 @@ using System.Windows.Forms;
 using PuttyServerGUI2.ToolWindows;
 
 namespace PuttyServerGUI2.WindowTools {
-    public delegate void PuttyClosedCallback(bool error);
+    public delegate void ApplicationClosedCallback(bool error);
 
     public class ApplicationPanel : System.Windows.Forms.Panel {
 
@@ -51,7 +51,7 @@ namespace PuttyServerGUI2.WindowTools {
         private string m_ApplicationWorkingDirectory = "";  //
         private WindowActivator m_windowActivator = null;   //
 
-        public PuttyClosedCallback m_CloseCallback;
+        public ApplicationClosedCallback m_CloseCallback;
 
         public IntPtr AppWindowHandle { get { return this.m_AppWin; } }
 

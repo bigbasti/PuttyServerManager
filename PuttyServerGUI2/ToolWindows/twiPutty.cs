@@ -16,13 +16,13 @@ namespace PuttyServerGUI2.ToolWindows {
     public partial class twiPutty : ToolWindow {
 
         private ApplicationPanel applicationwrapper;
-        private PuttyClosedCallback m_ApplicationExit;
+        private ApplicationClosedCallback m_ApplicationExit;
 
         private Form containerForm;
 
         public string sessionName;
 
-        public twiPutty(string session, PuttyClosedCallback callback, Form container) {
+        public twiPutty(string session, ApplicationClosedCallback callback, Form container) {
             InitializeComponent();
 
             m_ApplicationExit = callback;

@@ -178,5 +178,29 @@ namespace PuttyServerGUI2.Properties {
                 this["SingleInstance"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FileZillaPath {
+            get {
+                return ((string)(this["FileZillaPath"]));
+            }
+            set {
+                this["FileZillaPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WinSCPPath {
+            get {
+                return ((string)(this["WinSCPPath"]));
+            }
+            set {
+                this["WinSCPPath"] = value;
+            }
+        }
     }
 }

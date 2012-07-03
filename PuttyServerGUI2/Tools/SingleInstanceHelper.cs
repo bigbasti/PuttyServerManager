@@ -7,6 +7,7 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Runtime.Remoting.Messaging;
 using PuttyServerGUI2.Config;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace PuttyServerGUI2.Tools {
     public class SingleInstanceHelper : MarshalByRefObject {
@@ -60,7 +61,7 @@ namespace PuttyServerGUI2.Tools {
                     //Session name übergeben
                     frmMainWindow main = (frmMainWindow)ApplicationPaths.ApplicationMainForm;
                     if (main.InvokeRequired) {
-                        main.BeginInvoke(new Action<string>(main.frmSessions.StartPuttySession), args[0]);
+                        main.BeginInvoke(new Action<string, DockState>(main.frmSessions.StartPuttySession), args[0], DockState.Document);
                     }
                     //.frmSessions.StartPuttySession(args[0]);
                 } else if (args.Length == 3) {
