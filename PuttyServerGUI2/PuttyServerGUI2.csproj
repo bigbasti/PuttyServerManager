@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\application_cascade.png" />
     <None Include="Resources\tab_delete.png" />
     <None Include="Resources\tab_edit.png" />
     <None Include="Resources\application_double.png" />

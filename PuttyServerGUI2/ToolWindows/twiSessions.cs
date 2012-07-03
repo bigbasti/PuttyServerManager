@@ -143,6 +143,11 @@ namespace PuttyServerGUI2.ToolWindows {
                 }
 
                 if (clickedNode.SelectedImageIndex == 1) {
+                    if (clickedNode.Nodes.Count == 0) {
+                        startAllSessionsInFolderToolStripMenuItem.Enabled = false;
+                    } else {
+                        startAllSessionsInFolderToolStripMenuItem.Enabled = true;
+                    }
                     conMenuFolder.Show(MousePosition);
                     return;
                 }
@@ -845,6 +850,17 @@ namespace PuttyServerGUI2.ToolWindows {
 
         #endregion
 
+        private void startAllSessionsInFolderToolStripMenuItem_Click(object sender, EventArgs e) {
+            StartAllSessionsInFolder(trvSessions.SelectedNode);
+        }
+
+        private void StartAllSessionsInFolder(TreeNode folder) {
+            foreach (TreeNode session in folder.Nodes) {
+                if (session.ImageIndex == 6) {
+                    StartPuttySession(session.Text);
+                }
+            }
+        }
 
 
 

@@ -26,6 +26,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabGeneral = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -39,14 +41,20 @@
             this.lblStoredSessions = new System.Windows.Forms.Label();
             this.btnRunConfigurationWizard = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.chkSingleWindow = new System.Windows.Forms.CheckBox();
             this.chkStartWithWindows = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.btnOpenTeamSessionFolder = new System.Windows.Forms.Button();
             this.btnOpenTeamSessionList = new System.Windows.Forms.Button();
             this.txtTeamSessionFolder = new System.Windows.Forms.TextBox();
@@ -57,31 +65,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnSaveClose = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
-            this.chkSingleWindow = new System.Windows.Forms.CheckBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.tabGeneral.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabGeneral
@@ -109,6 +109,24 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(32, 249);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(236, 13);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "These settings require a restart of the application";
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox6.Location = new System.Drawing.Point(13, 246);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox6.TabIndex = 8;
+            this.pictureBox6.TabStop = false;
             // 
             // groupBox5
             // 
@@ -243,6 +261,25 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General Settings";
             // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox5.Location = new System.Drawing.Point(311, 38);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox5.TabIndex = 2;
+            this.pictureBox5.TabStop = false;
+            // 
+            // chkSingleWindow
+            // 
+            this.chkSingleWindow.AutoSize = true;
+            this.chkSingleWindow.Location = new System.Drawing.Point(6, 38);
+            this.chkSingleWindow.Name = "chkSingleWindow";
+            this.chkSingleWindow.Size = new System.Drawing.Size(186, 17);
+            this.chkSingleWindow.TabIndex = 1;
+            this.chkSingleWindow.Text = "Run PSG in Single-Window-Mode";
+            this.chkSingleWindow.UseVisualStyleBackColor = true;
+            // 
             // chkStartWithWindows
             // 
             this.chkStartWithWindows.AutoSize = true;
@@ -266,6 +303,24 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Team";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(25, 244);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(236, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "These settings require a restart of the application";
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox9.Location = new System.Drawing.Point(6, 241);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox9.TabIndex = 6;
+            this.pictureBox9.TabStop = false;
             // 
             // groupBox3
             // 
@@ -334,6 +389,24 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Paths - Team Settings";
             // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox8.Location = new System.Drawing.Point(305, 71);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox8.TabIndex = 14;
+            this.pictureBox8.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox7.Location = new System.Drawing.Point(305, 32);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox7.TabIndex = 13;
+            this.pictureBox7.TabStop = false;
+            // 
             // btnOpenTeamSessionFolder
             // 
             this.btnOpenTeamSessionFolder.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
@@ -382,9 +455,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 35);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 13);
+            this.label2.Size = new System.Drawing.Size(142, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Path to Team Session list";
+            this.label2.Text = "Path to Team Session list file";
             // 
             // pictureBox1
             // 
@@ -423,79 +496,6 @@
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Software Version {0}";
             // 
-            // chkSingleWindow
-            // 
-            this.chkSingleWindow.AutoSize = true;
-            this.chkSingleWindow.Location = new System.Drawing.Point(6, 38);
-            this.chkSingleWindow.Name = "chkSingleWindow";
-            this.chkSingleWindow.Size = new System.Drawing.Size(186, 17);
-            this.chkSingleWindow.TabIndex = 1;
-            this.chkSingleWindow.Text = "Run PSG in Single-Window-Mode";
-            this.chkSingleWindow.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = global::PuttyServerGUI2.Properties.Resources.error;
-            this.pictureBox5.Location = new System.Drawing.Point(311, 38);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox5.TabIndex = 2;
-            this.pictureBox5.TabStop = false;
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = global::PuttyServerGUI2.Properties.Resources.error;
-            this.pictureBox7.Location = new System.Drawing.Point(305, 32);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox7.TabIndex = 13;
-            this.pictureBox7.TabStop = false;
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Image = global::PuttyServerGUI2.Properties.Resources.error;
-            this.pictureBox8.Location = new System.Drawing.Point(305, 71);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox8.TabIndex = 14;
-            this.pictureBox8.TabStop = false;
-            // 
-            // pictureBox9
-            // 
-            this.pictureBox9.Image = global::PuttyServerGUI2.Properties.Resources.error;
-            this.pictureBox9.Location = new System.Drawing.Point(6, 241);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox9.TabIndex = 6;
-            this.pictureBox9.TabStop = false;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(25, 244);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(236, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "These settings require a restart of the application";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(32, 249);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(236, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "These settings require a restart of the application";
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = global::PuttyServerGUI2.Properties.Resources.error;
-            this.pictureBox6.Location = new System.Drawing.Point(13, 246);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox6.TabIndex = 8;
-            this.pictureBox6.TabStop = false;
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -514,6 +514,7 @@
             this.tabGeneral.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -522,19 +523,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

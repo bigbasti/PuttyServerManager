@@ -36,6 +36,25 @@
             this.tabRecentSessions = new System.Windows.Forms.TabPage();
             this.trvRecentSessions = new System.Windows.Forms.TreeView();
             this.conMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.conMenuFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.conMenuTreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.conMenuSessionMissing = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.conMenuRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
+            this.conMenuRemoveMissingRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
+            this.conMenuTeamSession = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.conMenuRegistrySession = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem39 = new System.Windows.Forms.ToolStripSeparator();
             this.startSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startColoredToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blackGreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,31 +66,23 @@
             this.redBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greyBlackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startSessionInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.editSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.startAllSessionsInFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSubfolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuTreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addSubfolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.renameToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.reloadOverviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortOverviewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.expandAllFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuSessionMissing = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeMissingSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeMissingSessionFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,18 +94,12 @@
             this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem20 = new System.Windows.Forms.ToolStripMenuItem();
             this.startInNativePuTTYWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.transferSessionToPersonalSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadSessionLisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.removeSessionFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuRemoveMissingRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeMissingSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
             this.removeAllMissingSessionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
             this.reloadSessionListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuTeamSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,13 +111,8 @@
             this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem29 = new System.Windows.Forms.ToolStripMenuItem();
             this.startInNativePuTTYWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.transferSessionToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.conMenuRegistrySession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.startInNativeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.transferToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem30 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem31 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem32 = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,6 +122,8 @@
             this.toolStripMenuItem36 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem37 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem38 = new System.Windows.Forms.ToolStripMenuItem();
+            this.startInNativeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transferToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSessionAreas.SuspendLayout();
             this.tabPersonal.SuspendLayout();
             this.tabTeam.SuspendLayout();
@@ -287,6 +289,149 @@
             this.conMenuSession.Name = "conMenuSession";
             this.conMenuSession.Size = new System.Drawing.Size(234, 142);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(230, 6);
+            // 
+            // conMenuFolder
+            // 
+            this.conMenuFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addSessionToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.startAllSessionsInFolderToolStripMenuItem,
+            this.toolStripMenuItem39,
+            this.addSubfolderToolStripMenuItem,
+            this.renameToolStripMenuItem1,
+            this.deleteToolStripMenuItem1});
+            this.conMenuFolder.Name = "contextMenuFolder";
+            this.conMenuFolder.Size = new System.Drawing.Size(210, 148);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(206, 6);
+            // 
+            // conMenuTreeView
+            // 
+            this.conMenuTreeView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addSessionToolStripMenuItem1,
+            this.addSubfolderToolStripMenuItem1,
+            this.toolStripMenuItem5,
+            this.renameToolStripMenuItem2,
+            this.toolStripMenuItem6,
+            this.reloadOverviewToolStripMenuItem,
+            this.sortOverviewToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.expandAllFoldersToolStripMenuItem,
+            this.collapseAllFoldersToolStripMenuItem});
+            this.conMenuTreeView.Name = "conMenuTreeView";
+            this.conMenuTreeView.Size = new System.Drawing.Size(176, 176);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(172, 6);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(172, 6);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(172, 6);
+            // 
+            // conMenuSessionMissing
+            // 
+            this.conMenuSessionMissing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeMissingSessionToolStripMenuItem});
+            this.conMenuSessionMissing.Name = "conMenuSessionMissing";
+            this.conMenuSessionMissing.Size = new System.Drawing.Size(191, 26);
+            // 
+            // conMenuRecent
+            // 
+            this.conMenuRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem1,
+            this.toolStripMenuItem12,
+            this.startInNativePuTTYWindowToolStripMenuItem,
+            this.toolStripMenuItem7,
+            this.transferSessionToPersonalSessionsToolStripMenuItem,
+            this.reloadSessionLisToolStripMenuItem,
+            this.toolStripMenuItem8,
+            this.removeSessionFromListToolStripMenuItem});
+            this.conMenuRecent.Name = "conMenuRecent";
+            this.conMenuRecent.Size = new System.Drawing.Size(267, 148);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(263, 6);
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(263, 6);
+            // 
+            // conMenuRemoveMissingRecent
+            // 
+            this.conMenuRemoveMissingRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeMissingSessionToolStripMenuItem1,
+            this.toolStripMenuItem9,
+            this.removeAllMissingSessionsToolStripMenuItem,
+            this.toolStripMenuItem10,
+            this.reloadSessionListToolStripMenuItem});
+            this.conMenuRemoveMissingRecent.Name = "conMenuRemoveMissingRecent";
+            this.conMenuRemoveMissingRecent.Size = new System.Drawing.Size(223, 82);
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(219, 6);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(219, 6);
+            // 
+            // conMenuTeamSession
+            // 
+            this.conMenuTeamSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem2,
+            this.toolStripMenuItem21,
+            this.startInNativePuTTYWindowToolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.transferSessionToPersonalListToolStripMenuItem});
+            this.conMenuTeamSession.Name = "conMenuTeamSession";
+            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 98);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(239, 6);
+            // 
+            // conMenuRegistrySession
+            // 
+            this.conMenuRegistrySession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startSessionToolStripMenuItem3,
+            this.toolStripMenuItem30,
+            this.startInNativeWindowToolStripMenuItem,
+            this.toolStripMenuItem11,
+            this.transferToPersonalListToolStripMenuItem});
+            this.conMenuRegistrySession.Name = "contextMenuStrip1";
+            this.conMenuRegistrySession.Size = new System.Drawing.Size(201, 98);
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(197, 6);
+            // 
+            // toolStripMenuItem39
+            // 
+            this.toolStripMenuItem39.Name = "toolStripMenuItem39";
+            this.toolStripMenuItem39.Size = new System.Drawing.Size(206, 6);
+            // 
             // startSessionToolStripMenuItem
             // 
             this.startSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
@@ -384,11 +529,6 @@
             this.startSessionInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
             this.startSessionInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startSessionInNativePuTTYWindowToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(230, 6);
-            // 
             // editSessionToolStripMenuItem
             // 
             this.editSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_edit;
@@ -413,35 +553,27 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // conMenuFolder
-            // 
-            this.conMenuFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addSessionToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.addSubfolderToolStripMenuItem,
-            this.renameToolStripMenuItem1,
-            this.deleteToolStripMenuItem1});
-            this.conMenuFolder.Name = "contextMenuFolder";
-            this.conMenuFolder.Size = new System.Drawing.Size(151, 98);
-            // 
             // addSessionToolStripMenuItem
             // 
             this.addSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.server_add;
             this.addSessionToolStripMenuItem.Name = "addSessionToolStripMenuItem";
-            this.addSessionToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.addSessionToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.addSessionToolStripMenuItem.Text = "Add Session";
             this.addSessionToolStripMenuItem.Click += new System.EventHandler(this.addSessionToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem3
+            // startAllSessionsInFolderToolStripMenuItem
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(147, 6);
+            this.startAllSessionsInFolderToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_cascade;
+            this.startAllSessionsInFolderToolStripMenuItem.Name = "startAllSessionsInFolderToolStripMenuItem";
+            this.startAllSessionsInFolderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.startAllSessionsInFolderToolStripMenuItem.Text = "Start all Sessions in Folder";
+            this.startAllSessionsInFolderToolStripMenuItem.Click += new System.EventHandler(this.startAllSessionsInFolderToolStripMenuItem_Click);
             // 
             // addSubfolderToolStripMenuItem
             // 
             this.addSubfolderToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.folder_add;
             this.addSubfolderToolStripMenuItem.Name = "addSubfolderToolStripMenuItem";
-            this.addSubfolderToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.addSubfolderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.addSubfolderToolStripMenuItem.Text = "Add Subfolder";
             this.addSubfolderToolStripMenuItem.Click += new System.EventHandler(this.addSubfolderToolStripMenuItem_Click);
             // 
@@ -449,7 +581,7 @@
             // 
             this.renameToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.folder_edit;
             this.renameToolStripMenuItem1.Name = "renameToolStripMenuItem1";
-            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+            this.renameToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
             this.renameToolStripMenuItem1.Text = "Rename";
             this.renameToolStripMenuItem1.Click += new System.EventHandler(this.renameToolStripMenuItem1_Click);
             // 
@@ -457,25 +589,9 @@
             // 
             this.deleteToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.folder_delete;
             this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(209, 22);
             this.deleteToolStripMenuItem1.Text = "Delete";
             this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
-            // 
-            // conMenuTreeView
-            // 
-            this.conMenuTreeView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addSessionToolStripMenuItem1,
-            this.addSubfolderToolStripMenuItem1,
-            this.toolStripMenuItem5,
-            this.renameToolStripMenuItem2,
-            this.toolStripMenuItem6,
-            this.reloadOverviewToolStripMenuItem,
-            this.sortOverviewToolStripMenuItem,
-            this.toolStripMenuItem4,
-            this.expandAllFoldersToolStripMenuItem,
-            this.collapseAllFoldersToolStripMenuItem});
-            this.conMenuTreeView.Name = "conMenuTreeView";
-            this.conMenuTreeView.Size = new System.Drawing.Size(176, 176);
             // 
             // addSessionToolStripMenuItem1
             // 
@@ -493,11 +609,6 @@
             this.addSubfolderToolStripMenuItem1.Text = "Add Subfolder";
             this.addSubfolderToolStripMenuItem1.Click += new System.EventHandler(this.addSubfolderToolStripMenuItem1_Click);
             // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(172, 6);
-            // 
             // renameToolStripMenuItem2
             // 
             this.renameToolStripMenuItem2.Image = global::PuttyServerGUI2.Properties.Resources.computer_edit;
@@ -505,11 +616,6 @@
             this.renameToolStripMenuItem2.Size = new System.Drawing.Size(175, 22);
             this.renameToolStripMenuItem2.Text = "Rename";
             this.renameToolStripMenuItem2.Click += new System.EventHandler(this.renameToolStripMenuItem2_Click);
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(172, 6);
             // 
             // reloadOverviewToolStripMenuItem
             // 
@@ -527,11 +633,6 @@
             this.sortOverviewToolStripMenuItem.Text = "Sort Overview";
             this.sortOverviewToolStripMenuItem.Click += new System.EventHandler(this.sortOverviewToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(172, 6);
-            // 
             // expandAllFoldersToolStripMenuItem
             // 
             this.expandAllFoldersToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.magnifier_zoom_in;
@@ -547,13 +648,6 @@
             this.collapseAllFoldersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.collapseAllFoldersToolStripMenuItem.Text = "Collapse all Folders";
             this.collapseAllFoldersToolStripMenuItem.Click += new System.EventHandler(this.collapseAllFoldersToolStripMenuItem_Click);
-            // 
-            // conMenuSessionMissing
-            // 
-            this.conMenuSessionMissing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeMissingSessionToolStripMenuItem});
-            this.conMenuSessionMissing.Name = "conMenuSessionMissing";
-            this.conMenuSessionMissing.Size = new System.Drawing.Size(191, 26);
             // 
             // removeMissingSessionToolStripMenuItem
             // 
@@ -572,20 +666,6 @@
             this.removeMissingSessionFromListToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.removeMissingSessionFromListToolStripMenuItem.Text = "Remove missing session from list";
             this.removeMissingSessionFromListToolStripMenuItem.Click += new System.EventHandler(this.removeMissingSessionFromListToolStripMenuItem_Click);
-            // 
-            // conMenuRecent
-            // 
-            this.conMenuRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startSessionToolStripMenuItem1,
-            this.toolStripMenuItem12,
-            this.startInNativePuTTYWindowToolStripMenuItem,
-            this.toolStripMenuItem7,
-            this.transferSessionToPersonalSessionsToolStripMenuItem,
-            this.reloadSessionLisToolStripMenuItem,
-            this.toolStripMenuItem8,
-            this.removeSessionFromListToolStripMenuItem});
-            this.conMenuRecent.Name = "conMenuRecent";
-            this.conMenuRecent.Size = new System.Drawing.Size(267, 148);
             // 
             // startSessionToolStripMenuItem1
             // 
@@ -685,11 +765,6 @@
             this.startInNativePuTTYWindowToolStripMenuItem.Text = "Start in Native PuTTY Window";
             this.startInNativePuTTYWindowToolStripMenuItem.Click += new System.EventHandler(this.startInNativePuTTYWindowToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(263, 6);
-            // 
             // transferSessionToPersonalSessionsToolStripMenuItem
             // 
             this.transferSessionToPersonalSessionsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
@@ -706,11 +781,6 @@
             this.reloadSessionLisToolStripMenuItem.Text = "Reload session list";
             this.reloadSessionLisToolStripMenuItem.Click += new System.EventHandler(this.reloadSessionLisToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem8
-            // 
-            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(263, 6);
-            // 
             // removeSessionFromListToolStripMenuItem
             // 
             this.removeSessionFromListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.delete;
@@ -720,17 +790,6 @@
             this.removeSessionFromListToolStripMenuItem.Text = "Remove session from list";
             this.removeSessionFromListToolStripMenuItem.Click += new System.EventHandler(this.removeSessionFromListToolStripMenuItem_Click);
             // 
-            // conMenuRemoveMissingRecent
-            // 
-            this.conMenuRemoveMissingRecent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeMissingSessionToolStripMenuItem1,
-            this.toolStripMenuItem9,
-            this.removeAllMissingSessionsToolStripMenuItem,
-            this.toolStripMenuItem10,
-            this.reloadSessionListToolStripMenuItem});
-            this.conMenuRemoveMissingRecent.Name = "conMenuRemoveMissingRecent";
-            this.conMenuRemoveMissingRecent.Size = new System.Drawing.Size(223, 82);
-            // 
             // removeMissingSessionToolStripMenuItem1
             // 
             this.removeMissingSessionToolStripMenuItem1.Image = global::PuttyServerGUI2.Properties.Resources.error;
@@ -738,11 +797,6 @@
             this.removeMissingSessionToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
             this.removeMissingSessionToolStripMenuItem1.Text = "Remove missing session";
             this.removeMissingSessionToolStripMenuItem1.Click += new System.EventHandler(this.removeMissingSessionToolStripMenuItem1_Click);
-            // 
-            // toolStripMenuItem9
-            // 
-            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(219, 6);
             // 
             // removeAllMissingSessionsToolStripMenuItem
             // 
@@ -752,11 +806,6 @@
             this.removeAllMissingSessionsToolStripMenuItem.Text = "Remove all missing sessions";
             this.removeAllMissingSessionsToolStripMenuItem.Click += new System.EventHandler(this.removeAllMissingSessionsToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem10
-            // 
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(219, 6);
-            // 
             // reloadSessionListToolStripMenuItem
             // 
             this.reloadSessionListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_refresh;
@@ -764,17 +813,6 @@
             this.reloadSessionListToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.reloadSessionListToolStripMenuItem.Text = "Reload session list";
             this.reloadSessionListToolStripMenuItem.Click += new System.EventHandler(this.reloadSessionListToolStripMenuItem_Click);
-            // 
-            // conMenuTeamSession
-            // 
-            this.conMenuTeamSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startSessionToolStripMenuItem2,
-            this.toolStripMenuItem21,
-            this.startInNativePuTTYWindowToolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.transferSessionToPersonalListToolStripMenuItem});
-            this.conMenuTeamSession.Name = "conMenuTeamSession";
-            this.conMenuTeamSession.Size = new System.Drawing.Size(243, 98);
             // 
             // startSessionToolStripMenuItem2
             // 
@@ -804,7 +842,7 @@
             // toolStripMenuItem22
             // 
             this.toolStripMenuItem22.Name = "toolStripMenuItem22";
-            this.toolStripMenuItem22.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem22.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem22.Text = "White / Black";
             this.toolStripMenuItem22.Click += new System.EventHandler(this.toolStripMenuItem22_Click);
             // 
@@ -813,7 +851,7 @@
             this.toolStripMenuItem23.BackColor = System.Drawing.Color.Black;
             this.toolStripMenuItem23.ForeColor = System.Drawing.Color.White;
             this.toolStripMenuItem23.Name = "toolStripMenuItem23";
-            this.toolStripMenuItem23.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem23.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem23.Text = "Black / White";
             this.toolStripMenuItem23.Click += new System.EventHandler(this.toolStripMenuItem23_Click);
             // 
@@ -822,7 +860,7 @@
             this.toolStripMenuItem24.BackColor = System.Drawing.Color.Black;
             this.toolStripMenuItem24.ForeColor = System.Drawing.Color.Lime;
             this.toolStripMenuItem24.Name = "toolStripMenuItem24";
-            this.toolStripMenuItem24.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem24.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem24.Text = "Black / Green";
             this.toolStripMenuItem24.Click += new System.EventHandler(this.toolStripMenuItem24_Click);
             // 
@@ -830,7 +868,7 @@
             // 
             this.toolStripMenuItem25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.toolStripMenuItem25.Name = "toolStripMenuItem25";
-            this.toolStripMenuItem25.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem25.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem25.Text = "Yellow / Black";
             this.toolStripMenuItem25.Click += new System.EventHandler(this.toolStripMenuItem25_Click);
             // 
@@ -838,7 +876,7 @@
             // 
             this.toolStripMenuItem26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.toolStripMenuItem26.Name = "toolStripMenuItem26";
-            this.toolStripMenuItem26.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem26.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem26.Text = "Blue / Black";
             this.toolStripMenuItem26.Click += new System.EventHandler(this.toolStripMenuItem26_Click);
             // 
@@ -846,7 +884,7 @@
             // 
             this.toolStripMenuItem27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.toolStripMenuItem27.Name = "toolStripMenuItem27";
-            this.toolStripMenuItem27.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem27.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem27.Text = "Green / Black";
             this.toolStripMenuItem27.Click += new System.EventHandler(this.toolStripMenuItem27_Click);
             // 
@@ -854,7 +892,7 @@
             // 
             this.toolStripMenuItem28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.toolStripMenuItem28.Name = "toolStripMenuItem28";
-            this.toolStripMenuItem28.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem28.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem28.Text = "Red / Black";
             this.toolStripMenuItem28.Click += new System.EventHandler(this.toolStripMenuItem28_Click);
             // 
@@ -862,7 +900,7 @@
             // 
             this.toolStripMenuItem29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.toolStripMenuItem29.Name = "toolStripMenuItem29";
-            this.toolStripMenuItem29.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem29.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem29.Text = "Grey / Black";
             this.toolStripMenuItem29.Click += new System.EventHandler(this.toolStripMenuItem29_Click);
             // 
@@ -874,11 +912,6 @@
             this.startInNativePuTTYWindowToolStripMenuItem1.Text = "Start in Native PuTTY Window";
             this.startInNativePuTTYWindowToolStripMenuItem1.Click += new System.EventHandler(this.startInNativePuTTYWindowToolStripMenuItem1_Click);
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(239, 6);
-            // 
             // transferSessionToPersonalListToolStripMenuItem
             // 
             this.transferSessionToPersonalListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
@@ -886,17 +919,6 @@
             this.transferSessionToPersonalListToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.transferSessionToPersonalListToolStripMenuItem.Text = "Transfer Session to Personal List";
             this.transferSessionToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferSessionToPersonalListToolStripMenuItem_Click);
-            // 
-            // conMenuRegistrySession
-            // 
-            this.conMenuRegistrySession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startSessionToolStripMenuItem3,
-            this.toolStripMenuItem30,
-            this.startInNativeWindowToolStripMenuItem,
-            this.toolStripMenuItem11,
-            this.transferToPersonalListToolStripMenuItem});
-            this.conMenuRegistrySession.Name = "contextMenuStrip1";
-            this.conMenuRegistrySession.Size = new System.Drawing.Size(201, 120);
             // 
             // startSessionToolStripMenuItem3
             // 
@@ -906,27 +928,6 @@
             this.startSessionToolStripMenuItem3.Size = new System.Drawing.Size(200, 22);
             this.startSessionToolStripMenuItem3.Text = "Start Session";
             this.startSessionToolStripMenuItem3.Click += new System.EventHandler(this.startSessionToolStripMenuItem3_Click);
-            // 
-            // startInNativeWindowToolStripMenuItem
-            // 
-            this.startInNativeWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
-            this.startInNativeWindowToolStripMenuItem.Name = "startInNativeWindowToolStripMenuItem";
-            this.startInNativeWindowToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.startInNativeWindowToolStripMenuItem.Text = "Start in Native Window";
-            this.startInNativeWindowToolStripMenuItem.Click += new System.EventHandler(this.startInNativeWindowToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(197, 6);
-            // 
-            // transferToPersonalListToolStripMenuItem
-            // 
-            this.transferToPersonalListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
-            this.transferToPersonalListToolStripMenuItem.Name = "transferToPersonalListToolStripMenuItem";
-            this.transferToPersonalListToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.transferToPersonalListToolStripMenuItem.Text = "Transfer to Personal List";
-            this.transferToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferToPersonalListToolStripMenuItem_Click);
             // 
             // toolStripMenuItem30
             // 
@@ -947,7 +948,7 @@
             // toolStripMenuItem31
             // 
             this.toolStripMenuItem31.Name = "toolStripMenuItem31";
-            this.toolStripMenuItem31.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem31.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem31.Text = "White / Black";
             this.toolStripMenuItem31.Click += new System.EventHandler(this.toolStripMenuItem31_Click);
             // 
@@ -956,7 +957,7 @@
             this.toolStripMenuItem32.BackColor = System.Drawing.Color.Black;
             this.toolStripMenuItem32.ForeColor = System.Drawing.Color.White;
             this.toolStripMenuItem32.Name = "toolStripMenuItem32";
-            this.toolStripMenuItem32.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem32.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem32.Text = "Black / White";
             this.toolStripMenuItem32.Click += new System.EventHandler(this.toolStripMenuItem32_Click);
             // 
@@ -965,7 +966,7 @@
             this.toolStripMenuItem33.BackColor = System.Drawing.Color.Black;
             this.toolStripMenuItem33.ForeColor = System.Drawing.Color.Lime;
             this.toolStripMenuItem33.Name = "toolStripMenuItem33";
-            this.toolStripMenuItem33.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem33.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem33.Text = "Black / Green";
             this.toolStripMenuItem33.Click += new System.EventHandler(this.toolStripMenuItem33_Click);
             // 
@@ -973,7 +974,7 @@
             // 
             this.toolStripMenuItem34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.toolStripMenuItem34.Name = "toolStripMenuItem34";
-            this.toolStripMenuItem34.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem34.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem34.Text = "Yellow / Black";
             this.toolStripMenuItem34.Click += new System.EventHandler(this.toolStripMenuItem34_Click);
             // 
@@ -981,7 +982,7 @@
             // 
             this.toolStripMenuItem35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.toolStripMenuItem35.Name = "toolStripMenuItem35";
-            this.toolStripMenuItem35.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem35.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem35.Text = "Blue / Black";
             this.toolStripMenuItem35.Click += new System.EventHandler(this.toolStripMenuItem35_Click);
             // 
@@ -989,7 +990,7 @@
             // 
             this.toolStripMenuItem36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.toolStripMenuItem36.Name = "toolStripMenuItem36";
-            this.toolStripMenuItem36.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem36.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem36.Text = "Green / Black";
             this.toolStripMenuItem36.Click += new System.EventHandler(this.toolStripMenuItem36_Click);
             // 
@@ -997,7 +998,7 @@
             // 
             this.toolStripMenuItem37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.toolStripMenuItem37.Name = "toolStripMenuItem37";
-            this.toolStripMenuItem37.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem37.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem37.Text = "Red / Black";
             this.toolStripMenuItem37.Click += new System.EventHandler(this.toolStripMenuItem37_Click);
             // 
@@ -1005,9 +1006,25 @@
             // 
             this.toolStripMenuItem38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.toolStripMenuItem38.Name = "toolStripMenuItem38";
-            this.toolStripMenuItem38.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem38.Size = new System.Drawing.Size(148, 22);
             this.toolStripMenuItem38.Text = "Grey / Black";
             this.toolStripMenuItem38.Click += new System.EventHandler(this.toolStripMenuItem38_Click);
+            // 
+            // startInNativeWindowToolStripMenuItem
+            // 
+            this.startInNativeWindowToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.startInNativeWindowToolStripMenuItem.Name = "startInNativeWindowToolStripMenuItem";
+            this.startInNativeWindowToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.startInNativeWindowToolStripMenuItem.Text = "Start in Native Window";
+            this.startInNativeWindowToolStripMenuItem.Click += new System.EventHandler(this.startInNativeWindowToolStripMenuItem_Click);
+            // 
+            // transferToPersonalListToolStripMenuItem
+            // 
+            this.transferToPersonalListToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.arrow_merge;
+            this.transferToPersonalListToolStripMenuItem.Name = "transferToPersonalListToolStripMenuItem";
+            this.transferToPersonalListToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.transferToPersonalListToolStripMenuItem.Text = "Transfer to Personal List";
+            this.transferToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferToPersonalListToolStripMenuItem_Click);
             // 
             // twiSessions
             // 
@@ -1135,6 +1152,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem36;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem37;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem38;
+        private System.Windows.Forms.ToolStripMenuItem startAllSessionsInFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem39;
 
     }
 }

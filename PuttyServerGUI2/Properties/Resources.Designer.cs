@@ -60,6 +60,13 @@ namespace PuttyServerGUI2.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap application_cascade {
+            get {
+                object obj = ResourceManager.GetObject("application_cascade", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap application_double {
             get {
                 object obj = ResourceManager.GetObject("application_double", resourceCulture);
