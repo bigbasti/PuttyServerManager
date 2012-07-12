@@ -73,6 +73,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox13 = new System.Windows.Forms.PictureBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btnSaveClose = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.Label();
             this.tabGeneral.SuspendLayout();
@@ -102,6 +103,7 @@
             this.tabGeneral.Controls.Add(this.tabPage1);
             this.tabGeneral.Controls.Add(this.tabPage2);
             this.tabGeneral.Controls.Add(this.tabPage3);
+            this.tabGeneral.Controls.Add(this.tabPage4);
             this.tabGeneral.Location = new System.Drawing.Point(12, 12);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.SelectedIndex = 0;
@@ -303,6 +305,7 @@
             this.chkStartWithWindows.TabIndex = 0;
             this.chkStartWithWindows.Text = "Start PSG with Windows automatically";
             this.chkStartWithWindows.UseVisualStyleBackColor = true;
+            this.chkStartWithWindows.CheckedChanged += new System.EventHandler(this.chkStartWithWindows_CheckedChanged);
             // 
             // tabPage2
             // 
@@ -588,6 +591,15 @@
             this.label13.TabIndex = 0;
             this.label13.Text = "Leave the Configuration blank to deactivete the extension.";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(342, 315);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "About";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // btnSaveClose
             // 
             this.btnSaveClose.Location = new System.Drawing.Point(242, 359);
@@ -708,5 +720,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.PictureBox pictureBox13;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }

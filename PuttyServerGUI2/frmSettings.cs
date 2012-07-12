@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using PuttyServerGUI2.Config;
 using System.IO;
 using System.Diagnostics;
+using PuttyServerGUI2.Tools;
 
 namespace PuttyServerGUI2 {
     public partial class frmSettings : Form {
@@ -107,6 +108,12 @@ namespace PuttyServerGUI2 {
             if (res != System.Windows.Forms.DialogResult.Abort && res != System.Windows.Forms.DialogResult.Cancel) {
                 txtWinSCPPath.Text = file.FileName;
             }
+        }
+
+        private void chkStartWithWindows_CheckedChanged(object sender, EventArgs e) {
+            chkStartWithWindows.Checked = !chkStartWithWindows.Checked;
+            ApplicationPaths.StartWithWindows = !chkStartWithWindows.Checked;
+            RegistryTools.RegisterInStartup(!chkStartWithWindows.Checked);
         }
     }
 }

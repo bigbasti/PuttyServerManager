@@ -8,8 +8,12 @@ using PuttyServerGUI2.Config;
 using System.IO;
 
 namespace PuttyServerGUI2.Tools {
-    class RegistryExporter {
+    class RegistryTools {
 
+        /// <summary>
+        /// Liest alle in der Registry gespeicherten Sessions aus
+        /// </summary>
+        /// <returns>Treenode mit allen gefundenen Sessions</returns>
         public static TreeNode ImportSessionsFromRegistry() {
 
             TreeNode retVal = new TreeNode("PuTTY Sessions");
@@ -77,6 +81,16 @@ namespace PuttyServerGUI2.Tools {
 
             return retVal;
 
+        }
+
+        public static void RegisterInStartup(bool isChecked) {
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey
+                    ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (isChecked) {
+                registryKey.SetValue("PuttyServerManager", Application.ExecutablePath);
+            } else {
+                registryKey.DeleteValue("PuttyServerManager");
+            }
         }
     }
 }

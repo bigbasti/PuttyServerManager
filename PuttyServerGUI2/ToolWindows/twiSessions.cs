@@ -99,7 +99,7 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private void LoarRegestrySessionsList() {
             try {
-                TreeNode node = RegistryExporter.ImportSessionsFromRegistry();
+                TreeNode node = RegistryTools.ImportSessionsFromRegistry();
                 trvRegistrySessions.Nodes.Add(node);
                 node.Expand();
             } catch (Exception ex) {
@@ -218,7 +218,7 @@ namespace PuttyServerGUI2.ToolWindows {
                 bool forbiddenNameFound = false;
                 foreach (string session in open.FileNames) {
 
-                    if (session.Contains(" ")) {
+                    if (Path.GetFileName(session).Contains(" ")) {
                         forbiddenNameFound = true;
                     } else {
                         if (trvSessions.DoesNodeExist(Path.GetFileName(session))) {
