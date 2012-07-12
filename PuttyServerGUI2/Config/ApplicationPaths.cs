@@ -50,7 +50,7 @@ namespace PuttyServerGUI2.Config {
 
         public static bool RemoteSessionIsConfigured {
             get {
-                return !string.IsNullOrEmpty(RemoteRepositoryPath);
+                return !string.IsNullOrEmpty(RemoteRepositoryPath) && !string.IsNullOrEmpty(RemoteSessionListPath);
             }
         }
 
