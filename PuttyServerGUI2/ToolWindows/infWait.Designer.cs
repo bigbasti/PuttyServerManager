@@ -1,4 +1,4 @@
-﻿namespace PuttyServerGUI2.ToolWindows {
+﻿namespace PuttyServerManager.ToolWindows {
     partial class infWait {
         /// <summary>
         /// Required designer variable.
@@ -44,7 +44,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::PuttyServerGUI2.Properties.Resources.clock;
+            this.pictureBox1.Image = global::PuttyServerManager.Properties.Resources.clock;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(48, 50);

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 
-namespace PuttyServerGUI2.ToolWindows {
+namespace PuttyServerManager.ToolWindows {
     public partial class infWait : Form {
         
         private string program, param;

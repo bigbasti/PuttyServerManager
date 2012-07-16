@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PuttyServerGUI2.WindowTools {
+namespace PuttyServerManager.WindowTools {
 
         #region WindowActivator
         public abstract class WindowActivator {

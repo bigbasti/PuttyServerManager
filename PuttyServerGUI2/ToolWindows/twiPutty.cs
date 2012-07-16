@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WindowTool;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
 using System.Runtime.InteropServices;
-using PuttyServerGUI2.WindowTools;
+using PuttyServerManager.WindowTools;
 
 
-namespace PuttyServerGUI2.ToolWindows {
+namespace PuttyServerManager.ToolWindows {
     public partial class twiPutty : ToolWindow {
 
         private ApplicationPanel applicationwrapper;

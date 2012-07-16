@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PuttyServerGUI2.ToolWindows {
+namespace PuttyServerManager.ToolWindows {
     public partial class dlgPassword : Form {
 
         public string EnteredPassword { get; private set; }

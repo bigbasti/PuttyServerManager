@@ -1,4 +1,4 @@
-﻿namespace PuttyServerGUI2.ToolWindows {
+﻿namespace PuttyServerManager.ToolWindows {
     partial class dlgPassword {
         /// <summary>
         /// Required designer variable.
@@ -72,7 +72,7 @@
             // 
             // imgKey
             // 
-            this.imgKey.Image = global::PuttyServerGUI2.Properties.Resources.Key1;
+            this.imgKey.Image = global::PuttyServerManager.Properties.Resources.Key1;
             this.imgKey.Location = new System.Drawing.Point(12, 12);
             this.imgKey.Name = "imgKey";
             this.imgKey.Size = new System.Drawing.Size(66, 75);

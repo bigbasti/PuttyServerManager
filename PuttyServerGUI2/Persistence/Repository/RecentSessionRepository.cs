@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
 
-namespace PuttyServerGUI2.Persistence.Repository {
+namespace PuttyServerManager.Persistence.Repository {
     class RecentSessionRepository : ISessionRepository{
         public bool UserCanEditList() {
             return false;

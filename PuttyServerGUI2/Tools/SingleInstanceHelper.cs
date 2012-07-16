@@ -6,13 +6,13 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Ipc;
 using System.Runtime.Remoting.Messaging;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace PuttyServerGUI2.Tools {
+namespace PuttyServerManager.Tools {
     public class SingleInstanceHelper : MarshalByRefObject {
 
-        public const string ChannelName = "PuttyServerGUI2";
+        public const string ChannelName = "PuttyServerManager";
         public const string SingleInstanceServiceName = "SingleInstance";
 
         public static void RegisterRemotingService() {
@@ -41,13 +41,6 @@ namespace PuttyServerGUI2.Tools {
             string objectUri;
             IMessageSink messageSink = channel.CreateMessageSink(url, null, out objectUri);
 
-            /*
-            Console.WriteLine("The URI of the message sink is {0}.", objectUri);
-            if (messageSink != null)
-            {
-                Console.WriteLine("The type of the message sink is {0}.", messageSink.GetType().ToString());
-            }
-            */
 
             SingleInstanceHelper helper = new SingleInstanceHelper();
             helper.Run(args);
@@ -72,12 +65,8 @@ namespace PuttyServerGUI2.Tools {
                     }
                 }
             } catch (Exception ex) {
-                Program.LogWriter.Log("Could not attach to existing PSG Process: {0}", ex.Message);
+                Program.LogWriter.Log("Could not attach to existing PSM Process: {0}", ex.Message);
             }
-
-            //CommandLineOptions cmd = new CommandLineOptions(args);
-            //SessionDataStartInfo ssi = cmd.ToSessionStartInfo();
-            //SuperPuTTY.OpenSession(ssi);
         }
     }
 }

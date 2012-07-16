@@ -8,8 +8,8 @@
     <ProjectGuid>{776A27D8-4C89-49EF-92E5-A379E65D71C8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PuttyServerGUI2</RootNamespace>
-    <AssemblyName>PuttyServerGUI2</AssemblyName>
+    <RootNamespace>PuttyServerManager</RootNamespace>
+    <AssemblyName>PuttyServerManager</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>PuttyServerGUI2.Program</StartupObject>
+    <StartupObject>PuttyServerManager.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>1340282105_network-workgroup.ico</ApplicationIcon>
@@ -72,7 +72,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -106,6 +106,12 @@
     <Compile Include="frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWizard.Designer.cs">
+      <DependentUpon>frmWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Persistence\Repository\ISessionRepository.cs" />
     <Compile Include="Persistence\Repository\LocalSessionRepository.cs" />
     <Compile Include="Persistence\Repository\RecentSessionRepository.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Logging\DebuggerMock.cs" />
     <Compile Include="Tools\Logging\DebugLogger.cs" />
+    <Compile Include="Tools\Logging\FileLogger.cs" />
     <Compile Include="Tools\Logging\ILogger.cs" />
     <Compile Include="Tools\Extensions\TreeViewExtensions.cs" />
     <Compile Include="Tools\RegistryTools.cs" />
@@ -164,6 +171,9 @@
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmWizard.resx">
+      <DependentUpon>frmWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -206,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\magic.png" />
     <None Include="Resources\computer_go.png" />
     <None Include="Resources\clock.png" />
     <None Include="Resources\Key1.png" />

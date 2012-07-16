@@ -1,4 +1,4 @@
-﻿namespace PuttyServerGUI2 {
+﻿namespace PuttyServerManager {
     partial class frmSettings {
         /// <summary>
         /// Required designer variable.
@@ -137,7 +137,7 @@
             // 
             // pictureBox6
             // 
-            this.pictureBox6.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox6.Image = global::PuttyServerManager.Properties.Resources.error;
             this.pictureBox6.Location = new System.Drawing.Point(13, 246);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(16, 16);
@@ -159,7 +159,7 @@
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox4.Image = global::PuttyServerManager.Properties.Resources.information;
             this.pictureBox4.Location = new System.Drawing.Point(6, 65);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(16, 16);
@@ -209,7 +209,7 @@
             // 
             // btnOpenStoredSessionsFolder
             // 
-            this.btnOpenStoredSessionsFolder.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnOpenStoredSessionsFolder.Image = global::PuttyServerManager.Properties.Resources.folder_explore;
             this.btnOpenStoredSessionsFolder.Location = new System.Drawing.Point(303, 48);
             this.btnOpenStoredSessionsFolder.Name = "btnOpenStoredSessionsFolder";
             this.btnOpenStoredSessionsFolder.Size = new System.Drawing.Size(24, 23);
@@ -237,7 +237,7 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = global::PuttyServerGUI2.Properties.Resources.server;
+            this.pictureBox3.Image = global::PuttyServerManager.Properties.Resources.server;
             this.pictureBox3.Location = new System.Drawing.Point(6, 16);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(16, 16);
@@ -255,7 +255,7 @@
             // 
             // btnRunConfigurationWizard
             // 
-            this.btnRunConfigurationWizard.Image = global::PuttyServerGUI2.Properties.Resources.wand;
+            this.btnRunConfigurationWizard.Image = global::PuttyServerManager.Properties.Resources.wand;
             this.btnRunConfigurationWizard.Location = new System.Drawing.Point(12, 282);
             this.btnRunConfigurationWizard.Name = "btnRunConfigurationWizard";
             this.btnRunConfigurationWizard.Size = new System.Drawing.Size(194, 27);
@@ -264,6 +264,7 @@
             this.btnRunConfigurationWizard.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRunConfigurationWizard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRunConfigurationWizard.UseVisualStyleBackColor = true;
+            this.btnRunConfigurationWizard.Click += new System.EventHandler(this.btnRunConfigurationWizard_Click);
             // 
             // groupBox1
             // 
@@ -279,7 +280,7 @@
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox5.Image = global::PuttyServerManager.Properties.Resources.error;
             this.pictureBox5.Location = new System.Drawing.Point(311, 38);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(16, 16);
@@ -291,9 +292,9 @@
             this.chkSingleWindow.AutoSize = true;
             this.chkSingleWindow.Location = new System.Drawing.Point(6, 38);
             this.chkSingleWindow.Name = "chkSingleWindow";
-            this.chkSingleWindow.Size = new System.Drawing.Size(186, 17);
+            this.chkSingleWindow.Size = new System.Drawing.Size(187, 17);
             this.chkSingleWindow.TabIndex = 1;
-            this.chkSingleWindow.Text = "Run PSG in Single-Window-Mode";
+            this.chkSingleWindow.Text = "Run PSM in Single-Window-Mode";
             this.chkSingleWindow.UseVisualStyleBackColor = true;
             // 
             // chkStartWithWindows
@@ -301,9 +302,9 @@
             this.chkStartWithWindows.AutoSize = true;
             this.chkStartWithWindows.Location = new System.Drawing.Point(6, 19);
             this.chkStartWithWindows.Name = "chkStartWithWindows";
-            this.chkStartWithWindows.Size = new System.Drawing.Size(206, 17);
+            this.chkStartWithWindows.Size = new System.Drawing.Size(207, 17);
             this.chkStartWithWindows.TabIndex = 0;
-            this.chkStartWithWindows.Text = "Start PSG with Windows automatically";
+            this.chkStartWithWindows.Text = "Start PSM with Windows automatically";
             this.chkStartWithWindows.UseVisualStyleBackColor = true;
             this.chkStartWithWindows.CheckedChanged += new System.EventHandler(this.chkStartWithWindows_CheckedChanged);
             // 
@@ -332,7 +333,7 @@
             // 
             // pictureBox9
             // 
-            this.pictureBox9.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox9.Image = global::PuttyServerManager.Properties.Resources.error;
             this.pictureBox9.Location = new System.Drawing.Point(6, 241);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(16, 16);
@@ -380,7 +381,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox2.Image = global::PuttyServerManager.Properties.Resources.information;
             this.pictureBox2.Location = new System.Drawing.Point(6, 19);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(16, 16);
@@ -408,7 +409,7 @@
             // 
             // pictureBox8
             // 
-            this.pictureBox8.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox8.Image = global::PuttyServerManager.Properties.Resources.error;
             this.pictureBox8.Location = new System.Drawing.Point(305, 71);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(16, 16);
@@ -417,7 +418,7 @@
             // 
             // pictureBox7
             // 
-            this.pictureBox7.Image = global::PuttyServerGUI2.Properties.Resources.error;
+            this.pictureBox7.Image = global::PuttyServerManager.Properties.Resources.error;
             this.pictureBox7.Location = new System.Drawing.Point(305, 32);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(16, 16);
@@ -426,7 +427,7 @@
             // 
             // btnOpenTeamSessionFolder
             // 
-            this.btnOpenTeamSessionFolder.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnOpenTeamSessionFolder.Image = global::PuttyServerManager.Properties.Resources.folder_explore;
             this.btnOpenTeamSessionFolder.Location = new System.Drawing.Point(300, 88);
             this.btnOpenTeamSessionFolder.Name = "btnOpenTeamSessionFolder";
             this.btnOpenTeamSessionFolder.Size = new System.Drawing.Size(24, 23);
@@ -436,7 +437,7 @@
             // 
             // btnOpenTeamSessionList
             // 
-            this.btnOpenTeamSessionList.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnOpenTeamSessionList.Image = global::PuttyServerManager.Properties.Resources.folder_explore;
             this.btnOpenTeamSessionList.Location = new System.Drawing.Point(300, 48);
             this.btnOpenTeamSessionList.Name = "btnOpenTeamSessionList";
             this.btnOpenTeamSessionList.Size = new System.Drawing.Size(24, 23);
@@ -478,7 +479,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox1.Image = global::PuttyServerManager.Properties.Resources.information;
             this.pictureBox1.Location = new System.Drawing.Point(6, 16);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(16, 16);
@@ -523,7 +524,7 @@
             // 
             // btnWinSCPPath
             // 
-            this.btnWinSCPPath.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnWinSCPPath.Image = global::PuttyServerManager.Properties.Resources.folder_explore;
             this.btnWinSCPPath.Location = new System.Drawing.Point(300, 88);
             this.btnWinSCPPath.Name = "btnWinSCPPath";
             this.btnWinSCPPath.Size = new System.Drawing.Size(24, 23);
@@ -533,7 +534,7 @@
             // 
             // btnFileZillaPath
             // 
-            this.btnFileZillaPath.Image = global::PuttyServerGUI2.Properties.Resources.folder_explore;
+            this.btnFileZillaPath.Image = global::PuttyServerManager.Properties.Resources.folder_explore;
             this.btnFileZillaPath.Location = new System.Drawing.Point(300, 48);
             this.btnFileZillaPath.Name = "btnFileZillaPath";
             this.btnFileZillaPath.Size = new System.Drawing.Size(24, 23);
@@ -575,7 +576,7 @@
             // 
             // pictureBox13
             // 
-            this.pictureBox13.Image = global::PuttyServerGUI2.Properties.Resources.information;
+            this.pictureBox13.Image = global::PuttyServerManager.Properties.Resources.information;
             this.pictureBox13.Location = new System.Drawing.Point(6, 16);
             this.pictureBox13.Name = "pictureBox13";
             this.pictureBox13.Size = new System.Drawing.Size(16, 16);

@@ -6,15 +6,21 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
 using System.IO;
 using System.Diagnostics;
-using PuttyServerGUI2.Tools;
+using PuttyServerManager.Tools;
+using PuttyServerManager.ToolWindows;
 
-namespace PuttyServerGUI2 {
+namespace PuttyServerManager {
     public partial class frmSettings : Form {
-        public frmSettings() {
+
+        private twiSessions SessionsForm;
+
+        public frmSettings(Form sessions) {
             InitializeComponent();
+
+            SessionsForm = (twiSessions)sessions;
         }
 
         private void frmSettings_Load(object sender, EventArgs e) {
@@ -114,6 +120,11 @@ namespace PuttyServerGUI2 {
             chkStartWithWindows.Checked = !chkStartWithWindows.Checked;
             ApplicationPaths.StartWithWindows = !chkStartWithWindows.Checked;
             RegistryTools.RegisterInStartup(!chkStartWithWindows.Checked);
+        }
+
+        private void btnRunConfigurationWizard_Click(object sender, EventArgs e) {
+            frmWizard wizard = new frmWizard(SessionsForm);
+            wizard.ShowDialog();
         }
     }
 }

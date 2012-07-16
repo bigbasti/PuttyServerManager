@@ -1,4 +1,4 @@
-﻿namespace PuttyServerGUI2.ToolWindows {
+﻿namespace PuttyServerManager.ToolWindows {
     partial class twiPutty {
         /// <summary>
         /// Required designer variable.
@@ -49,7 +49,7 @@
             // 
             // closeSessionToolStripMenuItem
             // 
-            this.closeSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.tab_delete;
+            this.closeSessionToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.tab_delete;
             this.closeSessionToolStripMenuItem.Name = "closeSessionToolStripMenuItem";
             this.closeSessionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.closeSessionToolStripMenuItem.Text = "Close Session";
@@ -57,7 +57,7 @@
             // 
             // cloneSessionToolStripMenuItem
             // 
-            this.cloneSessionToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_double;
+            this.cloneSessionToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.application_double;
             this.cloneSessionToolStripMenuItem.Name = "cloneSessionToolStripMenuItem";
             this.cloneSessionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cloneSessionToolStripMenuItem.Text = "Clone Session";
@@ -65,7 +65,7 @@
             // 
             // renameTabToolStripMenuItem
             // 
-            this.renameTabToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.tab_edit;
+            this.renameTabToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.tab_edit;
             this.renameTabToolStripMenuItem.Name = "renameTabToolStripMenuItem";
             this.renameTabToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.renameTabToolStripMenuItem.Text = "Rename Tab";

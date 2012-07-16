@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace PuttyServerGUI2.Config {
+namespace PuttyServerManager.Config {
 
     /// <summary>
     /// Führt eine Überprüfung des Installationsverzeichnisses 

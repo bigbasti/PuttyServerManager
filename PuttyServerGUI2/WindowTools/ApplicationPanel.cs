@@ -27,9 +27,11 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using PuttyServerGUI2.ToolWindows;
+using PuttyServerManager.ToolWindows;
+using PuttyServerManager.WindowTools;
 
-namespace PuttyServerGUI2.WindowTools {
+
+namespace PuttyServerManager.WindowTools {
     public delegate void ApplicationClosedCallback(bool error);
 
     public class ApplicationPanel : System.Windows.Forms.Panel {
@@ -112,12 +114,10 @@ namespace PuttyServerGUI2.WindowTools {
             mainForm = main;
 
             this.Disposed += new EventHandler(ApplicationPanel_Disposed);
-            //main.LayoutChanged += new EventHandler<Data.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
 
             // setup up the hook to watch for all EVENT_SYSTEM_FOREGROUND events system wide
 
             this.m_windowActivator = (WindowActivator)Activator.CreateInstance(Type.GetType(ActivatorTypeName));
-            //this.m_windowActivator = new SetFGCombinedWindowActivator();
             this.m_winEventDelegate = new NativeMethods.WinEventDelegate(WinEventProc);
             this.m_hWinEventHook = NativeMethods.SetWinEventHook(
                 NativeMethods.EVENT_SYSTEM_FOREGROUND,
@@ -131,45 +131,25 @@ namespace PuttyServerGUI2.WindowTools {
 
         void ApplicationPanel_Disposed(object sender, EventArgs e) {
             this.Disposed -= new EventHandler(ApplicationPanel_Disposed);
-            //main.LayoutChanged -= new EventHandler<Data.LayoutChangedEventArgs>(SuperPuTTY_LayoutChanged);
             NativeMethods.UnhookWinEvent(m_hWinEventHook);
         }
 
-        //void SuperPuTTY_LayoutChanged(object sender, Data.LayoutChangedEventArgs e) {
-        //    // move 1x after we're done loading
-        //    this.MoveWindow("LayoutChanged");
-        //}
 
-        //void SuperPuTTY_LayoutChanged(object sender, LayoutData Data.LayoutChangedEventArgs e) {
-        //    // move 1x after we're done loading
-        //    this.MoveWindow("LayoutChanged");
-        //}
 
         public void RefreshAppWindow() {
             this.MoveWindow("RefreshWindow");
         }
 
         private void MoveWindow(string src) {
-
-            //if (!true/*SuperPuTTY.IsLayoutChanging*/) {
-                //if (Log.IsDebugEnabled) {
-                //    Log.DebugFormat("MoveWindow [{3,-15}{4,20}] w={0,4}, h={1,4}, visible={2}", this.Width, this.Height, this.Visible, src, this.Name);
-                //}
-
-                NativeMethods.MoveWindow(m_AppWin, 0, 0, this.Width, this.Height, this.Visible);
-            //}
+            NativeMethods.MoveWindow(m_AppWin, 0, 0, this.Width, this.Height, this.Visible);
         }
 
         public bool ReFocusPuTTY(string caller) {
             bool result = false;
             if (this.m_AppWin != null && NativeMethods.GetForegroundWindow() != this.m_AppWin) {
-                //Log.InfoFormat("[{0}] ReFocusPuTTY - puttyTab={1}, caller={2}", this.m_AppWin, this.Parent.Text, caller);
-                settingForeground = true;
+                 settingForeground = true;
                 result = !NativeMethods.SetForegroundWindow(this.m_AppWin);
             }
-            //return (this.m_AppWin != null
-            //    && NativeMethods.GetForegroundWindow() != this.m_AppWin
-            //    && !NativeMethods.SetForegroundWindow(this.m_AppWin));
 
             return result;
         }
@@ -180,16 +160,15 @@ namespace PuttyServerGUI2.WindowTools {
 
         void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) {
             // if we got the EVENT_SYSTEM_FOREGROUND, and the hwnd is the putty terminal hwnd (m_AppWin)
-            // then bring the supperputty window to the foreground
+            // then bring the window to the foreground
 
             if (eventType == NativeMethods.EVENT_SYSTEM_FOREGROUND && hwnd == m_AppWin) {
-                //Log.DebugFormat("[{0}] HandlingForegroundEvent: settingFG={1}", hwnd, settingForeground);
                 if (settingForeground) {
                     settingForeground = false;
                     return;
                 }
 
-                // This is the easiest way I found to get the superputty window to be brought to the top
+                // This is the easiest way I found to get the window to be brought to the top
                 // if you leave TopMost = true; then the window will always be on top.
                 if (this.TopLevelControl != null) {
                     Form form = mainForm;
@@ -205,7 +184,6 @@ namespace PuttyServerGUI2.WindowTools {
                     if (parent.DockPanel.ActiveDocument != parent && !parent.IsFloat) {
                         string activeDoc = parent.DockPanel.ActiveDocument != null
                             ? ((ToolWindow)parent.DockPanel.ActiveDocument).Text : "?";
-                        //Log.InfoFormat("[{0}] Setting Active Document: {1} -> {2}", hwnd, activeDoc, parent.Text);
                         parent.Show();
                     } else {
                         // give focus back
@@ -1279,8 +1257,7 @@ namespace PuttyServerGUI2.WindowTools {
                     }
                 }
 
-                //Logger.Log("ApplicationPanel Handle: {0}", this.Handle.ToString("X"));              
-                //Logger.Log("Process Handle: {0}", m_AppWin.ToString("X"));
+
                 // Set the application as a child of the parent form
                 SetParent(m_AppWin, this.Handle);
 

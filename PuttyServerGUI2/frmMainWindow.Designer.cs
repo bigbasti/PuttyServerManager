@@ -1,4 +1,4 @@
-﻿namespace PuttyServerGUI2 {
+﻿namespace PuttyServerManager {
     partial class frmMainWindow {
         /// <summary>
         /// Required designer variable.
@@ -247,7 +247,7 @@
             // btnStartQuickConnection
             // 
             this.btnStartQuickConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartQuickConnection.Image = global::PuttyServerGUI2.Properties.Resources.server_go;
+            this.btnStartQuickConnection.Image = global::PuttyServerManager.Properties.Resources.server_go;
             this.btnStartQuickConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnStartQuickConnection.Name = "btnStartQuickConnection";
             this.btnStartQuickConnection.Size = new System.Drawing.Size(23, 22);
@@ -257,7 +257,7 @@
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.door_open;
+            this.exitToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.door_open;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
@@ -267,7 +267,7 @@
             // 
             this.showQuickConnectionBarToolStripMenuItem.Checked = true;
             this.showQuickConnectionBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showQuickConnectionBarToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.control_play_blue;
+            this.showQuickConnectionBarToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.control_play_blue;
             this.showQuickConnectionBarToolStripMenuItem.Name = "showQuickConnectionBarToolStripMenuItem";
             this.showQuickConnectionBarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.showQuickConnectionBarToolStripMenuItem.Text = "Show Quick connection bar";
@@ -275,7 +275,7 @@
             // 
             // pSGSettingsToolStripMenuItem
             // 
-            this.pSGSettingsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.cog;
+            this.pSGSettingsToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.cog;
             this.pSGSettingsToolStripMenuItem.Name = "pSGSettingsToolStripMenuItem";
             this.pSGSettingsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.pSGSettingsToolStripMenuItem.Text = "PSG Settings";
@@ -283,7 +283,7 @@
             // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.Image = global::PuttyServerGUI2.Properties.Resources.application_xp_terminal;
+            this.settingsToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.application_xp_terminal;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.settingsToolStripMenuItem.Text = "Putty Settings";

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
+using System.Windows.Forms;
 
-namespace PuttyServerGUI2.Persistence.Repository {
+namespace PuttyServerManager.Persistence.Repository {
     class LocalSessionRepository : ISessionRepository {
 
         public bool UserCanEditList() {
@@ -37,6 +38,7 @@ namespace PuttyServerGUI2.Persistence.Repository {
                 string newFileName = Path.Combine(ApplicationPaths.LocalRepositoryPath, newName);
                 File.Move(oldFileName, newFileName);
             } catch (Exception ex) {
+                MessageBox.Show("Could not Rename the Session.\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Program.LogWriter.Log("# Cound not Rename the Sessionfile in Repostitory because {0}", ex.Message);
                 return false;
             }

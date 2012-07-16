@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PuttyServerGUI2.Persistence;
+using PuttyServerManager.Persistence;
 using System.IO;
 
-namespace PuttyServerGUI2.Tools.Extensions {
+namespace PuttyServerManager.Tools.Extensions {
     /// <summary>
     /// Erweiterungen für die TreeView
     /// </summary>

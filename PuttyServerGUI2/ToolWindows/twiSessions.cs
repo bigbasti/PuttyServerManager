@@ -7,17 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using PuttyServerGUI2.Tools.Extensions;
-using PuttyServerGUI2.Persistence.Repository;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Tools.Extensions;
+using PuttyServerManager.Persistence.Repository;
+using PuttyServerManager.Config;
 using System.IO;
 using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
-using PuttyServerGUI2.WindowTools;
-using PuttyServerGUI2.Tools;
+using PuttyServerManager.WindowTools;
+using PuttyServerManager.Tools;
 
-namespace PuttyServerGUI2.ToolWindows {
+namespace PuttyServerManager.ToolWindows {
     public partial class twiSessions : ToolWindow {
 
         private ISessionRepository localRepository;
@@ -25,6 +25,12 @@ namespace PuttyServerGUI2.ToolWindows {
 
         private DockPanel dockPanel;
         private Form containerForm;
+
+        public TreeView TrvSessions {
+            get {
+                return trvSessions;
+            }
+        }
 
         public twiSessions(DockPanel dockPanel, Form container) {
             InitializeComponent();
@@ -262,7 +268,6 @@ namespace PuttyServerGUI2.ToolWindows {
 
             if (e.Node.ImageIndex == 6 && e.Label != null) {
                 if (!localRepository.RenameSession(e.Node.Text, e.Label)) {
-                    MessageBox.Show("Could not Rename the Session. Look into Logfile for further Details!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     e.CancelEdit = true;
                     return;
                 }
@@ -403,8 +408,20 @@ namespace PuttyServerGUI2.ToolWindows {
                     string serverPort = "";
 
                     //Es muss eine Getunnelte Verbindung aufgebaut werden
-                    userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
-                    serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                    try {
+                        userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
+                        serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                    }catch (Exception ex) {
+                        Program.LogWriter.Log("Could not extract username and server from RemoteCommand-Entry!");
+                        serverName = Microsoft.VisualBasic.Interaction.InputBox("Could not extract the server ip, please edit it manually:", "Server Adress", remoteCommandLine);
+                        if (string.IsNullOrEmpty(serverName)) {
+                            return;
+                        }
+                        userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username", remoteCommandLine);
+                        if (string.IsNullOrEmpty(userName)) {
+                            return;
+                        }
+                    }
                     serverPort = "22";
 
                     string rndPort = new Random().Next(1025, 65000).ToString();
@@ -986,8 +1003,21 @@ namespace PuttyServerGUI2.ToolWindows {
                         string serverPort = "";
 
                         //Es muss eine Getunnelte Verbindung aufgebaut werden
-                        userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
-                        serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                        try {
+                            userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
+                            serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                        } catch (Exception ex) {
+                            Program.LogWriter.Log("Could not extract username and server from RemoteCommand-Entry!");
+                            serverName = Microsoft.VisualBasic.Interaction.InputBox("Could not extract the server ip, please edit it manually:", "Server Adress", remoteCommandLine);
+                            if (string.IsNullOrEmpty(serverName)) {
+                                return;
+                            }
+                            userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username", remoteCommandLine);
+                            if (string.IsNullOrEmpty(userName)) {
+                                return;
+                            }
+                        }
+                        
                         serverPort = "22";
 
                         string rndPort = new Random().Next(1025, 65000).ToString();
@@ -1038,6 +1068,11 @@ namespace PuttyServerGUI2.ToolWindows {
                 } catch (Exception ex) {
                     Program.LogWriter.Log("Could not start WinSCP: {0}", ex.Message);
                 }
+        }
+
+        private void convertToExistingSessionToolStripMenuItem_Click(object sender, EventArgs e) {
+            trvSessions.SelectedNode.ImageIndex = 6;
+            trvSessions.SelectedNode.SelectedImageIndex = 6;
         }
     }
 }

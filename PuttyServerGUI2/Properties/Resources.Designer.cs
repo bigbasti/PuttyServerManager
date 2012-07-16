@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PuttyServerGUI2.Properties {
+namespace PuttyServerManager.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace PuttyServerGUI2.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PuttyServerGUI2.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PuttyServerManager.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -203,6 +203,13 @@ namespace PuttyServerGUI2.Properties {
         internal static System.Drawing.Bitmap Key1 {
             get {
                 object obj = ResourceManager.GetObject("Key1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap magic {
+            get {
+                object obj = ResourceManager.GetObject("magic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

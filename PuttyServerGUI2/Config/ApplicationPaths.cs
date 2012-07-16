@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PuttyServerGUI2.Properties;
+using PuttyServerManager.Properties;
 using System.Drawing;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace PuttyServerGUI2.Config {
+namespace PuttyServerManager.Config {
     public static class ApplicationPaths {
 
         public static string ApplicationPath {

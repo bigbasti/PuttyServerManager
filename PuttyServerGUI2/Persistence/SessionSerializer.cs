@@ -9,10 +9,10 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml;
 
-using PuttyServerGUI2;
-using PuttyServerGUI2.Config;
+using PuttyServerManager;
+using PuttyServerManager.Config;
 
-namespace PuttyServerGUI2.Persistence {
+namespace PuttyServerManager.Persistence {
     /// <summary>
     /// Se- und Deserialisiert Objekte
     /// </summary>
@@ -91,8 +91,13 @@ namespace PuttyServerGUI2.Persistence {
             TreeNode retVal = new TreeNode(XmlConvert.DecodeName(node.Name));
 
             if (File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, XmlConvert.DecodeName(node.Name))) || node.HasChildNodes) {
-                retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
-                retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+                if (Convert.ToInt32(node.Attributes["ImageIndex"].Value) == 9) {
+                    retVal.ImageIndex = 6;
+                    retVal.SelectedImageIndex = 6;
+                } else {
+                    retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+                    retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
+                }
             } else {
                 retVal.ImageIndex = 9;
                 retVal.SelectedImageIndex = 9;

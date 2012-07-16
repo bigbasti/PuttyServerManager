@@ -4,12 +4,12 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-using PuttyServerGUI2.Tools.Logging;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Tools.Logging;
+using PuttyServerManager.Config;
 using System.Threading;
-using PuttyServerGUI2.Tools;
+using PuttyServerManager.Tools;
 
-namespace PuttyServerGUI2 {
+namespace PuttyServerManager {
     static class Program {
 
         public static ILogger LogWriter;

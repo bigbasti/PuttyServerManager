@@ -5,7 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace PuttyServerGUI2.WindowTools {
+namespace PuttyServerManager.WindowTools {
 
     /// <summary>
     /// Based on off article below, modified to return more info in nice managed view

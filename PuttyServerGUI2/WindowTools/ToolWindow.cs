@@ -28,7 +28,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace PuttyServerGUI2.WindowTools
+namespace PuttyServerManager.WindowTools
 {
     public partial class ToolWindow : DockContent
     {

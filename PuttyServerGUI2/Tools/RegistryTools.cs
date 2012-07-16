@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using Microsoft.Win32;
 using System.Windows.Forms;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
 using System.IO;
 
-namespace PuttyServerGUI2.Tools {
+namespace PuttyServerManager.Tools {
     class RegistryTools {
 
         /// <summary>

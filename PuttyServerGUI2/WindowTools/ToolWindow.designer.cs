@@ -1,4 +1,4 @@
-﻿namespace PuttyServerGUI2.WindowTools
+﻿namespace PuttyServerManager.WindowTools
 {
     partial class ToolWindow
     {

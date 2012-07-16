@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace PuttyServerGUI2.WindowTools {
+namespace PuttyServerManager.WindowTools {
     public class NativeMethods {
 
         #region Win32 Constants/Enums

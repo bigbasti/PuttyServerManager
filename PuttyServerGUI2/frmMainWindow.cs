@@ -6,15 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PuttyServerGUI2.ToolWindows;
+using PuttyServerManager.ToolWindows;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
-using PuttyServerGUI2.Persistence.Repository;
-using PuttyServerGUI2.WindowTools;
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Persistence.Repository;
+using PuttyServerManager.WindowTools;
+using PuttyServerManager.Config;
 
 
-namespace PuttyServerGUI2 {
+namespace PuttyServerManager {
     public partial class frmMainWindow : Form {
 
         ISessionRepository recentRepository = new RecentSessionRepository();
@@ -44,6 +44,11 @@ namespace PuttyServerGUI2 {
             frmSessions.Size = ApplicationPaths.LastOverviewWindowSize;
             frmSessions.DockState = ApplicationPaths.SessionOverviewDockState;
 
+            if (this.Location.X < 0 || this.Location.Y < 0) {
+                Program.LogWriter.Log("Main Window is out of reach for the user, resetting window position");
+                this.Location = new Point(0, 0);
+            }
+
             toolQuickConnect.Visible = ApplicationPaths.ShowQuickConnectionBar;
             showQuickConnectionBarToolStripMenuItem.Checked = ApplicationPaths.ShowQuickConnectionBar;
 
@@ -51,9 +56,16 @@ namespace PuttyServerGUI2 {
                 ContentPanel.ActivePane.Focus();
             });
 
+            CheckIfFirstStart();
+
         }
 
-
+        private void CheckIfFirstStart() {
+            if (ApplicationPaths.FirstStart) {
+                ApplicationPaths.FirstStart = false;
+                new frmWizard(frmSessions).ShowDialog();
+            }
+        }
 
 
 
@@ -128,7 +140,7 @@ namespace PuttyServerGUI2 {
         }
 
         private void pSGSettingsToolStripMenuItem_Click(object sender, EventArgs e) {
-            new frmSettings().ShowDialog();
+            new frmSettings(frmSessions).ShowDialog();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) {

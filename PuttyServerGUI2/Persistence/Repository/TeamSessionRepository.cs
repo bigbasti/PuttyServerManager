@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using PuttyServerGUI2.Config;
+using PuttyServerManager.Config;
+using PuttyServerManager.Persistence.Repository;
 
-namespace PuttyServerGUI2.Persistence.Repository {
+namespace PuttyServerManager.Persistence.Repository {
     class TeamSessionRepository : ISessionRepository {
 
         public bool UserCanEditList() {
