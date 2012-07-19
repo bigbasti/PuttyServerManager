@@ -30,9 +30,20 @@ namespace PuttyServerManager {
             InitializeComponent();
 
             frmSessions = new twiSessions(ContentPanel, this);
-            frmSessions.Show(ContentPanel, DockState.DockRight);
+            frmSessions.Size = ApplicationPaths.LastOverviewWindowSize;
 
-            
+            RestoreLastSessionListWidth();
+
+            frmSessions.Show(ContentPanel, ApplicationPaths.SessionOverviewDockState);
+           
+        }
+
+        private void RestoreLastSessionListWidth() {
+            if (ApplicationPaths.SessionOverviewDockState == DockState.DockLeft) {
+                ContentPanel.DockLeftPortion = ApplicationPaths.LastOverviewWindowSize.Width;
+            }else if(ApplicationPaths.SessionOverviewDockState == DockState.DockRight){
+                ContentPanel.DockRightPortion = ApplicationPaths.LastOverviewWindowSize.Width;
+            }
         }
 
 
@@ -41,8 +52,6 @@ namespace PuttyServerManager {
 
             this.Size = ApplicationPaths.LastWindowSize;
             this.Location = ApplicationPaths.LastWindowPosition;
-            frmSessions.Size = ApplicationPaths.LastOverviewWindowSize;
-            frmSessions.DockState = ApplicationPaths.SessionOverviewDockState;
 
             if (this.Location.X < 0 || this.Location.Y < 0) {
                 Program.LogWriter.Log("Main Window is out of reach for the user, resetting window position");

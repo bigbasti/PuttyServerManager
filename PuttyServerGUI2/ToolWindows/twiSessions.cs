@@ -46,14 +46,21 @@ namespace PuttyServerManager.ToolWindows {
         /// Speichert alle Änderungen an der Session TreeView
         /// </summary>
         public void SaveChanges() {
-            trvSessions.SerializeNode(trvSessions.Nodes[0], ApplicationPaths.LocalSessionListPath);
-            trvRecentSessions.SerializeNode(trvRecentSessions.Nodes[0], ApplicationPaths.RecentSessionListPath);
+            try {
+                trvSessions.SerializeNode(trvSessions.Nodes[0], ApplicationPaths.LocalSessionListPath);
+                trvRecentSessions.SerializeNode(trvRecentSessions.Nodes[0], ApplicationPaths.RecentSessionListPath);
+            } catch (Exception ex) {
+                //Fehler Kann auftreten beim laden des Formulars wenn die
+                //recentSessions noch nicht geladen sind aber das ListAfterExpanded Event
+                //schon aufgerufen wird -> kann ingnoriert werden
+            }
         }
 
         /// <summary>
         /// Lädt alle nötigen Einstellungen
         /// </summary>
         private void LoadConfiguration() {
+
             LoadLocalSessionsList();
             trvSessions.Nodes[0].ImageIndex = 0;
             trvSessions.Nodes[0].SelectedImageIndex = 0;
@@ -118,9 +125,7 @@ namespace PuttyServerManager.ToolWindows {
         /// </summary>
         /// <param name="nodeName">Name des neuen Elements</param>
         public void AddSessionToRecentSessionList(string nodeName) {
-            TreeNode newNode = new TreeNode(nodeName);
-            newNode.ImageIndex = 6;
-            newNode.SelectedImageIndex = 6;
+            TreeNode newNode = CreateNewServerNode(nodeName);
             trvRecentSessions.Nodes[0].Nodes.Add(newNode);
 
             SaveChanges();
@@ -351,17 +356,14 @@ namespace PuttyServerManager.ToolWindows {
             }
         }
 
+        /// <summary>
+        /// Startet eine Putty Session in einem gedockten Fenster
+        /// </summary>
+        /// <param name="sessionName">Name der Session die gestartet werden soll</param>
+        /// <param name="dockstate">Angabe wie das neue Fenster angedockt werden soll</param>
         public void StartPuttySession(string sessionName, DockState dockstate = WeifenLuo.WinFormsUI.Docking.DockState.Document) {
 
-            //On demand: start putty agent
-            if (ApplicationPaths.UsePuttyAgent) {
-                if (Process.GetProcessesByName("pageant").Length < 1) {
-                    if (File.Exists(ApplicationPaths.PuttyAgentLocation)) {
-                        ProcessStartInfo info = new ProcessStartInfo(ApplicationPaths.PuttyAgentLocation, ApplicationPaths.PuttyAgentParameters);
-                        Process.Start(info);
-                    }
-                }
-            }
+            StartPuttyAgentIfNeeded();
             
             twiPutty puttyWindow = null;
 
@@ -375,8 +377,6 @@ namespace PuttyServerManager.ToolWindows {
                     } else {
                         puttyWindow.Close();
                     }
-
-
                 }
             };
 
@@ -384,6 +384,10 @@ namespace PuttyServerManager.ToolWindows {
             puttyWindow.Show(dockPanel, dockstate);
         }
 
+        /// <summary>
+        /// Startet FTP Verbindung über FileZilla - Falls ein RemoreCommand gesetzt ist wird ein Tunnel über eine Putty Session aufgebaut
+        /// </summary>
+        /// <param name="session">Session zu der die FTP Verbindung aufgebaut werden soll</param>
         private void StartSessionInFileZilla(string session, string userPass) {
 
             try {
@@ -409,18 +413,12 @@ namespace PuttyServerManager.ToolWindows {
 
                     //Es muss eine Getunnelte Verbindung aufgebaut werden
                     try {
-                        userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
-                        serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+                        userName = ExtractUserNameFromRemoteCommand(remoteCommandLine);
+                        serverName = ExtractServerNameFromRemoteCommand(remoteCommandLine);
                     }catch (Exception ex) {
                         Program.LogWriter.Log("Could not extract username and server from RemoteCommand-Entry!");
-                        serverName = Microsoft.VisualBasic.Interaction.InputBox("Could not extract the server ip, please edit it manually:", "Server Adress", remoteCommandLine);
-                        if (string.IsNullOrEmpty(serverName)) {
-                            return;
-                        }
-                        userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username", remoteCommandLine);
-                        if (string.IsNullOrEmpty(userName)) {
-                            return;
-                        }
+                        serverName = GetValueFromInput("Could not extract the server ip, please edit it manually:", "Enter Server Name", remoteCommandLine);
+                        userName = GetValueFromInput("Please Enter your username:", "Username", remoteCommandLine);
                     }
                     serverPort = "22";
 
@@ -428,15 +426,9 @@ namespace PuttyServerManager.ToolWindows {
 
                     puttyTunnel = string.Format("PortForwardings=L{0}={1}:{2},", rndPort, serverName, serverPort);
 
-                    for (int i = 0; i < sessionData.Length; i++) {
-                        if (sessionData[i].StartsWith("PortForwardings=")) { sessionData[i] = puttyTunnel; }
-                    }
+                    sessionData = SetPortForwardingsString(sessionData, puttyTunnel);
 
-                    //save temp session
-                    File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"), sessionData);
-
-                    //start putty session
-                    StartPuttySession(session + "_tunnel", WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
+                    SaveAndStartTempSession(session, sessionData);
 
                     filezillaString = string.Format("sftp://{0}:{1}@localhost:{2}", userName, userPass, rndPort);
                     Program.LogWriter.Log("sftp://{0}:{1}@localhost:{2}", userName, "******", rndPort);
@@ -449,20 +441,18 @@ namespace PuttyServerManager.ToolWindows {
                     string userName = "";
                     string serverName = "";
                     string serverPort = "22";
+
                     if (userNameLine.Length <= "UserName=".Length) {
-                        userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username");
-                        if (string.IsNullOrEmpty(userName)) {
-                            return;
-                        }
+                        userName = GetValueFromInput("Please Enter your username:", "Username", remoteCommandLine);
 
                         userNameLine = "UserName=" + userName;
                     }
-                    userName = userNameLine.Substring(userNameLine.IndexOf("=") + 1, userNameLine.Length - 1 - userNameLine.IndexOf("="));
-                    serverName = ipLine.Substring(ipLine.IndexOf("=") + 1, ipLine.Length - 1 - ipLine.IndexOf("="));
+                    userName = GetValueFromSetting(userNameLine);
+                    serverName = GetValueFromSetting(ipLine);
 
                     filezillaString = string.Format("sftp://{0}:{1}@{2}:{3}", userName, userPass, serverName, serverPort);
 
-                    Program.LogWriter.Log("sftp://{0}:{1}@{2}:{3}", userName, userPass, serverName, serverPort);
+                    Program.LogWriter.Log("sftp://{0}:{1}@{2}:{3}", userName, "******", serverName, serverPort);
 
                     ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToFileZilla, filezillaString);
                     pi.WorkingDirectory = ApplicationPaths.PathToFileZilla.Substring(0, ApplicationPaths.PathToFileZilla.LastIndexOf(Path.DirectorySeparatorChar));
@@ -474,10 +464,177 @@ namespace PuttyServerManager.ToolWindows {
 
         }
 
+        /// <summary>
+        /// Startet FTP Verbindung über WinSCP - Falls ein RemoreCommand gesetzt ist wird ein Tunnel über eine Putty Session aufgebaut
+        /// </summary>
+        /// <param name="session">Session zu der die FTP Verbindung aufgebaut werden soll</param>
+        private void StartSessionInWinSCP(string session) {
 
+            try {
+                string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
+
+                string winSCPString = "";
+                string puttyTunnel = "";
+
+                string userNameLine = "";
+                string ipLine = "";
+                string remoteCommandLine = "";
+
+                foreach (string line in sessionData) {
+                    if (line.StartsWith("UserName=")) { userNameLine = line; }
+                    if (line.StartsWith("HostName=")) { ipLine = line; }
+                    if (line.StartsWith("RemoteCommand=")) { remoteCommandLine = line; }
+                }
+
+                if (remoteCommandLine.Length > "RemoteCommand=".Length && remoteCommandLine.Contains("ssh")) {
+                    string userName = "";
+                    string serverName = "";
+                    string serverPort = "";
+
+                    //Es muss eine Getunnelte Verbindung aufgebaut werden
+                    try {
+                        userName = ExtractUserNameFromRemoteCommand(remoteCommandLine);
+                        serverName = ExtractServerNameFromRemoteCommand(remoteCommandLine);
+                    } catch (Exception ex) {
+                        Program.LogWriter.Log("Could not extract username and server from RemoteCommand-Entry!");
+                        serverName = GetValueFromInput("Could not extract the server ip, please edit it manually:", "Enter Server Name", remoteCommandLine);
+                        userName = GetValueFromInput("Please Enter your username:", "Username", remoteCommandLine);
+                    }
+
+                    serverPort = "22";
+
+                    string rndPort = new Random().Next(1025, 65000).ToString();
+
+                    puttyTunnel = string.Format("PortForwardings=L{0}={1}:{2},", rndPort, serverName, serverPort);
+
+                    sessionData = SetPortForwardingsString(sessionData, puttyTunnel);
+
+                    SaveAndStartTempSession(session, sessionData);
+
+                    winSCPString = string.Format("sftp://{0}@localhost:{1}", userName, rndPort);
+                    Program.LogWriter.Log("sftp://{0}@localhost:{1}", userName, rndPort);
+
+                    infWait waiter = new infWait(ApplicationPaths.PathToWinSCP, winSCPString);
+                    waiter.Show();
+
+                } else {
+                    //kein tunnel nötig
+                    string userName = "";
+                    string serverName = "";
+                    string serverPort = "22";
+                    if (userNameLine.Length <= "UserName=".Length) {
+                        userName = GetValueFromInput("Please Enter your username:", "Username", remoteCommandLine);
+
+                        userNameLine = "UserName=" + userName;
+                    }
+                    userName = GetValueFromSetting(userNameLine);
+                    serverName = GetValueFromSetting(ipLine);
+
+                    winSCPString = string.Format("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
+
+                    Program.LogWriter.Log("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
+
+                    ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToWinSCP, winSCPString);
+                    pi.WorkingDirectory = ApplicationPaths.PathToWinSCP.Substring(0, ApplicationPaths.PathToWinSCP.LastIndexOf(Path.DirectorySeparatorChar));
+                    Process.Start(pi);
+                }
+            } catch (Exception ex) {
+                Program.LogWriter.Log("Could not start WinSCP: {0}", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Liest den Wert eines Settings aus das im Format Setting=Value vorliegt
+        /// </summary>
+        /// <param name="setting">Die komplette setting-Zeile</param>
+        /// <returns>Der ausgelesene Wert</returns>
+        private static string GetValueFromSetting(string setting) {
+            string value = "";
+            value = setting.Substring(setting.IndexOf("=") + 1, setting.Length - 1 - setting.IndexOf("="));
+            return value;
+        }
+
+        /// <summary>
+        /// Speichert die angegebenen Session-Informationen in einer neuen Datei mit "_tunnel" Ahang und führt diese aus
+        /// </summary>
+        /// <param name="session">Name der Sessions</param>
+        /// <param name="sessionData">Inhalt der Session</param>
+        private void SaveAndStartTempSession(string session, string[] sessionData) {
+            //save temp session
+            File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"), sessionData);
+
+            //start putty session
+            StartPuttySession(session + "_tunnel", WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
+        }
+
+        /// <summary>
+        /// Findet die passende Stelle in den Sessionsettings und setzt den neuen Wert für PortForwardings
+        /// </summary>
+        /// <param name="sessionData">Inhalt der Session als Array</param>
+        /// <param name="puttyTunnel">Der neue Wert für die PortForwardings</param>
+        /// <returns>Inhalt des Arrays mit den neuen Einstellungen</returns>
+        private static string[] SetPortForwardingsString(string[] sessionData, string puttyTunnel) {
+            for (int i = 0; i < sessionData.Length; i++) {
+                if (sessionData[i].StartsWith("PortForwardings=")) { sessionData[i] = puttyTunnel; }
+            }
+            return sessionData;
+        }
+
+        /// <summary>
+        /// Fordert den Benutzer mit einem Dialog dazu auf einen Benutzernamen einzugeben
+        /// </summary>
+        /// <param name="description">Beschreibung zur Anzeige im Dialog</param>
+        /// <param name="title">Titel des Dialogs</param>
+        /// <param name="defaultText">Text der dem benutzer als Eingabe vorgeschlagen wird</param>
+        /// <returns>Den vom Benutzer eingegebenen String</returns>
+        private static string GetValueFromInput(string description, string title, string defaultText) {
+            string userName = "";
+            userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username", defaultText);
+            if (string.IsNullOrEmpty(userName)) {
+                return null;
+            }
+            return userName;
+        }
+
+        /// <summary>
+        /// Liest den Servernamen aus dem RemoteCommand String heraus, der den Benutzernamen und den Server mit einem @ getrennt angibt
+        /// </summary>
+        /// <param name="remoteCommandLine">Die RemoteCommand Zeile</param>
+        /// <returns>Der ausgelesene Wert</returns>
+        private static string ExtractServerNameFromRemoteCommand(string remoteCommandLine) {
+            string serverName = "";
+            serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
+            return serverName;
+        }
+
+        /// <summary>
+        /// Liest den Benutzernamen aus dem RemoteCommand String heraus, der den Benutzernamen und den Server mit einem @ getrennt angibt
+        /// </summary></summary>
+        /// <param name="remoteCommandLine">Die RemoteCommand Zeile</param>
+        /// <returns>Der ausgelesene Wert</returns>
+        private static string ExtractUserNameFromRemoteCommand(string remoteCommandLine) {
+            string userName = "";
+            userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
+            return userName;
+        }
+
+        /// <summary>
+        /// Startet die angegebene Putty Session ein einem eigenen PuTTY Fenster. 
+        /// Dieses Fenster kann nicht im MSM angedockt werden und bleibt selbstständig.
+        /// </summary>
+        /// <param name="sessionName">Name der Session die gestartet werden soll</param>
         private void StartNativePuttySession(string sessionName) {
-
             //On demand: start putty agent
+            StartPuttyAgentIfNeeded();
+
+            ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PuttyLocation, "-load " + sessionName);
+            Process.Start(pi);
+        }
+
+        /// <summary>
+        /// Startet den PuttyAgent falls der Benutzer dies in den Einstellungen konfiguriert hat
+        /// </summary>
+        private static void StartPuttyAgentIfNeeded() {
             if (ApplicationPaths.UsePuttyAgent) {
                 if (Process.GetProcessesByName("pageant").Length < 1) {
                     if (File.Exists(ApplicationPaths.PuttyAgentLocation)) {
@@ -486,11 +643,12 @@ namespace PuttyServerManager.ToolWindows {
                     }
                 }
             }
-
-            ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PuttyLocation, "-load " + sessionName);
-            Process.Start(pi);
         }
 
+        /// <summary>
+        /// Entfern die angegebene Node aus der TreeView und speichert die Übersicht
+        /// </summary>
+        /// <param name="node">Die Node die Entfernt werden soll</param>
         private void RemoveMissingNode(TreeNode node) {
             DialogResult res = MessageBox.Show("This session seems to be missing in your session folder. Do you want to remove this session from the list?", "Remove missing session?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -534,9 +692,7 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void transferSessionToPersonalSessionsToolStripMenuItem_Click(object sender, EventArgs e) {
-            TreeNode node = new TreeNode(trvRecentSessions.SelectedNode.Text);
-            node.ImageIndex = 6;
-            node.SelectedImageIndex = 6;
+            TreeNode node = CreateNewServerNode(trvRecentSessions.SelectedNode.Text);
 
             trvSessions.Nodes[0].Nodes.Add(node);
             trvRecentSessions.SelectedNode.Remove();
@@ -589,14 +745,22 @@ namespace PuttyServerManager.ToolWindows {
             StartTeamSession(trvTeam.SelectedNode.Text);
         }
 
+        /// <summary>
+        /// Über trägt eine Teamsession in das lokale Repository und startet diese
+        /// </summary>
+        /// <param name="sessionName">Die Session die gestartet werden soll</param>
         private void StartTeamSession(string sessionName) {
             string from = Path.Combine(ApplicationPaths.RemoteRepositoryPath, sessionName);
 
             TransferSessionFromTeamFolder(sessionName, from);
-
             StartPuttySession(sessionName);
         }
 
+        /// <summary>
+        /// Überträgt eine Session aus dem Teamverzeichnis und fügt die Benutzerspezifischen Werte ein
+        /// </summary>
+        /// <param name="sessionName">Name der Session</param>
+        /// <param name="from">Pfad zu der Session im Team Repository</param>
         private void TransferSessionFromTeamFolder(string sessionName, string from) {
             FolderSetup.SetupDirectory();
 
@@ -604,6 +768,14 @@ namespace PuttyServerManager.ToolWindows {
                 localRepository.AddSession(from);
             }
 
+            SetUserSpecificConfiguration(sessionName);
+        }
+
+        /// <summary>
+        /// Fügt die Benutzerspezifischen Werte in die Session ein
+        /// </summary>
+        /// <param name="sessionName">Die Session in die die einstellungen eingetragen werden sollen</param>
+        private static void SetUserSpecificConfiguration(string sessionName) {
             //TODO: Needs refactory
             if (!string.IsNullOrEmpty(ApplicationPaths.TeamUsername)) {
                 string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
@@ -630,13 +802,35 @@ namespace PuttyServerManager.ToolWindows {
 
                 TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, from);
 
-                TreeNode newNode = new TreeNode(Path.GetFileName(from));
-                newNode.ImageIndex = 6;
-                newNode.SelectedImageIndex = 6;
+                TreeNode newNode = CreateNewServerNode(Path.GetFileName(from));
 
                 trvSessions.Nodes[0].Nodes.Add(newNode);
             }
             SaveChanges();
+        }
+
+        /// <summary>
+        /// Erstellt eine neue TreeNode vom Typ Server (entsprechendes Icon)
+        /// </summary>
+        /// <param name="sessionName">Name der Session - wird auch name des Node werden</param>
+        /// <returns>Neuer TreeNode</returns>
+        private static TreeNode CreateNewServerNode(string sessionName) {
+            TreeNode newNode = new TreeNode(sessionName);
+            newNode.ImageIndex = 6;
+            newNode.SelectedImageIndex = 6;
+            return newNode;
+        }
+
+        /// <summary>
+        /// Erstellt eine neue TreeNode vom Typ Ordner (entsprechendes Icon)
+        /// </summary>
+        /// <param name="folderName">Name des Ordners</param>
+        /// <returns>Neuer TreeNode</returns>
+        private static TreeNode CreateNewFolderNode(string folderName) {
+            TreeNode newNode = new TreeNode(folderName);
+            newNode.ImageIndex = 1;
+            newNode.SelectedImageIndex = 1;
+            return newNode;
         }
 
         private void trvTeam_MouseClick(object sender, MouseEventArgs e) {
@@ -741,30 +935,42 @@ namespace PuttyServerManager.ToolWindows {
             try {
                 FolderSetup.SetupDirectory();
 
-                string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text));
+                //TODO: To be removed
+                //string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text));
+                //File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text), newSession);
 
-                File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text), newSession);
+                TreeNode node = CreateNewServerNode(trvRegistrySessions.SelectedNode.Text);
 
-                TreeNode node = new TreeNode(trvRegistrySessions.SelectedNode.Text);
-                node.SelectedImageIndex = 6;
-                node.ImageIndex = 6;
                 trvSessions.Nodes[0].Nodes.Add(node);
 
                 SaveChanges();
-            } catch (Exception ex) { }
+            } catch (Exception ex) {
+                Program.LogWriter.Log("Could not transfer Session to personal List because {0}", ex.Message);
+            }
         }
 
         private void trvRegistrySessions_MouseClick(object sender, MouseEventArgs e) {
             if (e.Button == System.Windows.Forms.MouseButtons.Right) {
                 //Auch bei einem Rechtsklick das gewählte Element markieren
-                TreeNode clickedNode = trvRegistrySessions.GetNodeAt(e.Location);
-                trvRegistrySessions.SelectedNode = clickedNode;
+                TreeNode clickedNode = SelectNodeAfterRightClick(trvRegistrySessions, e);
 
                 if (clickedNode.SelectedImageIndex == 6) {
                     conMenuRegistrySession.Show(MousePosition);
                     return;
                 }
             }
+        }
+
+        /// <summary>
+        /// Wählt die angeklickte Node aus
+        /// </summary>
+        /// <param name="trv">TreeView in der das Event ausgelößt wurde</param>
+        /// <param name="e">Das Event zur Bestimmung der Mausposition</param>
+        /// <returns>Das angeklickte TreeNode</returns>
+        private static TreeNode SelectNodeAfterRightClick(TreeView trv, MouseEventArgs e) {
+            TreeNode clickedNode = trv.GetNodeAt(e.Location);
+            trv.SelectedNode = clickedNode;
+            return clickedNode;
         }
 
 
@@ -781,19 +987,8 @@ namespace PuttyServerManager.ToolWindows {
             
             try {
                 if (File.Exists(sessionFile)) {
-                    string[] source = File.ReadAllLines(sessionFile);
-                    string [] backup = File.ReadAllLines(sessionFile);
-
-                    for (int i = 0; i < source.Length; i++) {
-                        if(source[i].StartsWith("Colour2=")){
-                            source[i] = bgColor;
-                        }
-                        if(source[i].StartsWith("Colour0=")){
-                            source[i] = foreColor;
-                        }
-                    }
-
-                    File.WriteAllLines(sessionFile, source);
+                    string[] backup = File.ReadAllLines(sessionFile);
+                    SetCustomColors(bgColor, foreColor, sessionFile);
 
                     StartPuttySession(sessionName);
 
@@ -804,6 +999,27 @@ namespace PuttyServerManager.ToolWindows {
             }catch(Exception ex){
                 Program.LogWriter.Log("Could not start Colored Session: {0}", ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Ändert die Text- und Hintergrundfarbe einer Session
+        /// </summary>
+        /// <param name="bgColor">Gewünschte Hintergrundfarbe</param>
+        /// <param name="foreColor">Gewünschte Textfarbe</param>
+        /// <param name="sessionFile">Die Session die geändert werden soll</param>
+        private static void SetCustomColors(string bgColor, string foreColor, string sessionFile) {
+            string[] source = File.ReadAllLines(sessionFile);
+
+            for (int i = 0; i < source.Length; i++) {
+                if (source[i].StartsWith("Colour2=")) {
+                    source[i] = bgColor;
+                }
+                if (source[i].StartsWith("Colour0=")) {
+                    source[i] = foreColor;
+                }
+            }
+
+            File.WriteAllLines(sessionFile, source);
         }
 
         #region ColoredSessionEventHandlers
@@ -957,6 +1173,10 @@ namespace PuttyServerManager.ToolWindows {
             StartAllSessionsInFolder(trvSessions.SelectedNode);
         }
 
+        /// <summary>
+        /// Startet alle Sessions eines ordners
+        /// </summary>
+        /// <param name="folder">Ordner-TreeNode</param>
         private void StartAllSessionsInFolder(TreeNode folder) {
             foreach (TreeNode session in folder.Nodes) {
                 if (session.ImageIndex == 6) {
@@ -979,100 +1199,23 @@ namespace PuttyServerManager.ToolWindows {
             StartSessionInWinSCP(trvSessions.SelectedNode.Text);
         }
 
-        private void StartSessionInWinSCP(string session) {
 
-                try {
-                    string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
-
-                    string winSCPString = "";
-                    string puttyTunnel = "";
-
-                    string userNameLine = "";
-                    string ipLine = "";
-                    string remoteCommandLine = "";
-
-                    foreach (string line in sessionData) {
-                        if (line.StartsWith("UserName=")) { userNameLine = line; }
-                        if (line.StartsWith("HostName=")) { ipLine = line; }
-                        if (line.StartsWith("RemoteCommand=")) { remoteCommandLine = line; }
-                    }
-
-                    if (remoteCommandLine.Length > "RemoteCommand=".Length && remoteCommandLine.Contains("ssh")) {
-                        string userName = "";
-                        string serverName = "";
-                        string serverPort = "";
-
-                        //Es muss eine Getunnelte Verbindung aufgebaut werden
-                        try {
-                            userName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("ssh ") + 4, remoteCommandLine.IndexOf("@") - remoteCommandLine.IndexOf("ssh ") - 4);
-                            serverName = remoteCommandLine.Substring(remoteCommandLine.IndexOf("@") + 1, remoteCommandLine.Length - 1 - remoteCommandLine.IndexOf("@"));
-                        } catch (Exception ex) {
-                            Program.LogWriter.Log("Could not extract username and server from RemoteCommand-Entry!");
-                            serverName = Microsoft.VisualBasic.Interaction.InputBox("Could not extract the server ip, please edit it manually:", "Server Adress", remoteCommandLine);
-                            if (string.IsNullOrEmpty(serverName)) {
-                                return;
-                            }
-                            userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username", remoteCommandLine);
-                            if (string.IsNullOrEmpty(userName)) {
-                                return;
-                            }
-                        }
-                        
-                        serverPort = "22";
-
-                        string rndPort = new Random().Next(1025, 65000).ToString();
-
-                        puttyTunnel = string.Format("PortForwardings=L{0}={1}:{2},", rndPort, serverName, serverPort);
-
-                        for (int i = 0; i < sessionData.Length; i++) {
-                            if (sessionData[i].StartsWith("PortForwardings=")) { sessionData[i] = puttyTunnel; }
-                        }
-
-                        //save temp session
-                        if(File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"))){File.Delete(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"));}
-                        File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"), sessionData);
-
-                        //start putty session
-                        StartPuttySession(session + "_tunnel", WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
-
-                        winSCPString = string.Format("sftp://{0}@localhost:{1}", userName, rndPort);
-                        Program.LogWriter.Log("sftp://{0}@localhost:{1}", userName, rndPort);
-
-                        infWait waiter = new infWait(ApplicationPaths.PathToWinSCP, winSCPString);
-                        waiter.Show();
-
-                    } else {
-                        //kein tunnel nötig
-                        string userName = "";
-                        string serverName = "";
-                        string serverPort = "22";
-                        if (userNameLine.Length <= "UserName=".Length) {
-                            userName = Microsoft.VisualBasic.Interaction.InputBox("Please Enter your username:", "Username");
-                            if (string.IsNullOrEmpty(userName)) {
-                                return;
-                            }
-
-                            userNameLine = "UserName=" + userName;
-                        }
-                        userName = userNameLine.Substring(userNameLine.IndexOf("=") + 1, userNameLine.Length - 1 - userNameLine.IndexOf("="));
-                        serverName = ipLine.Substring(ipLine.IndexOf("=") + 1, ipLine.Length - 1 - ipLine.IndexOf("="));
-
-                        winSCPString = string.Format("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
-
-                        Program.LogWriter.Log("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
-
-                        ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToWinSCP, winSCPString);
-                        pi.WorkingDirectory = ApplicationPaths.PathToWinSCP.Substring(0, ApplicationPaths.PathToWinSCP.LastIndexOf(Path.DirectorySeparatorChar));
-                        Process.Start(pi);
-                    }
-                } catch (Exception ex) {
-                    Program.LogWriter.Log("Could not start WinSCP: {0}", ex.Message);
-                }
-        }
 
         private void convertToExistingSessionToolStripMenuItem_Click(object sender, EventArgs e) {
             trvSessions.SelectedNode.ImageIndex = 6;
             trvSessions.SelectedNode.SelectedImageIndex = 6;
+        }
+
+        private void trvSessions_AfterExpand(object sender, TreeViewEventArgs e) {
+            SaveChanges();
+        }
+
+        private void trvSessions_AfterCollapse(object sender, TreeViewEventArgs e) {
+            SaveChanges();
+        }
+
+        private void twiSessions_SizeChanged(object sender, EventArgs e) {
+            ApplicationPaths.LastOverviewWindowSize = this.Size;
         }
     }
 }

@@ -76,6 +76,8 @@
             this.conMenuSessionMissing = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeMissingSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeMissingSessionFromListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem41 = new System.Windows.Forms.ToolStripSeparator();
+            this.convertToExistingSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conMenuRecent = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startSessionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,8 +129,6 @@
             this.startInNativeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
             this.transferToPersonalListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem41 = new System.Windows.Forms.ToolStripSeparator();
-            this.convertToExistingSessionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSessionAreas.SuspendLayout();
             this.tabPersonal.SuspendLayout();
             this.tabTeam.SuspendLayout();
@@ -184,6 +184,8 @@
             this.trvSessions.TabIndex = 0;
             this.trvSessions.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.trvSessions_AfterLabelEdit);
             this.trvSessions.BeforeCheck += new System.Windows.Forms.TreeViewCancelEventHandler(this.trvSessions_BeforeCheck);
+            this.trvSessions.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.trvSessions_AfterCollapse);
+            this.trvSessions.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.trvSessions_AfterExpand);
             this.trvSessions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.trvSessions_ItemDrag);
             this.trvSessions.DragDrop += new System.Windows.Forms.DragEventHandler(this.trvSessions_DragDrop);
             this.trvSessions.DragEnter += new System.Windows.Forms.DragEventHandler(this.trvSessions_DragEnter);
@@ -599,7 +601,7 @@
             this.conMenuSessionMissing.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeMissingSessionToolStripMenuItem});
             this.conMenuSessionMissing.Name = "conMenuSessionMissing";
-            this.conMenuSessionMissing.Size = new System.Drawing.Size(191, 48);
+            this.conMenuSessionMissing.Size = new System.Drawing.Size(191, 26);
             // 
             // removeMissingSessionToolStripMenuItem
             // 
@@ -620,6 +622,19 @@
             this.removeMissingSessionFromListToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.removeMissingSessionFromListToolStripMenuItem.Text = "Remove missing session from list";
             this.removeMissingSessionFromListToolStripMenuItem.Click += new System.EventHandler(this.removeMissingSessionFromListToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem41
+            // 
+            this.toolStripMenuItem41.Name = "toolStripMenuItem41";
+            this.toolStripMenuItem41.Size = new System.Drawing.Size(246, 6);
+            // 
+            // convertToExistingSessionToolStripMenuItem
+            // 
+            this.convertToExistingSessionToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.server_add;
+            this.convertToExistingSessionToolStripMenuItem.Name = "convertToExistingSessionToolStripMenuItem";
+            this.convertToExistingSessionToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.convertToExistingSessionToolStripMenuItem.Text = "Convert to existing session";
+            this.convertToExistingSessionToolStripMenuItem.Click += new System.EventHandler(this.convertToExistingSessionToolStripMenuItem_Click);
             // 
             // conMenuRecent
             // 
@@ -1057,19 +1072,6 @@
             this.transferToPersonalListToolStripMenuItem.Text = "Transfer to Personal List";
             this.transferToPersonalListToolStripMenuItem.Click += new System.EventHandler(this.transferToPersonalListToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem41
-            // 
-            this.toolStripMenuItem41.Name = "toolStripMenuItem41";
-            this.toolStripMenuItem41.Size = new System.Drawing.Size(246, 6);
-            // 
-            // convertToExistingSessionToolStripMenuItem
-            // 
-            this.convertToExistingSessionToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.server_add;
-            this.convertToExistingSessionToolStripMenuItem.Name = "convertToExistingSessionToolStripMenuItem";
-            this.convertToExistingSessionToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.convertToExistingSessionToolStripMenuItem.Text = "Convert to existing session";
-            this.convertToExistingSessionToolStripMenuItem.Click += new System.EventHandler(this.convertToExistingSessionToolStripMenuItem_Click);
-            // 
             // twiSessions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1080,6 +1082,7 @@
             this.Text = "Sessions";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.twiSessions_FormClosing);
             this.Load += new System.EventHandler(this.twiSessions_Load);
+            this.SizeChanged += new System.EventHandler(this.twiSessions_SizeChanged);
             this.tabSessionAreas.ResumeLayout(false);
             this.tabPersonal.ResumeLayout(false);
             this.tabTeam.ResumeLayout(false);
