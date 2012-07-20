@@ -19,8 +19,6 @@ namespace PuttyServerManager {
 
         ISessionRepository recentRepository = new RecentSessionRepository();
 
-
-
         /// <summary>
         /// Fenster mit der Treeview, die alle Sessions beinhaltet
         /// </summary>

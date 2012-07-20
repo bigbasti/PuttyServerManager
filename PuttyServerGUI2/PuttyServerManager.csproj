@@ -132,6 +132,12 @@
     <Compile Include="ToolWindows\dlgPassword.Designer.cs">
       <DependentUpon>dlgPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="ToolWindows\dlgSessionEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolWindows\dlgSessionEdit.Designer.cs">
+      <DependentUpon>dlgSessionEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolWindows\infWait.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,9 @@
     <EmbeddedResource Include="ToolWindows\dlgPassword.resx">
       <DependentUpon>dlgPassword.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ToolWindows\dlgSessionEdit.resx">
+      <DependentUpon>dlgSessionEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ToolWindows\infWait.resx">
       <DependentUpon>infWait.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\disk.png" />
+    <None Include="Resources\page_edit.png" />
+    <None Include="Resources\Edit.png" />
     <None Include="Resources\magic.png" />
     <None Include="Resources\computer_go.png" />
     <None Include="Resources\clock.png" />

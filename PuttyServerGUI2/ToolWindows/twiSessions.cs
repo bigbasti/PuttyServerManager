@@ -305,15 +305,8 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void editSessionToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (localRepository.CheckSessionExists(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvSessions.SelectedNode.Text))) {
-                try {
-                    ProcessStartInfo info = new ProcessStartInfo("C:\\Windows\\System32\\notepad.exe", Path.Combine(ApplicationPaths.LocalRepositoryPath, trvSessions.SelectedNode.Text));
-                    Process.Start(info);
-                } catch (Exception ex) {
-                    Program.LogWriter.Log("Could not start default editor, make sure there is an default editor for this type of file! - {0}", ex.Message);
-                    MessageBox.Show("Could not start default editor, make sure there is an default editor for this type of file!");
-                }
-            }
+            dlgSessionEdit edit = new dlgSessionEdit(trvSessions.SelectedNode.Text, localRepository);
+            edit.ShowDialog();
         }
 
         private void deleteToolStripMenuItem1_Click(object sender, EventArgs e) {
@@ -322,6 +315,8 @@ namespace PuttyServerManager.ToolWindows {
                 if (res == System.Windows.Forms.DialogResult.Yes) {
                     trvSessions.SelectedNode.Remove();
                 }
+            } else {
+                trvSessions.SelectedNode.Remove();
             }
             SaveChanges();
         }
