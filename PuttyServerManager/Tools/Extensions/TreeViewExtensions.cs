@@ -10,7 +10,7 @@ namespace PuttyServerManager.Tools.Extensions {
     /// <summary>
     /// Erweiterungen für die TreeView
     /// </summary>
-    static class TreeViewExtensions {
+    static public class TreeViewExtensions {
 
         /// <summary>
         /// Serialisiert eine angegebe TreeNode in eine Datei

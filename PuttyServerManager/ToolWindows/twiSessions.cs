@@ -16,7 +16,6 @@ using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
 using WindowTool;
 using PuttyServerManager.WindowTools;
-using PuttyServerManager.Tools;
 
 namespace PuttyServerManager.ToolWindows {
     public partial class twiSessions : ToolWindow {
@@ -88,8 +87,7 @@ namespace PuttyServerManager.ToolWindows {
         private void LoadConfiguration() {
 
             LoadLocalSessionsList();
-            trvSessions.Nodes[0].ImageIndex = (int)NodeType.RootNode;
-            trvSessions.Nodes[0].SelectedImageIndex = (int)NodeType.RootNode;
+            SetRootNodeIcon();
 
             LoadRecentSessionsList();
 
@@ -99,7 +97,7 @@ namespace PuttyServerManager.ToolWindows {
                 trvTeam.Nodes[0].Expand();
             }
 
-            LoarRegestrySessionsList();
+            LoadRegestrySessionsList();
 
             trvSessions.Sort();
             trvRecentSessions.Sort();
@@ -107,6 +105,11 @@ namespace PuttyServerManager.ToolWindows {
             trvSessions.LabelEdit = localRepository.UserCanEditList();
             trvRecentSessions.LabelEdit = recentRepository.UserCanEditList();
 
+        }
+
+        private void SetRootNodeIcon() {
+            trvSessions.Nodes[0].ImageIndex = (int)NodeType.RootNode;
+            trvSessions.Nodes[0].SelectedImageIndex = (int)NodeType.RootNode;
         }
 
         private void LoadRecentSessionsList() {
@@ -136,7 +139,7 @@ namespace PuttyServerManager.ToolWindows {
             }
         }
 
-        private void LoarRegestrySessionsList() {
+        private void LoadRegestrySessionsList() {
             try {
                 TreeNode node = RegistryTools.ImportSessionsFromRegistry();
                 trvRegistrySessions.Nodes.Add(node);
@@ -340,18 +343,6 @@ namespace PuttyServerManager.ToolWindows {
                 RemoveMissingNode(trvRecentSessions.SelectedNode);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// Entfern die angegebene Node aus der TreeView und speichert die Übersicht
@@ -610,8 +601,6 @@ namespace PuttyServerManager.ToolWindows {
             trv.SelectedNode = clickedNode;
             return clickedNode;
         }
-
-
 
         #region ColoredSessionEventHandlers
 

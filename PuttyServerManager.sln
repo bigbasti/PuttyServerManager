@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuttyServerManager", "PuttyServerManager\PuttyServerManager.csproj", "{776A27D8-4C89-49EF-92E5-A379E65D71C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuttyServerManager.Tests", "PuttyServerManager.Tests\PuttyServerManager.Tests.csproj", "{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFA69716-B7C0-4DD9-9FAE-65487F0B9528}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		PuttyServerManager.vsmdi = PuttyServerManager.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = PuttyServerManager.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -23,6 +35,16 @@ Global
 		{776A27D8-4C89-49EF-92E5-A379E65D71C8}.Release|Mixed Platforms.Build.0 = Release|x86
 		{776A27D8-4C89-49EF-92E5-A379E65D71C8}.Release|x86.ActiveCfg = Release|x86
 		{776A27D8-4C89-49EF-92E5-A379E65D71C8}.Release|x86.Build.0 = Release|x86
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A5E44FBF-B7D4-406A-88CF-9BCD4E6A602A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
