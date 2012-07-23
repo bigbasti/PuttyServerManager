@@ -17,7 +17,7 @@ namespace PuttyServerManager.Persistence.Repository {
             try {
                 Program.LogWriter.Log("Copying new Session to Repository: {0}", filename);
 
-                File.Copy(filename, Path.Combine(ApplicationPaths.LocalRepositoryPath, Path.GetFileName(filename)), true);
+                File.Copy(filename, Path.Combine(ApplicationSettings.LocalRepositoryPath, Path.GetFileName(filename)), true);
 
             } catch (Exception ex) {
                 Program.LogWriter.Log("# Cound not Copy the Sessionfile to Repostitory because {0}", ex.Message);
@@ -29,13 +29,13 @@ namespace PuttyServerManager.Persistence.Repository {
         }
 
         public bool CheckSessionExists(string sessionName) {
-            return File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+            return File.Exists(Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName));
         }
 
         public bool RenameSession(string sessionName, string newName) {
             try {
-                string oldFileName = Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName);
-                string newFileName = Path.Combine(ApplicationPaths.LocalRepositoryPath, newName);
+                string oldFileName = Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName);
+                string newFileName = Path.Combine(ApplicationSettings.LocalRepositoryPath, newName);
                 File.Move(oldFileName, newFileName);
             } catch (Exception ex) {
                 MessageBox.Show("Could not Rename the Session.\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -47,7 +47,7 @@ namespace PuttyServerManager.Persistence.Repository {
 
         public bool DeleteSession(string sessionName) {
             try {
-                File.Delete(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+                File.Delete(Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName));
             } catch (Exception ex) {
                 Program.LogWriter.Log("# Cound not delete the Sessionfile from Repostitory because {0}", ex.Message);
                 return false;

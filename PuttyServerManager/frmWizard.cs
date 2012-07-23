@@ -66,12 +66,12 @@ namespace PuttyServerManager {
                     chkImportFavourites.Enabled = false;
 
                     string pathToOldSessions = Path.Combine(Path.GetDirectoryName(file.FileName), ".putty\\sessions");
-                    Program.LogWriter.Log("Copying from {0} to {1}", pathToOldSessions, ApplicationPaths.LocalRepositoryPath);
+                    Program.LogWriter.Log("Copying from {0} to {1}", pathToOldSessions, ApplicationSettings.LocalRepositoryPath);
                     foreach (string f in Directory.GetFiles(pathToOldSessions)) {
-                        string newFile = Path.Combine(ApplicationPaths.LocalRepositoryPath, f);
+                        string newFile = Path.Combine(ApplicationSettings.LocalRepositoryPath, f);
                         try {
                             Program.LogWriter.Log("Copying File to repository: {0}", f);
-                            File.Copy(f, Path.Combine(ApplicationPaths.LocalRepositoryPath, Path.GetFileName(f)), false);
+                            File.Copy(f, Path.Combine(ApplicationSettings.LocalRepositoryPath, Path.GetFileName(f)), false);
                         } catch (Exception ex) {
                             Program.LogWriter.Log("Skipping file {0} - because: {1}", f, ex.Message);
                         }
@@ -87,11 +87,11 @@ namespace PuttyServerManager {
             CurrentSlide = panel1;
             Slides = new Panel[] {panel1, panel2, panel3, panel4, panel5};
 
-            txtFileZillaPath.Text = ApplicationPaths.PathToFileZilla;
-            txtWinSCPPath.Text = ApplicationPaths.PathToWinSCP;
-            txtTeamSessionFolderPath.Text = ApplicationPaths.RemoteRepositoryPath;
-            txtTeamSessionListPath.Text = ApplicationPaths.RemoteSessionListPath;
-            txtTeamUsername.Text = ApplicationPaths.TeamUsername;
+            txtFileZillaPath.Text = ApplicationSettings.PathToFileZilla;
+            txtWinSCPPath.Text = ApplicationSettings.PathToWinSCP;
+            txtTeamSessionFolderPath.Text = ApplicationSettings.RemoteRepositoryPath;
+            txtTeamSessionListPath.Text = ApplicationSettings.RemoteSessionListPath;
+            txtTeamUsername.Text = ApplicationSettings.TeamUsername;
         }
 
         private void button1_Click(object sender, EventArgs e) {
@@ -176,11 +176,11 @@ namespace PuttyServerManager {
         }
 
         private void btnFinish_Click(object sender, EventArgs e) {
-             ApplicationPaths.PathToFileZilla = txtFileZillaPath.Text;
-             ApplicationPaths.PathToWinSCP = txtWinSCPPath.Text;
-             ApplicationPaths.RemoteRepositoryPath = txtTeamSessionFolderPath.Text;
-             ApplicationPaths.RemoteSessionListPath = txtTeamSessionListPath.Text;
-             ApplicationPaths.TeamUsername = txtTeamUsername.Text;
+             ApplicationSettings.PathToFileZilla = txtFileZillaPath.Text;
+             ApplicationSettings.PathToWinSCP = txtWinSCPPath.Text;
+             ApplicationSettings.RemoteRepositoryPath = txtTeamSessionFolderPath.Text;
+             ApplicationSettings.RemoteSessionListPath = txtTeamSessionListPath.Text;
+             ApplicationSettings.TeamUsername = txtTeamUsername.Text;
 
              MessageBox.Show("The new settings require a restart of the application. Putty Server Manager will close now", "Application restart required!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

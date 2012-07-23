@@ -17,14 +17,14 @@ namespace PuttyServerManager.Persistence.Repository {
 
         public void AddSession(string server, string protocol, int port, string name = "") {
             try {
-                string defaultSession = File.ReadAllText(ApplicationPaths.SessionTemplatePath);
+                string defaultSession = File.ReadAllText(ApplicationSettings.SessionTemplatePath);
 
                 defaultSession = defaultSession.Replace("HostName=", "HostName=" + server);
                 defaultSession = defaultSession.Replace("Protocol=", "Protocol=" + protocol);
                 defaultSession = defaultSession.Replace("PortNumber=", "PortNumber=" + port);
                 defaultSession = defaultSession.Replace("WinTitle=", "WinTitle=" + name);
 
-                File.WriteAllText(Path.Combine(ApplicationPaths.LocalRepositoryPath, name), defaultSession);
+                File.WriteAllText(Path.Combine(ApplicationSettings.LocalRepositoryPath, name), defaultSession);
             } catch (Exception ex) {
                 Program.LogWriter.Log("# Cound not create the Sessionfile in Repostitory because {0}", ex.Message);
             }
@@ -40,7 +40,7 @@ namespace PuttyServerManager.Persistence.Repository {
 
         public bool DeleteSession(string sessionName) {
             try {
-                File.Delete(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+                File.Delete(Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName));
             } catch (Exception ex) {
                 Program.LogWriter.Log("# Cound not delete the Sessionfile from Repostitory because {0}", ex.Message);
                 return false;

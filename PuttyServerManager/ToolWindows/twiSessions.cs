@@ -47,8 +47,8 @@ namespace PuttyServerManager.ToolWindows {
         /// </summary>
         public void SaveChanges() {
             try {
-                trvSessions.SerializeNode(trvSessions.Nodes[0], ApplicationPaths.LocalSessionListPath);
-                trvRecentSessions.SerializeNode(trvRecentSessions.Nodes[0], ApplicationPaths.RecentSessionListPath);
+                trvSessions.SerializeNode(trvSessions.Nodes[0], ApplicationSettings.LocalSessionListPath);
+                trvRecentSessions.SerializeNode(trvRecentSessions.Nodes[0], ApplicationSettings.RecentSessionListPath);
             } catch (Exception ex) {
                 //Fehler Kann auftreten beim laden des Formulars wenn die
                 //recentSessions noch nicht geladen sind aber das ListAfterExpanded Event
@@ -62,12 +62,12 @@ namespace PuttyServerManager.ToolWindows {
         private void LoadConfiguration() {
 
             LoadLocalSessionsList();
-            trvSessions.Nodes[0].ImageIndex = 0;
-            trvSessions.Nodes[0].SelectedImageIndex = 0;
+            trvSessions.Nodes[0].ImageIndex = (int)NodeType.RootNode;
+            trvSessions.Nodes[0].SelectedImageIndex = (int)NodeType.RootNode;
 
             LoadRecentSessionsList();
 
-            if (ApplicationPaths.RemoteSessionIsConfigured) {
+            if (ApplicationSettings.RemoteSessionIsConfigured) {
                 LoadTeamSessionsList();
                 trvTeam.Sort();
                 trvTeam.Nodes[0].Expand();
@@ -85,7 +85,7 @@ namespace PuttyServerManager.ToolWindows {
 
         private void LoadRecentSessionsList() {
             try {
-                TreeNode node = trvRecentSessions.DeserializeNode(ApplicationPaths.RecentSessionListPath);
+                TreeNode node = trvRecentSessions.DeserializeNode(ApplicationSettings.RecentSessionListPath);
                 trvRecentSessions.Nodes.Add(node);
             } catch (Exception ex) {
                 trvRecentSessions.Nodes.Add("Recent Sessions");
@@ -94,7 +94,7 @@ namespace PuttyServerManager.ToolWindows {
 
         private void LoadLocalSessionsList() {
             try {
-                TreeNode node = trvSessions.DeserializeNode(ApplicationPaths.LocalSessionListPath);
+                TreeNode node = trvSessions.DeserializeNode(ApplicationSettings.LocalSessionListPath);
                 trvSessions.Nodes.Add(node);
             } catch (Exception ex) {
                 trvSessions.Nodes.Add("Saved Sessions");
@@ -103,7 +103,7 @@ namespace PuttyServerManager.ToolWindows {
 
         private void LoadTeamSessionsList() {
             try {
-                TreeNode node = trvTeam.DeserializeTeamNode(ApplicationPaths.RemoteSessionListPath);
+                TreeNode node = trvTeam.DeserializeTeamNode(ApplicationSettings.RemoteSessionListPath);
                 trvTeam.Nodes.Add(node);
             } catch (Exception ex) {
                 Program.LogWriter.Log("Could not load Team Sessions - {0}", ex.Message);
@@ -143,17 +143,17 @@ namespace PuttyServerManager.ToolWindows {
                 TreeNode clickedNode = trvSessions.GetNodeAt(e.Location);
                 trvSessions.SelectedNode = clickedNode;
 
-                if (clickedNode.SelectedImageIndex == 9) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerError) {
                     conMenuSessionMissing.Show(MousePosition);
                     return;
                 }
 
-                if (clickedNode.SelectedImageIndex == 6) {
-                    if (string.IsNullOrEmpty(ApplicationPaths.PathToFileZilla)) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerNode) {
+                    if (string.IsNullOrEmpty(ApplicationSettings.PathToFileZilla)) {
                         connectWithFileZillaToolStripMenuItem.Enabled = false;
                     } else { connectWithFileZillaToolStripMenuItem.Enabled = true; }
 
-                    if (string.IsNullOrEmpty(ApplicationPaths.PathToWinSCP)) {
+                    if (string.IsNullOrEmpty(ApplicationSettings.PathToWinSCP)) {
                         connectWithWinSCPToolStripMenuItem.Enabled = false;
                     } else { connectWithWinSCPToolStripMenuItem.Enabled = true; }
 
@@ -161,7 +161,7 @@ namespace PuttyServerManager.ToolWindows {
                     return;
                 }
 
-                if (clickedNode.SelectedImageIndex == 1) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.FolderNode) {
                     if (clickedNode.Nodes.Count == 0) {
                         startAllSessionsInFolderToolStripMenuItem.Enabled = false;
                     } else {
@@ -180,9 +180,7 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void addSubfolderToolStripMenuItem_Click(object sender, EventArgs e) {
-            TreeNode newNode = new TreeNode("New Folder");
-            newNode.SelectedImageIndex = 1;
-            newNode.ImageIndex = 1;
+            TreeNode newNode = CreateNewFolderNode("New Folder");
 
             trvSessions.SelectedNode.Nodes.Add(newNode);
             trvSessions.SelectedNode.Expand();
@@ -252,9 +250,7 @@ namespace PuttyServerManager.ToolWindows {
         /// </summary>
         /// <param name="session">Kompletter Pfad der Session</param>
         private void AddSessionAsTreeNode(string session) {
-            TreeNode newNode = new TreeNode(Path.GetFileName(session));
-            newNode.ImageIndex = 6;
-            newNode.SelectedImageIndex = 6;
+            TreeNode newNode = CreateNewServerNode(Path.GetFileName(session));
 
             trvSessions.SelectedNode.Nodes.Add(newNode);
         }
@@ -271,7 +267,7 @@ namespace PuttyServerManager.ToolWindows {
                 return;
             }
 
-            if (e.Node.ImageIndex == 6 && e.Label != null) {
+            if (e.Node.ImageIndex == (int)NodeType.ServerNode && e.Label != null) {
                 if (!localRepository.RenameSession(e.Node.Text, e.Label)) {
                     e.CancelEdit = true;
                     return;
@@ -334,19 +330,19 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void trvSessions_DoubleClick(object sender, EventArgs e) {
-            if (trvSessions.SelectedNode.ImageIndex == 6) {         //Normale Session
+            if (trvSessions.SelectedNode.ImageIndex == (int)NodeType.ServerNode) {         //Normale Session
                 StartPuttySession(trvSessions.SelectedNode.Text);
             }
-            if (trvSessions.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+            if (trvSessions.SelectedNode.ImageIndex == (int)NodeType.ServerError) {   //Nicht gefundene Session
                 RemoveMissingNode(trvSessions.SelectedNode);
             }
         }
 
         private void trvRecentSessions_DoubleClick(object sender, EventArgs e) {
-            if (trvRecentSessions.SelectedNode.ImageIndex == 6) {   //Normale Session
+            if (trvRecentSessions.SelectedNode.ImageIndex == (int)NodeType.ServerNode) {   //Normale Session
                 StartPuttySession(trvRecentSessions.SelectedNode.Text);
             }
-            if (trvRecentSessions.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+            if (trvRecentSessions.SelectedNode.ImageIndex == (int)NodeType.ServerError) {   //Nicht gefundene Session
                 RemoveMissingNode(trvRecentSessions.SelectedNode);
             }
         }
@@ -356,7 +352,7 @@ namespace PuttyServerManager.ToolWindows {
         /// </summary>
         /// <param name="sessionName">Name der Session die gestartet werden soll</param>
         /// <param name="dockstate">Angabe wie das neue Fenster angedockt werden soll</param>
-        public void StartPuttySession(string sessionName, DockState dockstate = WeifenLuo.WinFormsUI.Docking.DockState.Document) {
+        public void StartPuttySession(string sessionName, DockState dockstate = DockState.Document) {
 
             StartPuttyAgentIfNeeded();
             
@@ -386,7 +382,7 @@ namespace PuttyServerManager.ToolWindows {
         private void StartSessionInFileZilla(string session, string userPass) {
 
             try {
-                string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
+                string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationSettings.LocalRepositoryPath, session));
 
                 string filezillaString = "";
                 string puttyTunnel = "";
@@ -428,7 +424,7 @@ namespace PuttyServerManager.ToolWindows {
                     filezillaString = string.Format("sftp://{0}:{1}@localhost:{2}", userName, userPass, rndPort);
                     Program.LogWriter.Log("sftp://{0}:{1}@localhost:{2}", userName, "******", rndPort);
 
-                    infWait waiter = new infWait(ApplicationPaths.PathToFileZilla, filezillaString);
+                    infWait waiter = new infWait(ApplicationSettings.PathToFileZilla, filezillaString);
                     waiter.Show();
 
                 } else {
@@ -449,8 +445,8 @@ namespace PuttyServerManager.ToolWindows {
 
                     Program.LogWriter.Log("sftp://{0}:{1}@{2}:{3}", userName, "******", serverName, serverPort);
 
-                    ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToFileZilla, filezillaString);
-                    pi.WorkingDirectory = ApplicationPaths.PathToFileZilla.Substring(0, ApplicationPaths.PathToFileZilla.LastIndexOf(Path.DirectorySeparatorChar));
+                    ProcessStartInfo pi = new ProcessStartInfo(ApplicationSettings.PathToFileZilla, filezillaString);
+                    pi.WorkingDirectory = ApplicationSettings.PathToFileZilla.Substring(0, ApplicationSettings.PathToFileZilla.LastIndexOf(Path.DirectorySeparatorChar));
                     Process.Start(pi);
                 }
             } catch (Exception ex) {
@@ -466,7 +462,7 @@ namespace PuttyServerManager.ToolWindows {
         private void StartSessionInWinSCP(string session) {
 
             try {
-                string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
+                string[] sessionData = File.ReadAllLines(Path.Combine(ApplicationSettings.LocalRepositoryPath, session));
 
                 string winSCPString = "";
                 string puttyTunnel = "";
@@ -509,7 +505,7 @@ namespace PuttyServerManager.ToolWindows {
                     winSCPString = string.Format("sftp://{0}@localhost:{1}", userName, rndPort);
                     Program.LogWriter.Log("sftp://{0}@localhost:{1}", userName, rndPort);
 
-                    infWait waiter = new infWait(ApplicationPaths.PathToWinSCP, winSCPString);
+                    infWait waiter = new infWait(ApplicationSettings.PathToWinSCP, winSCPString);
                     waiter.Show();
 
                 } else {
@@ -529,8 +525,8 @@ namespace PuttyServerManager.ToolWindows {
 
                     Program.LogWriter.Log("sftp://{0}@{1}:{2}", userName, serverName, serverPort);
 
-                    ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PathToWinSCP, winSCPString);
-                    pi.WorkingDirectory = ApplicationPaths.PathToWinSCP.Substring(0, ApplicationPaths.PathToWinSCP.LastIndexOf(Path.DirectorySeparatorChar));
+                    ProcessStartInfo pi = new ProcessStartInfo(ApplicationSettings.PathToWinSCP, winSCPString);
+                    pi.WorkingDirectory = ApplicationSettings.PathToWinSCP.Substring(0, ApplicationSettings.PathToWinSCP.LastIndexOf(Path.DirectorySeparatorChar));
                     Process.Start(pi);
                 }
             } catch (Exception ex) {
@@ -556,7 +552,7 @@ namespace PuttyServerManager.ToolWindows {
         /// <param name="sessionData">Inhalt der Session</param>
         private void SaveAndStartTempSession(string session, string[] sessionData) {
             //save temp session
-            File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, session + "_tunnel"), sessionData);
+            File.WriteAllLines(Path.Combine(ApplicationSettings.LocalRepositoryPath, session + "_tunnel"), sessionData);
 
             //start putty session
             StartPuttySession(session + "_tunnel", WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
@@ -622,7 +618,7 @@ namespace PuttyServerManager.ToolWindows {
             //On demand: start putty agent
             StartPuttyAgentIfNeeded();
 
-            ProcessStartInfo pi = new ProcessStartInfo(ApplicationPaths.PuttyLocation, "-load " + sessionName);
+            ProcessStartInfo pi = new ProcessStartInfo(ApplicationSettings.PuttyLocation, "-load " + sessionName);
             Process.Start(pi);
         }
 
@@ -630,10 +626,10 @@ namespace PuttyServerManager.ToolWindows {
         /// Startet den PuttyAgent falls der Benutzer dies in den Einstellungen konfiguriert hat
         /// </summary>
         private static void StartPuttyAgentIfNeeded() {
-            if (ApplicationPaths.UsePuttyAgent) {
+            if (ApplicationSettings.UsePuttyAgent) {
                 if (Process.GetProcessesByName("pageant").Length < 1) {
-                    if (File.Exists(ApplicationPaths.PuttyAgentLocation)) {
-                        ProcessStartInfo info = new ProcessStartInfo(ApplicationPaths.PuttyAgentLocation, ApplicationPaths.PuttyAgentParameters);
+                    if (File.Exists(ApplicationSettings.PuttyAgentLocation)) {
+                        ProcessStartInfo info = new ProcessStartInfo(ApplicationSettings.PuttyAgentLocation, ApplicationSettings.PuttyAgentParameters);
                         Process.Start(info);
                     }
                 }
@@ -674,12 +670,12 @@ namespace PuttyServerManager.ToolWindows {
                 TreeNode clickedNode = trvRecentSessions.GetNodeAt(e.Location);
                 trvRecentSessions.SelectedNode = clickedNode;
 
-                if (clickedNode.SelectedImageIndex == 9) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerError) {
                     conMenuRemoveMissingRecent.Show(MousePosition);
                     return;
                 }
 
-                if (clickedNode.SelectedImageIndex == 6) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerNode) {
                     conMenuRecent.Show(MousePosition);
                     return;
                 }
@@ -721,7 +717,7 @@ namespace PuttyServerManager.ToolWindows {
 
         private void removeAllMissingSessionsToolStripMenuItem_Click(object sender, EventArgs e) {
             foreach (TreeNode n in trvRecentSessions.Nodes[0].Nodes) {
-                if (n.SelectedImageIndex == 9) {
+                if (n.SelectedImageIndex == (int)NodeType.ServerError) {
                     n.Remove();
                 }
             }
@@ -745,7 +741,7 @@ namespace PuttyServerManager.ToolWindows {
         /// </summary>
         /// <param name="sessionName">Die Session die gestartet werden soll</param>
         private void StartTeamSession(string sessionName) {
-            string from = Path.Combine(ApplicationPaths.RemoteRepositoryPath, sessionName);
+            string from = Path.Combine(ApplicationSettings.RemoteRepositoryPath, sessionName);
 
             TransferSessionFromTeamFolder(sessionName, from);
             StartPuttySession(sessionName);
@@ -772,24 +768,24 @@ namespace PuttyServerManager.ToolWindows {
         /// <param name="sessionName">Die Session in die die einstellungen eingetragen werden sollen</param>
         private static void SetUserSpecificConfiguration(string sessionName) {
             //TODO: Needs refactory
-            if (!string.IsNullOrEmpty(ApplicationPaths.TeamUsername)) {
-                string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName));
+            if (!string.IsNullOrEmpty(ApplicationSettings.TeamUsername)) {
+                string[] newSession = File.ReadAllLines(Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName));
 
                 for (int i = 0; i < newSession.Length; i++) {
                     if (newSession[i].Equals("UserName=")) {
-                        newSession[i] = "UserName=" + ApplicationPaths.TeamUsername;
+                        newSession[i] = "UserName=" + ApplicationSettings.TeamUsername;
                     }
                     if (newSession[i].Contains("ssh  @")) {
-                        newSession[i] = newSession[i].Replace("=ssh  @", "=ssh " + ApplicationPaths.TeamUsername + "@");
+                        newSession[i] = newSession[i].Replace("=ssh  @", "=ssh " + ApplicationSettings.TeamUsername + "@");
                     }
                 }
 
-                File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName), newSession);
+                File.WriteAllLines(Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName), newSession);
             }
         }
 
         private void transferSessionToPersonalListToolStripMenuItem_Click(object sender, EventArgs e) {
-            string from = Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text);
+            string from = Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text);
 
             if (trvSessions.DoesNodeExist(Path.GetFileName(from))) {
                 MessageBox.Show(string.Format("The Session {0} is already in your Session list and won't be added again!", Path.GetFileName(from)), "Session already in the list", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -811,8 +807,8 @@ namespace PuttyServerManager.ToolWindows {
         /// <returns>Neuer TreeNode</returns>
         private static TreeNode CreateNewServerNode(string sessionName) {
             TreeNode newNode = new TreeNode(sessionName);
-            newNode.ImageIndex = 6;
-            newNode.SelectedImageIndex = 6;
+            newNode.ImageIndex = (int)NodeType.ServerNode;
+            newNode.SelectedImageIndex = (int)NodeType.ServerNode;
             return newNode;
         }
 
@@ -823,8 +819,8 @@ namespace PuttyServerManager.ToolWindows {
         /// <returns>Neuer TreeNode</returns>
         private static TreeNode CreateNewFolderNode(string folderName) {
             TreeNode newNode = new TreeNode(folderName);
-            newNode.ImageIndex = 1;
-            newNode.SelectedImageIndex = 1;
+            newNode.ImageIndex = (int)NodeType.FolderNode;
+            newNode.SelectedImageIndex = (int)NodeType.FolderNode;
             return newNode;
         }
 
@@ -834,17 +830,17 @@ namespace PuttyServerManager.ToolWindows {
                 TreeNode clickedNode = trvTeam.GetNodeAt(e.Location);
                 trvTeam.SelectedNode = clickedNode;
 
-                if (clickedNode.SelectedImageIndex == 9) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerError) {
                     conMenuSessionMissing.Show(MousePosition);
                     return;
                 }
 
-                if (clickedNode.SelectedImageIndex == 6) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerNode) {
                     conMenuTeamSession.Show(MousePosition);
                     return;
                 }
 
-                if (clickedNode.SelectedImageIndex == 1) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.FolderNode) {
                     //conMenuFolder.Show(MousePosition);
                     return;
                 }
@@ -853,10 +849,10 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void trvTeam_DoubleClick(object sender, EventArgs e) {
-            if (trvTeam.SelectedNode.ImageIndex == 6) {         //Normale Session
+            if (trvTeam.SelectedNode.ImageIndex == (int)NodeType.ServerNode) {          //Normale Session
                 StartTeamSession(trvTeam.SelectedNode.Text);
             }
-            if (trvTeam.SelectedNode.ImageIndex == 9) {   //Nicht gefundene Session
+            if (trvTeam.SelectedNode.ImageIndex == (int)NodeType.ServerError) {         //Nicht gefundene Session
                 MessageBox.Show("This session seems to be missing in the Team folder. Please contact your Session Folder administrator!", "Missing session!", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
         }
@@ -876,7 +872,7 @@ namespace PuttyServerManager.ToolWindows {
                 draggedNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
 
                 if (!destenationNode.FullPath.Contains(draggedNode.Text)) {
-                    if (destenationNode.ImageIndex > 1) {
+                    if (destenationNode.ImageIndex > (int)NodeType.FolderNode) {
                         destenationNode = destenationNode.Parent;
                     }
 
@@ -930,15 +926,15 @@ namespace PuttyServerManager.ToolWindows {
             try {
                 FolderSetup.SetupDirectory();
 
-                //TODO: To be removed
-                //string[] newSession = File.ReadAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text));
-                //File.WriteAllLines(Path.Combine(ApplicationPaths.LocalRepositoryPath, trvRegistrySessions.SelectedNode.Text), newSession);
+                if (!trvSessions.DoesNodeExist(trvRegistrySessions.SelectedNode.Text)) {
+                    TreeNode node = CreateNewServerNode(trvRegistrySessions.SelectedNode.Text);
 
-                TreeNode node = CreateNewServerNode(trvRegistrySessions.SelectedNode.Text);
+                    trvSessions.Nodes[0].Nodes.Add(node);
 
-                trvSessions.Nodes[0].Nodes.Add(node);
-
-                SaveChanges();
+                    SaveChanges();
+                } else {
+                    Program.LogWriter.Log("The Session you try to add is already in the list and won't be added again!");
+                }
             } catch (Exception ex) {
                 Program.LogWriter.Log("Could not transfer Session to personal List because {0}", ex.Message);
             }
@@ -949,7 +945,7 @@ namespace PuttyServerManager.ToolWindows {
                 //Auch bei einem Rechtsklick das gewählte Element markieren
                 TreeNode clickedNode = SelectNodeAfterRightClick(trvRegistrySessions, e);
 
-                if (clickedNode.SelectedImageIndex == 6) {
+                if (clickedNode.SelectedImageIndex == (int)NodeType.ServerNode) {
                     conMenuRegistrySession.Show(MousePosition);
                     return;
                 }
@@ -978,7 +974,7 @@ namespace PuttyServerManager.ToolWindows {
         /// <param name="foreColor">Gewünschte Textfarbe</param>
         /// <param name="isRemote">Gibt an, ob eine Teamsession gestartet werden soll</param>
         private void StartSessionInColor(string sessionName, string bgColor, string foreColor, bool isRemote=false) {
-            string sessionFile = Path.Combine(ApplicationPaths.LocalRepositoryPath, sessionName);
+            string sessionFile = Path.Combine(ApplicationSettings.LocalRepositoryPath, sessionName);
             
             try {
                 if (File.Exists(sessionFile)) {
@@ -1090,42 +1086,42 @@ namespace PuttyServerManager.ToolWindows {
         //Team Sessions ---
 
         private void toolStripMenuItem22_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour=0,0,0", "Colour0=255,255,255");
         }
 
         private void toolStripMenuItem23_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=255,255,255", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem24_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=0,0,0", "Colour0=0,255,0");
         }
 
         private void toolStripMenuItem25_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=227,255,104", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem26_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=119,255,239", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem27_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=174,255,145", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem28_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=255,188,196", "Colour0=0,0,0");
         }
 
         private void toolStripMenuItem29_Click(object sender, EventArgs e) {
-            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationPaths.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
+            TransferSessionFromTeamFolder(trvTeam.SelectedNode.Text, Path.Combine(ApplicationSettings.RemoteRepositoryPath, trvTeam.SelectedNode.Text));
             StartSessionInColor(trvTeam.SelectedNode.Text, "Colour2=192,192,192", "Colour0=0,0,0");
         }
 
@@ -1174,7 +1170,7 @@ namespace PuttyServerManager.ToolWindows {
         /// <param name="folder">Ordner-TreeNode</param>
         private void StartAllSessionsInFolder(TreeNode folder) {
             foreach (TreeNode session in folder.Nodes) {
-                if (session.ImageIndex == 6) {
+                if (session.ImageIndex == (int)NodeType.ServerNode) {
                     StartPuttySession(session.Text);
                 }
             }
@@ -1197,8 +1193,8 @@ namespace PuttyServerManager.ToolWindows {
 
 
         private void convertToExistingSessionToolStripMenuItem_Click(object sender, EventArgs e) {
-            trvSessions.SelectedNode.ImageIndex = 6;
-            trvSessions.SelectedNode.SelectedImageIndex = 6;
+            trvSessions.SelectedNode.ImageIndex = (int)NodeType.ServerNode;
+            trvSessions.SelectedNode.SelectedImageIndex = (int)NodeType.ServerNode;
         }
 
         private void trvSessions_AfterExpand(object sender, TreeViewEventArgs e) {
@@ -1210,7 +1206,7 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void twiSessions_SizeChanged(object sender, EventArgs e) {
-            ApplicationPaths.LastOverviewWindowSize = this.Size;
+            ApplicationSettings.LastOverviewWindowSize = this.Size;
         }
     }
 }

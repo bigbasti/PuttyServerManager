@@ -8,7 +8,7 @@ using System.Drawing;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace PuttyServerManager.Config {
-    public static class ApplicationPaths {
+    public static class ApplicationSettings {
 
         public static string ApplicationPath {
             get {

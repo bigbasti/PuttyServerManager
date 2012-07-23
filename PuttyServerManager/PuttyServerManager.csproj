@@ -92,8 +92,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\ApplicationPaths.cs" />
+    <Compile Include="Config\ApplicationSettings.cs" />
     <Compile Include="Config\FolderSetup.cs" />
+    <Compile Include="Config\NodeType.cs" />
     <Compile Include="frmMainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -28,19 +28,19 @@ namespace PuttyServerManager {
             InitializeComponent();
 
             frmSessions = new twiSessions(ContentPanel, this);
-            frmSessions.Size = ApplicationPaths.LastOverviewWindowSize;
+            frmSessions.Size = ApplicationSettings.LastOverviewWindowSize;
 
             RestoreLastSessionListWidth();
 
-            frmSessions.Show(ContentPanel, ApplicationPaths.SessionOverviewDockState);
+            frmSessions.Show(ContentPanel, ApplicationSettings.SessionOverviewDockState);
            
         }
 
         private void RestoreLastSessionListWidth() {
-            if (ApplicationPaths.SessionOverviewDockState == DockState.DockLeft) {
-                ContentPanel.DockLeftPortion = ApplicationPaths.LastOverviewWindowSize.Width;
-            }else if(ApplicationPaths.SessionOverviewDockState == DockState.DockRight){
-                ContentPanel.DockRightPortion = ApplicationPaths.LastOverviewWindowSize.Width;
+            if (ApplicationSettings.SessionOverviewDockState == DockState.DockLeft) {
+                ContentPanel.DockLeftPortion = ApplicationSettings.LastOverviewWindowSize.Width;
+            }else if(ApplicationSettings.SessionOverviewDockState == DockState.DockRight){
+                ContentPanel.DockRightPortion = ApplicationSettings.LastOverviewWindowSize.Width;
             }
         }
 
@@ -48,16 +48,16 @@ namespace PuttyServerManager {
         private void frmMainWindow_Load(object sender, EventArgs e) {
             cboServerProtocol.SelectedIndex = 0;
 
-            this.Size = ApplicationPaths.LastWindowSize;
-            this.Location = ApplicationPaths.LastWindowPosition;
+            this.Size = ApplicationSettings.LastWindowSize;
+            this.Location = ApplicationSettings.LastWindowPosition;
 
             if (this.Location.X < 0 || this.Location.Y < 0) {
                 Program.LogWriter.Log("Main Window is out of reach for the user, resetting window position");
                 this.Location = new Point(0, 0);
             }
 
-            toolQuickConnect.Visible = ApplicationPaths.ShowQuickConnectionBar;
-            showQuickConnectionBarToolStripMenuItem.Checked = ApplicationPaths.ShowQuickConnectionBar;
+            toolQuickConnect.Visible = ApplicationSettings.ShowQuickConnectionBar;
+            showQuickConnectionBarToolStripMenuItem.Checked = ApplicationSettings.ShowQuickConnectionBar;
 
             this.GotFocus += ((object o, EventArgs ev) => {
                 ContentPanel.ActivePane.Focus();
@@ -68,8 +68,8 @@ namespace PuttyServerManager {
         }
 
         private void CheckIfFirstStart() {
-            if (ApplicationPaths.FirstStart) {
-                ApplicationPaths.FirstStart = false;
+            if (ApplicationSettings.FirstStart) {
+                ApplicationSettings.FirstStart = false;
                 new frmWizard(frmSessions).ShowDialog();
             }
         }
@@ -80,7 +80,7 @@ namespace PuttyServerManager {
             toolQuickConnect.Visible = !showQuickConnectionBarToolStripMenuItem.Checked;
             showQuickConnectionBarToolStripMenuItem.Checked = !showQuickConnectionBarToolStripMenuItem.Checked;
 
-            ApplicationPaths.ShowQuickConnectionBar = !showQuickConnectionBarToolStripMenuItem.Checked;
+            ApplicationSettings.ShowQuickConnectionBar = !showQuickConnectionBarToolStripMenuItem.Checked;
         }
 
         private void btnStartQuickConnection_Click(object sender, EventArgs e) {
@@ -156,10 +156,10 @@ namespace PuttyServerManager {
         }
 
         private void frmMainWindow_FormClosing(object sender, FormClosingEventArgs e) {
-            ApplicationPaths.LastWindowPosition = this.Location;
-            ApplicationPaths.LastWindowSize = this.Size;
-            ApplicationPaths.SessionOverviewDockState = frmSessions.DockState;
-            ApplicationPaths.LastOverviewWindowSize = frmSessions.Size;
+            ApplicationSettings.LastWindowPosition = this.Location;
+            ApplicationSettings.LastWindowSize = this.Size;
+            ApplicationSettings.SessionOverviewDockState = frmSessions.DockState;
+            ApplicationSettings.LastOverviewWindowSize = frmSessions.Size;
         }
 
 

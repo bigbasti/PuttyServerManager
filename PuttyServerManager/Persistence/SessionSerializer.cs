@@ -90,17 +90,17 @@ namespace PuttyServerManager.Persistence {
         private static TreeNode CreateTreeNodeFromXmlNode(XmlNode node) {
             TreeNode retVal = new TreeNode(XmlConvert.DecodeName(node.Name));
 
-            if (File.Exists(Path.Combine(ApplicationPaths.LocalRepositoryPath, XmlConvert.DecodeName(node.Name))) || node.HasChildNodes) {
-                if (Convert.ToInt32(node.Attributes["ImageIndex"].Value) == 9) {
-                    retVal.ImageIndex = 6;
-                    retVal.SelectedImageIndex = 6;
+            if (File.Exists(Path.Combine(ApplicationSettings.LocalRepositoryPath, XmlConvert.DecodeName(node.Name))) || node.HasChildNodes) {
+                if (Convert.ToInt32(node.Attributes["ImageIndex"].Value) == (int)NodeType.ServerError) {
+                    retVal.ImageIndex = (int)NodeType.ServerNode;
+                    retVal.SelectedImageIndex = (int)NodeType.ServerNode;
                 } else {
                     retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
                     retVal.SelectedImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
                 }
             } else {
-                retVal.ImageIndex = 9;
-                retVal.SelectedImageIndex = 9;
+                retVal.ImageIndex = (int)NodeType.ServerError;
+                retVal.SelectedImageIndex = (int)NodeType.ServerError;
             }
             if (Convert.ToBoolean(node.Attributes["Expanded"].Value)) { retVal.Expand(); }
 
@@ -138,7 +138,7 @@ namespace PuttyServerManager.Persistence {
         private static TreeNode CreateTreeNodeFromTeamXmlNode(XmlNode node) {
             TreeNode retVal = new TreeNode(XmlConvert.DecodeName(node.Name));
 
-            if (File.Exists(Path.Combine(ApplicationPaths.RemoteRepositoryPath, node.Name)) || node.HasChildNodes) {
+            if (File.Exists(Path.Combine(ApplicationSettings.RemoteRepositoryPath, node.Name)) || node.HasChildNodes) {
                 //Abwärtskompatibilität gewährleisten
                 try {
                     retVal.ImageIndex = Convert.ToInt32(node.Attributes["ImageIndex"].Value);
@@ -146,16 +146,16 @@ namespace PuttyServerManager.Persistence {
                 } catch (Exception ex) {
                     //Das alte Format kennt diese Attribute nicht
                     if (node.HasChildNodes) {
-                        retVal.ImageIndex = 1;
-                        retVal.SelectedImageIndex = 1;
+                        retVal.ImageIndex = (int)NodeType.FolderNode;
+                        retVal.SelectedImageIndex = (int)NodeType.FolderNode;
                     } else {
-                        retVal.ImageIndex = 6;
-                        retVal.SelectedImageIndex = 6;
+                        retVal.ImageIndex = (int)NodeType.ServerNode;
+                        retVal.SelectedImageIndex = (int)NodeType.ServerNode;
                     }
                 }
             } else {
-                retVal.ImageIndex = 9;
-                retVal.SelectedImageIndex = 9;
+                retVal.ImageIndex = (int)NodeType.ServerError;
+                retVal.SelectedImageIndex = (int)NodeType.ServerError;
             }
 
             try {

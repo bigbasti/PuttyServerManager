@@ -22,7 +22,7 @@ namespace PuttyServerManager {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Form applicationMainWindow = new frmMainWindow();
-            ApplicationPaths.ApplicationMainForm = applicationMainWindow;
+            ApplicationSettings.ApplicationMainForm = applicationMainWindow;
 
             if (Debugger.IsAttached) {
                 LogWriter = new DebugLogger();
@@ -33,7 +33,7 @@ namespace PuttyServerManager {
 
             SingleInstanceHelper.RegisterRemotingService();
 
-            if (ApplicationPaths.RuninSingleInstanceMode) {
+            if (ApplicationSettings.RuninSingleInstanceMode) {
                 bool onlyInstance = false;
                 Mutex mutex = new Mutex(true, "PuttyServerGUI2", out onlyInstance);
 

@@ -27,8 +27,8 @@ namespace PuttyServerManager {
 
             FolderSetup.SetupDirectory();
 
-            lblStoredSessions.Text = string.Format(lblStoredSessions.Text, Directory.GetFiles(ApplicationPaths.LocalRepositoryPath).Length);
-            txtStoredSessionsPath.Text = ApplicationPaths.LocalRepositoryPath;
+            lblStoredSessions.Text = string.Format(lblStoredSessions.Text, Directory.GetFiles(ApplicationSettings.LocalRepositoryPath).Length);
+            txtStoredSessionsPath.Text = ApplicationSettings.LocalRepositoryPath;
 
             lblVersion.Text = string.Format(lblVersion.Text, Application.ProductVersion);
             lblVersion2.Text = string.Format(lblVersion2.Text, Application.ProductVersion);
@@ -38,35 +38,35 @@ namespace PuttyServerManager {
 
         private void btnOpenStoredSessionsFolder_Click(object sender, EventArgs e) {
             try {
-                Process.Start(ApplicationPaths.LocalRepositoryPath);
+                Process.Start(ApplicationSettings.LocalRepositoryPath);
             } catch (Exception ex) {
                 Program.LogWriter.Log("Error opening Sessions Folder - {0}", ex.Message);
             }
         }
 
         private void SaveSettings() {
-            ApplicationPaths.StartWithWindows = chkStartWithWindows.Checked;
-            ApplicationPaths.PuttyAgentParameters = txtPuttyAgentParameters.Text;
-            ApplicationPaths.RemoteRepositoryPath = txtTeamSessionFolder.Text;
-            ApplicationPaths.RemoteSessionListPath = txtTeamSessionList.Text;
-            ApplicationPaths.TeamUsername = txtUsername.Text;
-            ApplicationPaths.UsePuttyAgent = chkUsePuttyAgent.Checked;
-            ApplicationPaths.RuninSingleInstanceMode = chkSingleWindow.Checked;
-            ApplicationPaths.PathToFileZilla = txtFileZillaPath.Text;
-            ApplicationPaths.PathToWinSCP = txtWinSCPPath.Text;
+            ApplicationSettings.StartWithWindows = chkStartWithWindows.Checked;
+            ApplicationSettings.PuttyAgentParameters = txtPuttyAgentParameters.Text;
+            ApplicationSettings.RemoteRepositoryPath = txtTeamSessionFolder.Text;
+            ApplicationSettings.RemoteSessionListPath = txtTeamSessionList.Text;
+            ApplicationSettings.TeamUsername = txtUsername.Text;
+            ApplicationSettings.UsePuttyAgent = chkUsePuttyAgent.Checked;
+            ApplicationSettings.RuninSingleInstanceMode = chkSingleWindow.Checked;
+            ApplicationSettings.PathToFileZilla = txtFileZillaPath.Text;
+            ApplicationSettings.PathToWinSCP = txtWinSCPPath.Text;
         }
 
         private void LoadSettings() {
-            chkStartWithWindows.Checked = ApplicationPaths.StartWithWindows;
-            txtPuttyAgentParameters.Text = ApplicationPaths.PuttyAgentParameters;
-            txtTeamSessionFolder.Text = ApplicationPaths.RemoteRepositoryPath;
-            txtTeamSessionList.Text = ApplicationPaths.RemoteSessionListPath;
-            txtUsername.Text = ApplicationPaths.TeamUsername;
-            chkUsePuttyAgent.Checked = ApplicationPaths.UsePuttyAgent;
+            chkStartWithWindows.Checked = ApplicationSettings.StartWithWindows;
+            txtPuttyAgentParameters.Text = ApplicationSettings.PuttyAgentParameters;
+            txtTeamSessionFolder.Text = ApplicationSettings.RemoteRepositoryPath;
+            txtTeamSessionList.Text = ApplicationSettings.RemoteSessionListPath;
+            txtUsername.Text = ApplicationSettings.TeamUsername;
+            chkUsePuttyAgent.Checked = ApplicationSettings.UsePuttyAgent;
             txtPuttyAgentParameters.Enabled = chkUsePuttyAgent.Checked;
-            chkSingleWindow.Checked = ApplicationPaths.RuninSingleInstanceMode;
-            txtFileZillaPath.Text = ApplicationPaths.PathToFileZilla;
-            txtWinSCPPath.Text = ApplicationPaths.PathToWinSCP;
+            chkSingleWindow.Checked = ApplicationSettings.RuninSingleInstanceMode;
+            txtFileZillaPath.Text = ApplicationSettings.PathToFileZilla;
+            txtWinSCPPath.Text = ApplicationSettings.PathToWinSCP;
         }
 
         private void btnSaveClose_Click(object sender, EventArgs e) {
@@ -119,7 +119,7 @@ namespace PuttyServerManager {
 
         private void chkStartWithWindows_CheckedChanged(object sender, EventArgs e) {
             chkStartWithWindows.Checked = !chkStartWithWindows.Checked;
-            ApplicationPaths.StartWithWindows = !chkStartWithWindows.Checked;
+            ApplicationSettings.StartWithWindows = !chkStartWithWindows.Checked;
             RegistryTools.RegisterInStartup(!chkStartWithWindows.Checked);
         }
 

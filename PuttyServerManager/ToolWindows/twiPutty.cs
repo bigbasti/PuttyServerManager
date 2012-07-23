@@ -30,14 +30,14 @@ namespace PuttyServerManager.ToolWindows {
             sessionName = session;
 
             if (session == "") {
-                this.Text = ApplicationPaths.PuttyLocation;
+                this.Text = ApplicationSettings.PuttyLocation;
             } else {
                 this.Text = session;
             }
 
             this.applicationwrapper = new ApplicationPanel(container);
             this.applicationwrapper.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.applicationwrapper.ApplicationName = ApplicationPaths.PuttyLocation;
+            this.applicationwrapper.ApplicationName = ApplicationSettings.PuttyLocation;
             if (session != "") {
                 this.applicationwrapper.ApplicationParameters = "-load " + session;
             }

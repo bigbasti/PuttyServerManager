@@ -29,7 +29,7 @@ namespace PuttyServerManager.ToolWindows {
 
         private string ReadSetting(string setting, string session) {
             try {
-                string file = Path.Combine(ApplicationPaths.LocalRepositoryPath, session);
+                string file = Path.Combine(ApplicationSettings.LocalRepositoryPath, session);
                 string line = File.ReadAllLines(file).FirstOrDefault(m => m.StartsWith(setting));
 
                 string value = line.Replace(setting + "=", "");
@@ -43,7 +43,7 @@ namespace PuttyServerManager.ToolWindows {
 
         private void WriteSetting(string setting, string data, string session) {
             try {
-                string file = Path.Combine(ApplicationPaths.LocalRepositoryPath, session);
+                string file = Path.Combine(ApplicationSettings.LocalRepositoryPath, session);
                 string[] lines = File.ReadAllLines(file);
 
                 for (int i = 0; i < lines.Length; i++) {
@@ -59,9 +59,9 @@ namespace PuttyServerManager.ToolWindows {
         }
 
         private void button3_Click(object sender, EventArgs e) {
-            if (localRepository.CheckSessionExists(Path.Combine(ApplicationPaths.LocalRepositoryPath, session))) {
+            if (localRepository.CheckSessionExists(Path.Combine(ApplicationSettings.LocalRepositoryPath, session))) {
                 try {
-                    ProcessStartInfo info = new ProcessStartInfo("C:\\Windows\\System32\\notepad.exe", Path.Combine(ApplicationPaths.LocalRepositoryPath, session));
+                    ProcessStartInfo info = new ProcessStartInfo("C:\\Windows\\System32\\notepad.exe", Path.Combine(ApplicationSettings.LocalRepositoryPath, session));
                     Process.Start(info);
                 } catch (Exception ex) {
                     Program.LogWriter.Log("Could not start default editor, make sure there is an default editor for this type of file! - {0}", ex.Message);

@@ -64,7 +64,7 @@ namespace PuttyServerManager.Tools {
                         lst_n[i] = lst_n[i].Replace(" ", "_");
                     }
 
-                    string filepath = Path.Combine(ApplicationPaths.LocalRepositoryPath, lst_n[i].ToString());
+                    string filepath = Path.Combine(ApplicationSettings.LocalRepositoryPath, lst_n[i].ToString());
                     if(File.Exists(filepath)){
                         File.Delete(filepath);
                     }

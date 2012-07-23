@@ -52,14 +52,14 @@ namespace PuttyServerManager.Tools {
             try {
                 if (args.Length == 1) {
                     //Session name übergeben
-                    frmMainWindow main = (frmMainWindow)ApplicationPaths.ApplicationMainForm;
+                    frmMainWindow main = (frmMainWindow)ApplicationSettings.ApplicationMainForm;
                     if (main.InvokeRequired) {
                         main.BeginInvoke(new Action<string, DockState>(main.frmSessions.StartPuttySession), args[0], DockState.Document);
                     }
                     //.frmSessions.StartPuttySession(args[0]);
                 } else if (args.Length == 3) {
                     //protocol - host - port
-                    frmMainWindow main = (frmMainWindow)ApplicationPaths.ApplicationMainForm;
+                    frmMainWindow main = (frmMainWindow)ApplicationSettings.ApplicationMainForm;
                     if (main.InvokeRequired) {
                         main.BeginInvoke(new Action<string, string, string>(main.StartQuickSession), args[0], args[1], args[2]);
                     }

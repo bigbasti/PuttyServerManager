@@ -14,12 +14,12 @@ namespace PuttyServerManager.Config {
 
         public static bool SetupDirectory() {
 
-            if (!Directory.Exists(ApplicationPaths.LocalRepositoryPath)) {
+            if (!Directory.Exists(ApplicationSettings.LocalRepositoryPath)) {
                 Program.LogWriter.Log("! Local Repository Folder doesn't exist - creating the Folder");
 
                 try {
-                    Directory.CreateDirectory(ApplicationPaths.ApplicationPath + "\\.putty");
-                    Directory.CreateDirectory(ApplicationPaths.LocalRepositoryPath);
+                    Directory.CreateDirectory(ApplicationSettings.ApplicationPath + "\\.putty");
+                    Directory.CreateDirectory(ApplicationSettings.LocalRepositoryPath);
                 } catch (Exception ex) {
                     Program.LogWriter.Log("# Could not create Sessions Folder because {0}", ex.Message);
                     return false;
