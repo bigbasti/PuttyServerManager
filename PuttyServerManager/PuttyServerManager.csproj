@@ -220,9 +220,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Setup\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
     <None Include="Resources\Info.png" />
