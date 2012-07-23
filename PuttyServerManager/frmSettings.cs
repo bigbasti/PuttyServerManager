@@ -31,6 +31,7 @@ namespace PuttyServerManager {
             txtStoredSessionsPath.Text = ApplicationPaths.LocalRepositoryPath;
 
             lblVersion.Text = string.Format(lblVersion.Text, Application.ProductVersion);
+            lblVersion2.Text = string.Format(lblVersion2.Text, Application.ProductVersion);
 
             LoadSettings();
         }
@@ -125,6 +126,18 @@ namespace PuttyServerManager {
         private void btnRunConfigurationWizard_Click(object sender, EventArgs e) {
             frmWizard wizard = new frmWizard(SessionsForm);
             wizard.ShowDialog();
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("http://sourceforge.net/projects/dockpanelsuite/");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("http://www.famfamfam.com/lab/icons/silk/");
+        }
+
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("http://code.google.com/p/superputty/");
         }
     }
 }

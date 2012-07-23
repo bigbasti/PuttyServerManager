@@ -225,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1340282105_network-workgroup.ico" />
+    <None Include="Resources\Info.png" />
     <None Include="Resources\disk.png" />
     <None Include="Resources\page_edit.png" />
     <None Include="Resources\Edit.png" />

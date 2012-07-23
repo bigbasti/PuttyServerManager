@@ -48,14 +48,14 @@
             this.txtServerPort = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.cboServerProtocol = new System.Windows.Forms.ToolStripComboBox();
+            this.btnStartQuickConnection = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fIleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnStartQuickConnection = new System.Windows.Forms.ToolStripButton();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showQuickConnectionBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.pSGSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conMenuTab = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -189,6 +189,17 @@
             this.cboServerProtocol.Name = "cboServerProtocol";
             this.cboServerProtocol.Size = new System.Drawing.Size(75, 25);
             // 
+            // btnStartQuickConnection
+            // 
+            this.btnStartQuickConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartQuickConnection.Image = global::PuttyServerManager.Properties.Resources.server_go;
+            this.btnStartQuickConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartQuickConnection.Name = "btnStartQuickConnection";
+            this.btnStartQuickConnection.Size = new System.Drawing.Size(23, 22);
+            this.btnStartQuickConnection.Text = "Connect";
+            this.btnStartQuickConnection.ToolTipText = "Open Connection to the Server";
+            this.btnStartQuickConnection.Click += new System.EventHandler(this.btnStartQuickConnection_Click);
+            // 
             // toolStripContainer1
             // 
             // 
@@ -228,6 +239,14 @@
             this.fIleToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fIleToolStripMenuItem.Text = "File";
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.door_open;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -239,30 +258,6 @@
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(217, 6);
-            // 
-            // btnStartQuickConnection
-            // 
-            this.btnStartQuickConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartQuickConnection.Image = global::PuttyServerManager.Properties.Resources.server_go;
-            this.btnStartQuickConnection.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartQuickConnection.Name = "btnStartQuickConnection";
-            this.btnStartQuickConnection.Size = new System.Drawing.Size(23, 22);
-            this.btnStartQuickConnection.Text = "Connect";
-            this.btnStartQuickConnection.ToolTipText = "Open Connection to the Server";
-            this.btnStartQuickConnection.Click += new System.EventHandler(this.btnStartQuickConnection_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Image = global::PuttyServerManager.Properties.Resources.door_open;
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
             // showQuickConnectionBarToolStripMenuItem
             // 
             this.showQuickConnectionBarToolStripMenuItem.Checked = true;
@@ -272,6 +267,11 @@
             this.showQuickConnectionBarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.showQuickConnectionBarToolStripMenuItem.Text = "Show Quick connection bar";
             this.showQuickConnectionBarToolStripMenuItem.Click += new System.EventHandler(this.showQuickConnectionBarToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(217, 6);
             // 
             // pSGSettingsToolStripMenuItem
             // 
@@ -311,7 +311,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuMain;
             this.Name = "frmMainWindow";
-            this.Text = "Serveroverview 2.0a";
+            this.Text = "Putty Server Manager Beta";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMainWindow_FormClosing);
             this.Load += new System.EventHandler(this.frmMainWindow_Load);
             this.toolQuickConnect.ResumeLayout(false);
