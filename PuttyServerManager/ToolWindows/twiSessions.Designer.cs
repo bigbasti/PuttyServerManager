@@ -1,5 +1,5 @@
 ﻿namespace PuttyServerManager.ToolWindows {
-    partial class twiSessions {
+    public partial class twiSessions {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -13,6 +13,7 @@
             if (disposing && (components != null)) {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 

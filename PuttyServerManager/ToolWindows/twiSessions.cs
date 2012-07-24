@@ -54,7 +54,7 @@ namespace PuttyServerManager.ToolWindows {
                 if (puttyWindow != null) {
 
                     if (puttyWindow.InvokeRequired) {
-                        this.BeginInvoke((MethodInvoker)delegate() {
+                        this.BeginInvoke((MethodInvoker)delegate {
                             puttyWindow.Close();
                         });
                     } else {
@@ -162,7 +162,6 @@ namespace PuttyServerManager.ToolWindows {
         
 
         private void twiSessions_Load(object sender, EventArgs e) {
-
             LoadConfiguration();
         }
 
@@ -196,6 +195,7 @@ namespace PuttyServerManager.ToolWindows {
                     } else {
                         startAllSessionsInFolderToolStripMenuItem.Enabled = true;
                     }
+
                     conMenuFolder.Show(MousePosition);
                     return;
                 }
@@ -289,6 +289,7 @@ namespace PuttyServerManager.ToolWindows {
                 renameToolStripMenuItem1.Enabled = false;
                 renameToolStripMenuItem2.Enabled = false;
             }
+
             SaveChanges();
         }
 
@@ -311,6 +312,7 @@ namespace PuttyServerManager.ToolWindows {
             } else {
                 trvSessions.SelectedNode.Remove();
             }
+
             SaveChanges();
         }
 
@@ -323,6 +325,7 @@ namespace PuttyServerManager.ToolWindows {
                 renameToolStripMenuItem1.Enabled = false;
                 renameToolStripMenuItem2.Enabled = false;
             }
+
             SaveChanges();
         }
 

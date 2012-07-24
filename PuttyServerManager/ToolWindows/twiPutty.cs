@@ -69,8 +69,8 @@ namespace PuttyServerManager.ToolWindows {
         private void twiPutty_Load(object sender, EventArgs e) {
             //this.GotFocus += ((object s, EventArgs ev) => {
             //    //this.applicationwrapper.Focus();
-                
-            //    applicationwrapper.ReFocusPuTTY();
+
+            //    FocusParentWindow();
             //});
 
             //this.LostFocus += ((object s, EventArgs ev) => {
@@ -80,7 +80,7 @@ namespace PuttyServerManager.ToolWindows {
             //this.applicationwrapper.GotFocus += ((object s, EventArgs ev) => {
             //    //FocusParentWindow();
 
-            //    applicationwrapper.ReFocusPuTTY();
+            //    FocusParentWindow();
             //});
         }
 
