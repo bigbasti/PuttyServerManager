@@ -35,7 +35,7 @@ namespace PuttyServerManager {
 
             if (ApplicationSettings.RuninSingleInstanceMode) {
                 bool onlyInstance = false;
-                Mutex mutex = new Mutex(true, "PuttyServerGUI2", out onlyInstance);
+                Mutex mutex = new Mutex(true, "PuttyServerManager", out onlyInstance);
 
                 LogWriter.Log("Running in single instance mode - is first instance: {0}", onlyInstance);
                 if (!onlyInstance) {
