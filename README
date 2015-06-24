@@ -1,6 +1,6 @@
 Putty Server Manager
 ====================
-This is a small Tool i created for my collegues at work to help them manage all the PuTTY Session they are using.
+This is a small Tool i created for my collegues at work to help them manage all their PuTTY Session.
 (And they have A LOT of those...)
 
 Another PuTTY-Tool? SRSLY?
@@ -13,14 +13,14 @@ Main Features
 Teamwork
 --------
 What is really different here is the ability to create a Session Repository for a Team.
-So all team members can use predefied uptodate Sessions without caring to keeping them uptodate.
+So all team members can use predefied and uptodate Sessions without caring to keep them uptodate.
 
-There is oly one Admin who adds Sessions and checks them in on a shared drive where everybody else has access to them.
+There is only one Admin who adds Sessions and checks them in on a shared drive where everybody else has access to them.
 
 USB-Stick Mode
 --------------
-Most PuTTY tools stode ther sessions in the Windows Registry, well that sucks, you can't take your sessions on a nother computer.
-Putty Server Manager stores all his data in his directory so you can use this tool from a USB Stick or other removable media and easily share your sessions.
+Most PuTTY tools store their sessions in the Windows Registry, well that sucks, you can't take your sessions on a nother computer.
+Putty Server Manager stores all its data in its directory so you can use this tool from a USB Stick or other removable media and easily share your sessions.
 
 Other hady features
 -------------------
@@ -32,9 +32,9 @@ If you got some cool ideas for handy features just open an issue on GitHub.
 
 Code
 ====
-The Application is completely in english language, the Code documentation is in german... because of reasons! No seriously i donk know why maybe i will translate the code docs someday... maybe not ;)
+The Application is completely in english language, the Code documentation is in german... because of reasons! No seriously i donk know why, maybe i will translate the code docs someday... maybe not ;)
 
-This project has become some kind of a playground for me, since i am a web-dev and i usually don't write desktop apps don't wonder if you find some code which is not exactly "best practise".
+This project has become some kind of a playground for me, since i am a web-dev and i usually don't write desktop apps, don't wonder if you find some code which is not exactly "best practise".
 
 
-If this App is interesting for you, don't bother to use it :)
+If this App is interesting for you, give it a try :)
